@@ -1,160 +1,17 @@
-@import './reset.scss';
-
-$primary: #064A3C;
-$primary-dk-1: darken($primary, 9.25%);
-$primary-dk-2: darken($primary, 10%);
-$secondary: #FECD45;
-
-$gutter: 10px;
-
-$container-lg: 1200px + ($gutter * 2);
-
-.uppercase {
-    text-transform: uppercase;
-}
+@import './variables.scss';
 
 .gra-tag {
     padding: 6px 30px;
     border-radius: 100px;
     line-height: 36px;
     background-color: $secondary;
-}
-
-.gra-header {
-    display: flex;
-    align-items: center;
-    height: 110px;
-    background-color: $primary;
-
-    &__nav {
-        display: flex;
-        align-items: center;
-        margin-left: auto;
-        gap: 40px;
-    }
-    
-    &__dropdown {
-        position: relative;
-        text-align: center;
-        &-item {
-            padding: 8px;
-            margin-top: 20px;
-            border-radius: 50px;
-            background-color: $primary-dk-1;
-        }
-        &-link {
-            color: #fff;
-        }
-        &-list {
-            display: flex;
-            flex-direction: column;
-            position: absolute;
-            opacity: 0;
-            z-index: -1;
-            visibility: hidden;
-            width: 100%;
-            transition: all .3s linear;
-            list-style: none;
-            font-size: 12px;
-        }
-        &.active &-list {
-            opacity: 1;
-            z-index: 1;
-            visibility: visible;
-        }
-    }
-
-    a, button {
-        line-height: 1;
-        text-decoration: none;
-    }
-
-    img {
-        vertical-align: middle;
-    }
-
-    &__link, &__btn-link {
-        display: flex;
-        align-items: center;
-    }
-    &__link {
-        gap: 15px;
-        font-size: 15px;
-        font-weight: 500;
-        color: #fff
-    }
-}
-
-.gra-btn-link {
-    display: inline-flex;
-    align-items: center;
-    height: 55px;
-    padding: 0 0 0 30px;
-    border-radius: 55px;
-    font-weight: 600;
-    font-size: 16px;
-    span {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 55px;
-        height: 55px;
-        border-radius: 55px;
-        margin-right: -1px;
-        margin-left: 20px;
-    }
-    &.white {
-        background-color: #fff;
-        color: $primary;
-        span {
-            background-color: $primary-dk-1;
-        }
-    }
-    &.yellow {
-        background-color: $secondary;
-        color: $primary-dk-2;
-        span {
-            background-color: #fff;
-        }
-    }
-    &.green {
-        background-color: $primary;
-        color: #fff;
-        span {
-            background-color: $primary-dk-1;
-        }
-    }
-    &.icon-green {
-        span {
-            background-color: $primary;
-        }
-    }
-}
-
-.gra-container {
-    max-width: $container-lg;
-    width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: $gutter;
-    padding-right: $gutter;
-
-    &--flex {
-        display: flex;
-        align-items: center;
-    }
+    color: $primary-dk-1;
 }
 
 .gra-section__left {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-}
-
-.gra-separator {
-    margin: 89px 0;
-    height: 1px;
-    background-color: #CDCDCD;
 }
 
 .gra-section-1 {
@@ -234,7 +91,6 @@ $container-lg: 1200px + ($gutter * 2);
     background-image: linear-gradient(to right, darken($primary, 2.5%), $primary);
     &__bg {
         padding-top: 338px;
-        max-width: 1444px;
         height: 100%;
         margin-left: auto;
         margin-right: auto;
@@ -429,6 +285,38 @@ $container-lg: 1200px + ($gutter * 2);
         &-text {
             margin-top: 28px;
             font-size: 19px;
+        }
+    }
+}
+
+.gra-section-7 {
+    padding: 68px 0;
+    .gra-separator {
+        margin: 52px 0;
+    }
+    &__title {
+        font-size: 40px;
+        line-height: 1.25;
+    }
+
+    details {
+        min-height: 70px;
+        padding: 13px 70px;
+        border-radius: 25px;
+        margin-bottom: 25px;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 1.5;
+        background-color: #f0f0f0;
+        color: #888888;
+        &:last-child {
+            margin-bottom: 0;
+        }
+        summary {
+            font-size: 18px;
+            line-height: 45px;
+            font-weight: 500;
+            color: $primary;
         }
     }
 }

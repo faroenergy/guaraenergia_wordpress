@@ -1,0 +1,195 @@
+@import './variables.scss';
+
+.gra-section-1 {
+    height: 704px;
+    background-image: url(../images/casa-empresa/banner.png);
+    background-repeat: no-repeat;
+    background-position: bottom center;
+    padding: 89px 0;
+    margin-bottom: 77px;
+    &__title {
+        max-width: 580px;
+        font-size: 50px;
+        line-height: 1;
+        font-weight: 400;
+        color: $primary;
+    }
+    &__subtitle {
+        font-size: 16px;
+        line-height: 1.1875;
+        margin-top: 24px;
+        font-weight: 500;
+    }
+    .gra-btn-link {
+        margin-top: 49px;
+    }
+}
+
+.gra-section-2 {
+    &__painel {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        border-radius: 50px;
+        background-color: #f0f0f0;
+        padding: 60px 60px 75px 60px;
+    }
+    &__left {
+        max-width: 570px;
+        &-title {
+            max-width: 292px;
+            font-size: 40px;
+            font-weight: 500;
+            line-height: 1.125;
+            &::after {
+                content: '';
+                display: block;
+                width: 100px;
+                height: 5px;
+                margin-top: 30px;
+                border-radius: 10px;
+                background-color: $primary;
+            }
+        }
+        &-text {
+            margin-top: 30px;
+            font-size: 20px;
+            line-height: 1.5;
+        }
+    }
+    &__right {
+        max-width: 373px;
+        &-list {
+            display: flex;
+            flex-direction: column;
+            gap: 43px;
+            font-size: 24px;
+            line-height: 1.25;
+            font-weight: 500;
+            color: $primary-dk-1;
+            &-icon {
+                width: 60px;
+                height: 60px;
+                flex-shrink: 0;
+                border-radius: 16px;
+                background-color: $primary-dk-1;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            &-item {
+                display: flex;
+                align-items: center;
+                gap: 20px;
+            }
+        }
+        .gra-btn-link {
+            margin-top: 54px;
+        }
+    }
+}
+
+.gra-section-3 {
+    .gra-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 105px;
+        @media (min-width: $container-lg) {
+            max-width: 1125px;
+        }
+    }
+    &__video {
+        width: 684px;
+        height: 433px;
+        background-image: url(../images/casa-empresa/video.png);
+        background-repeat: no-repeat;
+        cursor: pointer;
+        &:hover {
+            opacity: .75;
+        }
+    }
+    &__text {
+        max-width: 320px;
+        font-size: 40px;
+        line-height: 1.125;
+    }
+}
+
+.gra-section-4 {
+    padding: 70px 0;
+    background-color: $primary;
+    color: #fff;
+    &__title {
+        margin-bottom: 24px;
+        font-size: 40px;
+        line-height: 1.125;
+    }
+    &__subtitle {
+        font-size: 20px;
+        line-height: 1.2;
+    }
+    &__items {
+        display: flex;
+        text-align: center;
+        justify-content: space-between;
+        list-style: none;
+        margin-top: 63px;
+        margin-bottom: 42px;
+    }
+    &__arrow {
+        display: block;
+        width: 64px;
+        height: 64px;
+        background-image: url(../images/icons/arrow-right-yellow.svg);
+        background-repeat: no-repeat;
+        background-position: center;
+        margin-top: 32px;
+    }
+    &__item {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        &:first-child::after {
+            display: none;
+        }
+        &:first-child {
+            max-width: 145px;
+        }
+        &:nth-child(3) {
+            max-width: 332px;
+        }
+        &:nth-child(5) {
+            max-width: 205px;
+        }
+        &:last-child {
+            max-width: 143px;
+        }
+
+        &-ordem {
+            $size: 120px;
+            width: $size;
+            height: $size;
+            line-height: $size;
+            border-radius: 50%;
+            color: $primary;
+            font-size: 40px;
+        }
+        &-texto {
+            margin-top: 25px;
+            font-size: 18px;
+            line-height: 1.22;
+        }
+        &.yellow {
+            .gra-section-4__item-ordem {
+                background-color: $secondary;
+            }
+        }
+        &.white {
+            .gra-section-4__item-ordem {
+                background-color: #fff;
+            }
+        }
+    }
+}

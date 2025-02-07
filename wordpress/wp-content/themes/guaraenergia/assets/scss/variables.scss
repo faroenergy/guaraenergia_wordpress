@@ -1,0 +1,9 @@
+$primary: #064A3C;
+$primary-dk-1: darken($primary, 9.25%);
+$primary-dk-2: darken($primary, 10%);
+$secondary: #FECD45;
+
+$gutter: 10px;
+
+$container-lg: 1200px + ($gutter * 2);
+$container-md: 992px + ($gutter * 2);

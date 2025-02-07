@@ -1,0 +1,329 @@
+@import './reset.scss';
+@import './variables.scss';
+
+
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+
+body {
+    color: $primary-dk-1;
+    background-color: #fff;
+    @media (max-width: $container-md - 1) {
+        padding-top: 70px;
+    }
+}
+
+.gra-uppercase {
+    text-transform: uppercase;
+}
+
+@media (max-width: $container-md - 1) {
+    .gra-mobile-hide {
+        display: none;
+    }
+}
+
+@media (min-width: $container-md) {
+    .gra-desktop-hide {
+        display: none;
+    }
+}
+
+.gra-container {
+    max-width: $container-lg;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: $gutter;
+    padding-right: $gutter;
+    
+    @media (max-width: $container-lg - 1) {
+        max-width: $container-md;
+    }
+
+    &--flex {
+        display: flex;
+        align-items: center;
+    }
+}
+
+.gra-separator {
+    margin: 89px 0;
+    height: 1px;
+    background-color: #CDCDCD;
+}
+
+.gra-header {
+    display: flex;
+    align-items: center;
+    height: 110px;
+    background-color: $primary;
+
+    &__nav {
+        display: flex;
+        align-items: center;
+        margin-left: auto;
+        gap: 40px;
+    }
+    
+    &__dropdown {
+        position: relative;
+        text-align: center;
+        &-item {
+            padding: 8px;
+            margin-top: 20px;
+            border-radius: 50px;
+            background-color: $primary-dk-1;
+        }
+        &-link {
+            color: #fff;
+        }
+        &-list {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            list-style: none;
+            font-size: 12px;
+            @media (min-width: $container-md) {
+                position: absolute;
+                opacity: 0;
+                z-index: -1;
+                visibility: hidden;
+                transition: all .3s linear;
+            }
+        }
+        &.active &-list {
+            opacity: 1;
+            z-index: 1;
+            visibility: visible;
+        }
+    }
+
+    a, button {
+        line-height: 1;
+        text-decoration: none;
+    }
+
+    img {
+        vertical-align: middle;
+    }
+
+    &__link, &__btn-link {
+        display: flex;
+        align-items: center;
+    }
+    &__link {
+        gap: 15px;
+        font-size: 15px;
+        font-weight: 500;
+        color: #fff
+    }
+    &__menu-btn {
+        display: none;
+        cursor: pointer;
+    }
+    @media (max-width: $container-lg - 1) {
+        &__nav {
+            gap: 20px;
+        }
+        .gra-btn-link {
+            padding-left: 20px;
+        }
+    }
+    @media (max-width: $container-md - 1) {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 70px;
+        padding: 10px 0;
+        z-index: 1;
+
+        &__logo {
+            img {
+                max-height: 50px;
+            }
+        }
+        &__nav {
+            display: none;
+        }
+        &__menu-btn {
+            display: block;
+            width: 32px;
+            height: 32px;
+            margin-left: auto;
+            color: #fff;
+        }
+    }
+}
+
+.gra-menu-active {
+    overflow: hidden;
+    .gra-header {
+        &__nav {
+            display: flex;
+            position: fixed;
+            width: 100%;
+            top: 70px;
+            left: 0;
+            height: calc(100% - 70px);
+            padding: 16px;
+            background-color: #fff;
+            z-index: 1;
+            flex-direction: column;
+        }
+        &__link {
+            color: $primary;
+        }
+        a.gra-header__link {
+            width: 100%;
+            justify-content: center;
+            text-align: center;
+            color: #fff;
+            padding: 8px;
+            border-radius: 50px;
+            background-color: $primary;
+            font-size: 18px;
+        }
+        &__dropdown {
+            width: 100%;
+            &-btn {
+                font-size: 24px;
+                font-weight: bold;
+                img {
+                    display: none;
+                }
+            }
+            &-list {
+                display: block;
+                font-size: 18px;
+            }
+        }
+    }
+    .gra-separator {
+        width: 100%;
+        margin: 5px 0;
+    }
+}
+
+.gra-btn-link {
+    display: inline-flex;
+    align-items: center;
+    height: 55px;
+    padding: 0 0 0 30px;
+    border-radius: 55px;
+    font-weight: 600;
+    font-size: 16px;
+    span {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 55px;
+        height: 55px;
+        border-radius: 55px;
+        margin-right: -1px;
+        margin-left: 20px;
+        @media (max-width: $container-md - 1) {
+            width: 53px;
+            height: 53px;
+            margin-right: 0;
+        }
+    }
+    &.white {
+        background-color: #fff;
+        color: $primary;
+        span {
+            background-color: $primary-dk-1;
+        }
+    }
+    &.bd-green-mobile {
+        border: 1px solid $primary;
+    }
+    &.bd-yellow-mobile {
+        border: 1px solid $secondary;
+    }
+    &.yellow {
+        background-color: $secondary;
+        color: $primary-dk-2;
+        span {
+            background-color: #fff;
+        }
+    }
+    &.green {
+        background-color: $primary;
+        color: #fff;
+        span {
+            background-color: $primary-dk-1;
+        }
+    }
+    &.icon-green {
+        span {
+            background-color: $primary;
+        }
+    }
+}
+
+.gra-footer {
+    height: 404px;
+    padding: 52px 0;
+    border-radius: 50px 50px 0 0;
+    border-bottom: 10px solid $secondary;
+    color: #fff;
+    background-color: $primary-dk-2;
+    background-image: url(../images/footer-bg.png);
+    background-repeat: no-repeat;
+    background-position: top right;
+    &__link {
+        color: #fff;
+    }
+    &__list {
+        list-style: none;
+        font-size: 12px;
+        a {
+            color: #fff;
+        }
+    }
+    &__left {
+        max-width: 451px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        line-height: 1.5;
+        font-size: 12px;
+    }
+    &__right {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        text-align: right;
+    }
+    &__title {
+        margin-bottom: 7px;
+        font-size: 20px;
+        line-height: 2.25;
+        color: #FECD45;
+    }
+
+    .gra-container {
+        display: flex;
+        justify-content: space-between;
+    }
+    
+    &__socials {
+        display: flex;
+        gap: 12px;
+        a {
+            color: $primary-dk-1;
+        }
+    }
+}
+
+.gra-text-center {
+    text-align: center;
+}
