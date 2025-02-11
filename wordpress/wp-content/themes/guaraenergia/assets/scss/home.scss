@@ -16,10 +16,16 @@
 
 .gra-section-1 {
     padding-top: 79px;
+    @media (max-width: $container-md - 1) {
+        padding-top: 32px;
+    }
     .gra-container {
         display: flex;
         align-items: flex-start;
         gap: 53px;
+        @media (max-width: $container-md - 1) {
+            flex-direction: column;
+        }
     }
     h2, h3 {
         font-weight: 400;
@@ -29,6 +35,9 @@
         font-size: 60px;
         line-height: 1;
         color: $primary;
+        @media (max-width: $container-md - 1) {
+            font-size: 32px;
+        }
     }
     h3 {
         max-width: 530px;
@@ -36,6 +45,10 @@
         font-size: 24px;
         line-height: 1.4;
         color: $primary-dk-1;
+        @media (max-width: $container-md - 1) {
+            font-size: 20px;
+            margin-top: 16px;
+        }
     }
     .gra-section__left {
         max-width: 567px;
@@ -43,6 +56,16 @@
     .gra-btn-link {
         margin-top: 63px;
         font-size: 22px;
+        @media (max-width: $container-md - 1) {
+            margin-top: 24px;
+            font-size: 16px;
+        }
+    }
+
+    @media (max-width: $container-md - 1) {
+        .gra-section__right {
+            display: none;
+        }
     }
 }
 
@@ -54,6 +77,13 @@
         height: 483px;
         background-image: url(../images/home/section-2.png);
         background-repeat: no-repeat;
+        @media (max-width: $container-md - 1) {
+            background-repeat: no-repeat;
+            background-size: 100%;
+            background-position: top center;
+            padding-top: 45%;
+            height: auto;
+        }
     }
     &__content {
         max-width: 380px;
@@ -65,6 +95,9 @@
             line-height: 1.125;
             font-weight: 500;
             color: #000;
+            @media (max-width: $container-md - 1) {
+                font-size: 24px;
+            }
             &::after {
                 content: '';
                 display: block;
@@ -73,6 +106,9 @@
                 margin-top: 30px;
                 border-radius: 10px;
                 background-color: $primary;
+                @media (max-width: $container-md - 1) {
+                    margin-top: 16px;
+                }
             }
         }
         &-list {
@@ -81,7 +117,16 @@
             line-height: 1.3334;
             font-weight: 500;
             color: $primary-dk-1;
+            @media (max-width: $container-md - 1) {
+                margin-top: 16px;
+            }
         }
+        @media (max-width: $container-md - 1) {
+            margin: 0 auto;
+        }
+    }
+    @media (max-width: $container-md - 1) {
+        padding-bottom: 24px;
     }
 }
 
@@ -89,6 +134,10 @@
     height: 904px;
     margin-top: -241px;
     background-image: linear-gradient(to right, darken($primary, 2.5%), $primary);
+    @media (max-width: $container-md - 1) {
+        margin-top: 0;
+        height: auto;
+    }
     &__bg {
         padding-top: 338px;
         height: 100%;
@@ -97,12 +146,19 @@
         background-image: url(../images/home/section-2-bg.png);
         background-repeat: no-repeat;
         background-position: top right;
+        @media (max-width: $container-md - 1) {
+            padding: 24px 0;
+        }
     }
     &__title {
         color: #fff;
         font-size: 40px;
         line-height: 1;
         margin-bottom: 38px;
+        @media (max-width: $container-md - 1) {
+            font-size: 32px;
+            margin-bottom: 16px;
+        }
         &::after {
             content: '';
             display: block;
@@ -111,11 +167,18 @@
             margin-top: 30px;
             border-radius: 10px;
             background-color: $secondary;
+            @media (max-width: $container-md - 1) {
+                margin-top: 16px;
+            }
         }
     }
     &__content {
         display: flex;
         gap: 40px;
+        @media (max-width: $container-md - 1) {
+            flex-direction: column;
+            gap: 20px
+        }
         &-icon {
             display: inline-flex;
             align-items: center;
@@ -128,6 +191,9 @@
             margin: 31px 0 27px;
             font-size: 26px;
             color: inherit;
+            @media (max-width: $container-md - 1) {
+                margin: 16px 0 0;
+            }
         }
         &-text {
             font-size: 14px;
@@ -140,6 +206,9 @@
             padding: 44px 50px 35px;
             flex: 1;
             border-radius: 50px;
+            @media (max-width: $container-md - 1) {
+                padding: 24px;
+            }
             &.white {
                 background-color: #fff;
                 color: $primary-dk-1;
@@ -162,11 +231,20 @@
 .gra-section-4 {
     margin-top: 86px;
     margin-bottom: 86px;
+    @media (max-width: $container-md - 1) {
+        margin: 24px 0
+    }
     &__content {
         display: flex;
         align-items: flex-start;
         justify-content: space-between;
         text-align: center;
+        @media (max-width: $container-md - 1) {
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 32px;
+        }
         &-block {
             display: flex;
             flex-direction: column;
@@ -177,6 +255,9 @@
             max-width: 274px;
             margin: 0 auto;
             font-size: 26px;
+            @media (max-width: $container-md - 1) {
+                font-size: 20px;
+            }
         }
         &-icon {
             width: 100px;
@@ -186,7 +267,12 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 40px;
+            margin-bottom: 0 auto 40px;
+            @media (max-width: $container-md - 1) {
+                margin: 0 auto 10px;
+                width: 60px;
+                height: 60px;
+            }
         }
     }
 }
@@ -195,32 +281,50 @@
     // background-color: $secondary;
     color: $primary-dk-1;
     height: 646px;
+    @media (max-width: $container-md - 1) {
+        height: auto;
+    }
     .gra-container {
         position: relative;
         height: 100%;
         padding-top: 54px;
+        @media (max-width: $container-md - 1) {
+            padding: 16px;
+        }
     }
     &__map {
-        position: absolute;
-        top: 0;
-        right: 71px;
-        width: 620px;
-        height: 100%;
-        background-image: url(../images/home/section-5.png);
-        background-repeat: no-repeat;
-        background-position: top right;
-        z-index: 1;
+        display: none;
+        @media (min-width: $container-md) {
+            position: absolute;
+            top: 0;
+            right: 71px;
+            display: block;
+            width: 620px;
+            height: 100%;
+            background-image: url(../images/home/section-5.png);
+            background-repeat: no-repeat;
+            background-position: top right;
+            z-index: 1;
+        }
     }
     &__content {
         height: 537px;
         border-radius: 50px;
         padding: 89px 100px 43px;
         background-color: $secondary;
+        @media (max-width: $container-md - 1) {
+            height: auto;
+            padding: 16px;
+            border-radius: 16px;
+        }
         &-title {
             margin-bottom: 30px;
             font-size: 40px;
             line-height: 1.125;
             font-weight: 500;
+            @media (max-width: $container-md - 1) {
+                margin-bottom: 16px;
+            }
             &::after {
                 content: '';
                 display: block;
@@ -229,6 +333,9 @@
                 margin-top: 30px;
                 border-radius: 10px;
                 background-color: $primary;
+                @media (max-width: $container-md - 1) {
+                    margin-top: 16px;
+                }
             }
         }
         &-subtitle, &-list {
@@ -238,6 +345,9 @@
         &-list {
             margin-top: 30px;
             margin-left: 20px;
+            @media (max-width: $container-md - 1) {
+                margin-top: 16px;
+            }
             span {
                 font-weight: 500;
             }
@@ -248,55 +358,87 @@
 .gra-section-6 {
     padding: 75px 0;
     background-color: #F0F0F0;
+    @media (max-width: $container-md - 1) {
+        padding: 32px 0;
+    }
     &__content {
         &-title {
             text-align: center;
             font-size: 40px;
             line-height: 1.125;
+            @media (max-width: $container-md - 1) {
+                font-size: 24px;
+            }
         }
         &-imgs {
             display: flex;
             margin: 71px 0 51px;
             gap: 41px;
             text-align: center;
+            @media (max-width: $container-md - 1) {
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                margin: 24px 0;
+            }
         }
         &-img {
             position: relative;
             flex-shrink: 0;
             max-width: 270px;
-            &::after {
-                content: '';
-                position: absolute;
-                top: 140px;
-                right: -52px;
-                width: 63px;
-                height: 63px;
-                border-radius: 63px;
-                background-color: $secondary;
-                background-image: url(../images/icons/arrow-right-dk.svg);
-                background-repeat: no-repeat;
-                background-position: center;
-                z-index: 1;
+            img {
+                max-width: 200px;
             }
-            &:last-child::after {
-                display: none;
+            @media (min-width: $container-md) {
+                img {
+                    max-width: 270px;
+                }
+                &::after {
+                    content: '';
+                    position: absolute;
+                    top: 140px;
+                    right: -52px;
+                    width: 63px;
+                    height: 63px;
+                    border-radius: 63px;
+                    background-color: $secondary;
+                    background-image: url(../images/icons/arrow-right-dk.svg);
+                    background-repeat: no-repeat;
+                    background-position: center;
+                    z-index: 1;
+                }
+                &:last-child::after {
+                    display: none;
+                }
             }
         }
         &-text {
             margin-top: 28px;
             font-size: 19px;
+            @media (max-width: $container-md - 1) {
+                margin-top: 16px;
+            }
         }
     }
 }
 
 .gra-section-7 {
-    padding: 68px 0;
-    .gra-separator {
-        margin: 52px 0;
+    padding: 68px 0 100px;
+    @media (max-width: $container-md - 1) {
+        padding: 32px 0;
+    }
+    @media (min-width: $container-md) {
+        .gra-separator {
+            margin: 52px 0;
+            
+        }
     }
     &__title {
         font-size: 40px;
         line-height: 1.25;
+        @media (max-width: $container-md - 1) {
+            font-size: 24px;
+        }
     }
 
     details {
@@ -309,6 +451,10 @@
         line-height: 1.5;
         background-color: #f0f0f0;
         color: #888888;
+        @media (max-width: $container-md - 1) {
+            padding: 12px 24px;
+            margin-bottom: 12px;
+        }
         &:last-child {
             margin-bottom: 0;
         }

@@ -7,21 +7,41 @@
     background-position: bottom center;
     padding: 89px 0;
     margin-bottom: 77px;
+    
     &__title {
         max-width: 580px;
         font-size: 50px;
         line-height: 1;
         font-weight: 400;
         color: $primary;
+        @media (max-width: $container-md - 1) {
+            font-size: 30px;;
+        }
     }
     &__subtitle {
         font-size: 16px;
         line-height: 1.1875;
         margin-top: 24px;
         font-weight: 500;
+        @media (max-width: $container-md - 1) {
+            margin-top: 16px;
+            font-size: 20px;
+        }
     }
     .gra-btn-link {
         margin-top: 49px;
+        @media (max-width: $container-md - 1) {
+            margin-top: 16px;
+        }
+    }
+
+    @media (max-width: $container-md - 1) {
+        height: auto;
+        padding: 32px 0;
+        background-position: center, center right -520px;
+        margin-bottom: 16px;
+        background-image: linear-gradient(to right,rgba(255,255,255,.9), rgba(255,255,255,.6)), url(../images/casa-empresa/banner.png);
+        background-repeat: repeat, no-repeat;
     }
 }
 
@@ -33,6 +53,16 @@
         border-radius: 50px;
         background-color: #f0f0f0;
         padding: 60px 60px 75px 60px;
+        @media (max-width: $container-md - 1) {
+            max-width: 570px;
+            border-radius: 16px;
+            margin: 0 auto;
+            padding: 16px;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 16px;
+        }
     }
     &__left {
         max-width: 570px;
@@ -49,12 +79,22 @@
                 margin-top: 30px;
                 border-radius: 10px;
                 background-color: $primary;
+                @media (max-width: $container-md - 1) {
+                    margin-top: 16px;
+                }
+            }
+            @media (max-width: $container-md - 1) {
+                font-size: 30px;
             }
         }
         &-text {
             margin-top: 30px;
             font-size: 20px;
             line-height: 1.5;
+            @media (max-width: $container-md - 1) {
+                margin-top: 16px;
+                font-size: 16px;
+            }
         }
     }
     &__right {
@@ -67,6 +107,10 @@
             line-height: 1.25;
             font-weight: 500;
             color: $primary-dk-1;
+            @media (max-width: $container-md - 1) {
+                gap: 20px;
+                font-size: 20px;
+            }
             &-icon {
                 width: 60px;
                 height: 60px;
@@ -81,10 +125,14 @@
                 display: flex;
                 align-items: center;
                 gap: 20px;
+                
             }
         }
         .gra-btn-link {
             margin-top: 54px;
+            @media (max-width: $container-md - 1) {
+                margin-top: 24px;
+            }
         }
     }
 }
@@ -98,12 +146,24 @@
         @media (min-width: $container-lg) {
             max-width: 1125px;
         }
+        @media (max-width: $container-md - 1) {
+            flex-direction: column;
+            margin-bottom: 24px;
+        }
     }
     &__video {
         width: 684px;
         height: 433px;
         background-image: url(../images/casa-empresa/video.png);
         background-repeat: no-repeat;
+        @media (max-width: $container-md - 1) {
+            max-width: 570px;
+            width: 100%;
+            height: auto;
+            padding-top: 40.7%;
+            background-position: center;
+            background-size: contain;
+        }
         cursor: pointer;
         &:hover {
             opacity: .75;
@@ -113,6 +173,11 @@
         max-width: 320px;
         font-size: 40px;
         line-height: 1.125;
+        @media (max-width: $container-md - 1) {
+            margin-top: 16px;
+            font-size: 24px;
+            text-align: center;
+        }
     }
 }
 
@@ -120,14 +185,27 @@
     padding: 70px 0;
     background-color: $primary;
     color: #fff;
+    @media (max-width: $container-md - 1) {
+        padding: 24px 0;
+    }
     &__title {
         margin-bottom: 24px;
         font-size: 40px;
         line-height: 1.125;
+        @media (max-width: $container-md - 1) {
+            margin-bottom: 12px;
+            font-size: 30px;
+            text-align: center;
+        }
     }
     &__subtitle {
+        margin-bottom: 32px;
         font-size: 20px;
         line-height: 1.2;
+        @media (max-width: $container-md - 1) {
+            font-size: 16px;
+            text-align: center;
+        }
     }
     &__items {
         display: flex;
@@ -136,15 +214,24 @@
         list-style: none;
         margin-top: 63px;
         margin-bottom: 42px;
+        @media (max-width: $container-md - 1) {
+            flex-direction: column;
+            justify-content: center;
+            gap: 32px;
+            margin: 16px 0;
+        }
     }
     &__arrow {
-        display: block;
-        width: 64px;
-        height: 64px;
-        background-image: url(../images/icons/arrow-right-yellow.svg);
-        background-repeat: no-repeat;
-        background-position: center;
-        margin-top: 32px;
+        display: none;
+        @media (min-width: $container-md) {
+            display: block;
+            width: 64px;
+            height: 64px;
+            background-image: url(../images/icons/arrow-right-yellow.svg);
+            background-repeat: no-repeat;
+            background-position: center;
+            margin-top: 32px;
+        }
     }
     &__item {
         position: relative;
@@ -167,6 +254,10 @@
             max-width: 143px;
         }
 
+        @media (max-width: $container-md - 1) {
+            margin: 0 auto;
+        }
+
         &-ordem {
             $size: 120px;
             width: $size;
@@ -175,11 +266,22 @@
             border-radius: 50%;
             color: $primary;
             font-size: 40px;
+            @media (max-width: $container-md - 1) {
+                $size: 60px;
+                width: $size;
+                height: $size;
+                line-height: $size;
+            }
         }
         &-texto {
             margin-top: 25px;
             font-size: 18px;
             line-height: 1.22;
+            @media (max-width: $container-md - 1) {
+                margin-top: 12px;
+                font-size: 16px;
+            }
+            
         }
         &.yellow {
             .gra-section-4__item-ordem {
@@ -189,6 +291,153 @@
         &.white {
             .gra-section-4__item-ordem {
                 background-color: #fff;
+            }
+        }
+
+    }
+    @media (max-width: $container-md - 1) {
+        .gra-btn-link {
+            margin-top: 25px;
+        }
+    }
+}
+
+.gra-section-5 {
+    display: flex;
+    align-items: center;
+    border-radius: 50px;
+    background-color: #F0F0F0;
+    max-width: 1070px;
+    margin: 81px auto;
+    padding: 10px 50px;
+    @media (min-width: $container-md) {
+        min-height: 234px;
+        background-image: url(../images/casa-empresa/garantia-transparencia.png);
+        background-repeat: no-repeat;
+        background-position: right;
+    }
+    @media (max-width: $container-md - 1) {
+        flex-direction: column;
+        padding: 24px;
+        gap: 24px;
+        margin: 24px auto;
+    }
+    &__left-text {
+        font-size: 30px;
+        font-weight: 600;
+        max-width: 349px;
+        line-height: 1.33;
+        @media (max-width: $container-md - 1) {
+            text-align: center;
+        }
+    }
+    &__anatel {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 80px;
+        height: 80px;
+        border-radius: 80px;
+        background-color: $primary;
+        flex-shrink: 0;
+    }
+    &__right-text {
+        display: flex;
+        align-items: center;
+        gap: 35px;
+        max-width: 548px;
+        margin-left: auto;
+        font-size: 15px;
+        font-weight: 500;
+        line-height: 1.33;
+    }
+}
+
+.gra-section-6 {
+    padding: 74px 0 140px;
+    background-color: #F0F0F0;
+    @media (max-width: $container-md - 1) {
+        padding: 24px 0;
+    }
+    &__title {
+        margin-bottom: 70px;
+        font-size: 40px;
+        text-align: center;
+        line-height: 1.125;
+        @media (max-width: $container-md - 1) {
+            font-size: 24px;
+            margin-bottom: 24px;
+        }
+    }
+    &__content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+        text-align: center;
+        @media (max-width: $container-md - 1) {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        &-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            flex-shrink: 0;
+            border-radius: 16px;
+            &.yellow {
+                background-color: $secondary;
+            }
+            &.green {
+                background-color: $primary;
+            }
+        }
+        &-title {
+            margin-top: 30px;
+            font-size: 24px;
+            line-height: 1.125;
+            font-weight: 500;
+            @media (max-width: $container-md - 1) {
+                margin-top: 16px;
+            }
+        }
+        &-subtitle {
+            margin-top: 30px;
+            font-size: 16px;
+            line-height: 1.25;
+            max-width: 384px;
+            min-height: 60px;
+            font-weight: 500;
+            @media (max-width: $container-md - 1) {
+                margin-top: 16px;
+                min-height: auto;
+            }
+        }
+        &-left, &-right {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 52px;
+            border-radius: 50px;
+            flex: 1;
+            @media (max-width: $container-md - 1) {
+                padding: 24px;
+                border-radius: 24px;
+            }
+        }
+        &-left {
+            background-color: $primary;
+            color: #fff;
+        }
+        &-right {
+            background-color: #fff;
+        }
+        .gra-btn-link {
+            margin-top: 30px;
+            @media (max-width: $container-md - 1) {
+                margin-top: 16px;
             }
         }
     }

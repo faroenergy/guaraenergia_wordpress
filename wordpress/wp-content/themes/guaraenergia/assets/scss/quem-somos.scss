@@ -1,0 +1,230 @@
+@import './variables.scss';
+
+.gra-section-1 {
+    height: 700px;
+    background-image: url(../images/quem-somos/banner.png);
+    background-repeat: no-repeat;
+    background-position: bottom center;
+    padding: 120px 0 0;
+    margin-bottom: 77px;
+    
+    &__title {
+        max-width: 854px;
+        font-size: 50px;
+        line-height: 1;
+        font-weight: 600;
+        color: #fff;
+        @media (max-width: $container-md - 1) {
+            font-size: 30px;
+            br {
+                display: none;
+            }
+        }
+        span {
+            color: $secondary;
+        }
+    }
+    &__subtitle {
+        font-size: 16px;
+        line-height: 1.1875;
+        margin-top: 24px;
+        font-weight: 500;
+        color: #fff;
+        @media (max-width: $container-md - 1) {
+            margin-top: 16px;
+            font-size: 20px;
+        }
+    }
+    .gra-btn-link {
+        margin-top: 49px;
+        @media (max-width: $container-md - 1) {
+            margin-top: 16px;
+        }
+    }
+
+    @media (max-width: $container-md - 1) {
+        height: auto;
+        padding: 32px 0;
+        background-position: center, center right -520px;
+        margin-bottom: 16px;
+        background-image: linear-gradient(to right,rgba(0,0,0,.9), rgba(0,0,0,.6)), url(../images/quem-somos/banner.png);
+        background-repeat: repeat, no-repeat;
+    }
+}
+
+.gra-section-4 {
+    margin-top: 86px;
+    margin-bottom: 86px;
+    @media (max-width: $container-md - 1) {
+        margin: 24px 0
+    }
+    &__content {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        text-align: left;
+        @media (max-width: $container-md - 1) {
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 32px;
+        }
+        &-block {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            max-width: 350px;
+            flex: 1;
+        }
+        &-text {
+            max-width: 274px;
+            font-size: 30px;
+            line-height: 1.25;
+            text-align: left;
+            color: $primary;
+            @media (max-width: $container-md - 1) {
+                text-align: left;
+                font-size: 20px;
+            }
+        }
+        &-icon {
+            width: 60px;
+            height: 60px;
+            background-color: $primary;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            @media (max-width: $container-md - 1) {
+                margin: 0 auto 10px;
+            }
+        }
+        ul {
+            margin-top: 10px;
+            margin-left: 22px;
+            color: #828282;
+        }
+    }
+}
+
+.gra-section-5 {
+    // background-color: $secondary;
+    color: $primary-dk-1;
+    height: 646px;
+    @media (max-width: $container-md - 1) {
+        height: auto;
+    }
+    .gra-container {
+        position: relative;
+        height: 100%;
+        padding-top: 54px;
+        @media (max-width: $container-md - 1) {
+            padding: 16px;
+        }
+    }
+    &__map {
+        display: none;
+        @media (min-width: $container-md) {
+            position: absolute;
+            top: -44px;
+            right: 71px;
+            display: block;
+            width: 620px;
+            height: 100%;
+            background-image: url(../images/home/section-5.png);
+            background-repeat: no-repeat;
+            background-position: top right;
+            z-index: 1;
+        }
+    }
+    &__content {
+        height: 439px;
+        border-radius: 50px;
+        padding: 89px 100px 43px;
+        background-color: $secondary;
+        @media (max-width: $container-md - 1) {
+            height: auto;
+            padding: 16px;
+            border-radius: 16px;
+        }
+        &-title {
+            margin-bottom: 30px;
+            font-size: 40px;
+            line-height: 1.125;
+            font-weight: 500;
+            @media (max-width: $container-md - 1) {
+                margin-bottom: 16px;
+            }
+            &::after {
+                content: '';
+                display: block;
+                width: 100px;
+                height: 5px;
+                margin-top: 30px;
+                border-radius: 10px;
+                background-color: $primary;
+                @media (max-width: $container-md - 1) {
+                    margin-top: 16px;
+                }
+            }
+        }
+        &-subtitle, &-list {
+            font-size: 20px;
+            line-height: 1.5;
+        }
+        &-list {
+            max-width: 595px;
+            margin-top: 30px;
+            margin-left: 20px;
+            font-size: 20px;
+            @media (max-width: $container-md - 1) {
+                margin-top: 16px;
+            }
+            span {
+                font-weight: 500;
+            }
+        }
+    }
+}
+
+
+.gra-section-6 {
+    padding: 105px 0;
+    background-color: $primary-dk-1;
+    @media (max-width: $container-md - 1) {
+        padding: 20px 0;
+    }
+    &__top {
+        display: flex;
+        justify-content: space-between;
+        @media (max-width: $container-md - 1) {
+            flex-direction: column;
+            gap: 24px;
+        }
+    }
+    &__title {
+        max-width: 448px;
+        font-size: 50px;
+        line-height: 1.125;
+        color: #fff;
+        b {
+            color: $secondary;
+        }
+        @media (max-width: $container-md - 1) {
+            font-size: 24px;
+        }
+    }
+    &__bottom {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        margin-top: -110px;
+        @media (max-width: $container-lg - 1) {
+            flex-direction: column;
+            align-items: center;
+            margin-top: 24px;
+            gap: 24px;
+        }
+    }
+}

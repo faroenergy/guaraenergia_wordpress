@@ -57,6 +57,9 @@ body {
     margin: 89px 0;
     height: 1px;
     background-color: #CDCDCD;
+    @media (max-width: $container-md - 1) {
+        margin: 24px 0;
+    }
 }
 
 .gra-header {
@@ -279,6 +282,15 @@ body {
     background-image: url(../images/footer-bg.png);
     background-repeat: no-repeat;
     background-position: top right;
+    margin-top: -52px;
+    position: relative;
+
+    @media (max-width: $container-md - 1) {
+        height: auto;
+        margin-top: 0;
+        border-radius: 0;
+        padding: 24px 0;
+    }
     &__link {
         color: #fff;
     }
@@ -296,12 +308,23 @@ body {
         gap: 16px;
         line-height: 1.5;
         font-size: 12px;
+        @media (max-width: $container-xs - 1) {
+            grid-template-columns: 1fr;
+        }
     }
     &__right {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
         text-align: right;
+        @media (max-width: $container-md - 1) {
+            text-align: left;
+            gap: 16px;
+            margin-top: 24px;
+            img {
+                max-width: 200px;
+            }
+        }
     }
     &__title {
         margin-bottom: 7px;
@@ -313,6 +336,9 @@ body {
     .gra-container {
         display: flex;
         justify-content: space-between;
+        @media (max-width: $container-sm - 1) {
+            flex-direction: column;
+        }
     }
     
     &__socials {
@@ -326,4 +352,16 @@ body {
 
 .gra-text-center {
     text-align: center;
+}
+
+@media (max-width: $container-md - 1) {
+    .gra-text-center-mb {
+        text-align: center;
+    }
+}
+
+@media (max-width: $container-md - 1) {
+    br {
+        display: none;
+    }
 }
