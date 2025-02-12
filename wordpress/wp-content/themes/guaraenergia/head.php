@@ -6,7 +6,9 @@
     <title><?php echo $args['title']; ?></title>
 
     <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/assets/css/core.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.4/tiny-slider.css">
+    <?php if ($args['css'] == 'seja-um-parceiro'): ?>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.4/tiny-slider.css">
+    <?php endif; ?>
     <link href="<?php echo get_template_directory_uri(); ?>/assets/css/<?php echo $args['css']; ?>.css" rel="stylesheet">
 
 </head>

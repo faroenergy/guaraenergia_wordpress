@@ -267,7 +267,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 0 auto 40px;
+            margin: 0 auto 40px;
             @media (max-width: $container-md - 1) {
                 margin: 0 auto 10px;
                 width: 60px;
@@ -279,8 +279,9 @@
 
 .gra-section-5 {
     // background-color: $secondary;
-    color: $primary-dk-1;
     height: 646px;
+    margin-bottom: 54px;
+    color: $primary-dk-1;
     @media (max-width: $container-md - 1) {
         height: auto;
     }
@@ -308,12 +309,12 @@
         }
     }
     &__content {
-        height: 537px;
+        min-height: 537px;
         border-radius: 50px;
         padding: 89px 100px 43px;
         background-color: $secondary;
         @media (max-width: $container-md - 1) {
-            height: auto;
+            min-height: auto;
             padding: 16px;
             border-radius: 16px;
         }
@@ -375,6 +376,7 @@
             margin: 71px 0 51px;
             gap: 41px;
             text-align: center;
+            flex-wrap: wrap;
             @media (max-width: $container-md - 1) {
                 flex-direction: column;
                 justify-content: center;
@@ -385,7 +387,7 @@
         &-img {
             position: relative;
             flex-shrink: 0;
-            max-width: 270px;
+            max-width: 269px;
             img {
                 max-width: 200px;
             }

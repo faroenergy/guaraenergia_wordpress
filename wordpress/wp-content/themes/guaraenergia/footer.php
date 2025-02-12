@@ -76,32 +76,37 @@
         </div>
     </div>
 </footer>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.2/min/tiny-slider.js"></script>
-    <script src="<?php echo get_template_directory_uri(); ?>/assets/script.js"></script>
 
-    <script>
-        if (document.querySelector('.jsSliderDepoimentos')) {
-            var slider = tns({
-                container: '.jsSliderDepoimentos',
-                items: 1,
-                slideBy: 1,
-                autoplay: false,
-                loop: false,
-                nav: false,
-                gutter: 16,
-                controlsContainer: '.jsSliderDepoimentosBtns',
-                mouseDrag: true,
-                responsive: {
-                    595: {
-                        items: 2
-                    },
-                    788: {
-                        items: 3,
-                        gutter: 32
-                    }
+<?php if ($args['name']): ?>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.2/min/tiny-slider.js"></script>
+
+<script>
+    if (document.querySelector('.jsSliderDepoimentos')) {
+        var slider = tns({
+            container: '.jsSliderDepoimentos',
+            items: 1,
+            slideBy: 1,
+            autoplay: false,
+            loop: false,
+            nav: false,
+            gutter: 16,
+            controlsContainer: '.jsSliderDepoimentosBtns',
+            mouseDrag: true,
+            responsive: {
+                595: {
+                    items: 2
+                },
+                788: {
+                    items: 3,
+                    gutter: 32
                 }
-            });
-        }
-    </script>
+            }
+        });
+    }
+</script>
+<?php endif; ?>
+
+<script src="<?php echo get_template_directory_uri(); ?>/assets/script.js"></script>
+
 </body>
 </html>

@@ -182,4 +182,7 @@
         <div class="gra-separator"></div>
     </div>
 </section>
-<?php get_template_part('footer')?>
+<?php get_template_part('footer', null,  
+ array( 
+    'name' => 'seja-um-parceiro'
+))?>

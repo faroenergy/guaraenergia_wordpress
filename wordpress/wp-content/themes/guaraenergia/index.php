@@ -20,7 +20,7 @@
             </a>
         </div>
         <div class="gra-section__right">
-            <img src="assets/images/home/section-1.png" alt="">
+            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/home/section-1.png" alt="">
         </div>
     </div>
 </section>
