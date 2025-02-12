@@ -1,8 +1,10 @@
-/*
-Theme Name: Para casa e empresa
-*/
+<!-- Template Name: Para casa e empresa -->
 
-<?php get_template_part('head')?>
+<?php get_template_part('head', null, 
+ array( 
+    'title' => "Para casa e empresa",
+    'css' => 'para-casa-empresa'
+))?>
 <?php get_template_part('header')?>
 <section class="gra-section-1">
     <div class="gra-container">
@@ -15,7 +17,7 @@ Theme Name: Para casa e empresa
         <a href="" class="gra-btn-link yellow">
             Quero Economizar
             <span>
-                <img src="./assets/images/icons/arrow-tright-dk.svg" alt="">
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/arrow-tright-dk.svg" alt="">
             </span>
         </a>
     </div>
@@ -37,19 +39,19 @@ Theme Name: Para casa e empresa
                 <ul class="gra-section-2__right-list">
                     <li  class="gra-section-2__right-list-item">
                         <span class="gra-section-2__right-list-icon">
-                            <img src="./assets/images/icons/cloud-cross.svg" alt="">
+                            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/cloud-cross.svg" alt="">
                         </span>
                         Sem obras ou instalações
                     </li>
                     <li  class="gra-section-2__right-list-item">
                         <span class="gra-section-2__right-list-icon">
-                            <img src="./assets/images/icons/electricity.svg" alt="">
+                            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/electricity.svg" alt="">
                         </span>
                         Utiliza a fiação existente
                     </li>
                     <li  class="gra-section-2__right-list-item">
                         <span class="gra-section-2__right-list-icon">
-                            <img src="./assets/images/icons/cloud-add.svg" alt="">
+                            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/cloud-add.svg" alt="">
                         </span>
                         Você pode contratar de forma 100% digital
                     </li>
@@ -58,7 +60,7 @@ Theme Name: Para casa e empresa
                     <a href="" class="gra-btn-link yellow gra-uppercase">
                         Tenho Interesse
                         <span>
-                            <img src="./assets/images/icons/arrow-tright-dk.svg" alt="">
+                            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/arrow-tright-dk.svg" alt="">
                         </span>
                     </a>
                 </div>
@@ -114,7 +116,7 @@ Theme Name: Para casa e empresa
             <a href="" class="gra-btn-link yellow gra-uppercase">
                 Tenho Interesse
                 <span>
-                    <img src="./assets/images/icons/arrow-tright-dk.svg" alt="">
+                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/arrow-tright-dk.svg" alt="">
                 </span>
             </a>
         </div>
@@ -126,7 +128,7 @@ Theme Name: Para casa e empresa
             Garantimos transparência, segurança e legalidade
         </p>
         <p class="gra-section-5__right-text">
-            <span class="gra-section-5__anatel"><img src="./assets/images/casa-empresa/logo.svg" alt=""></span>
+            <span class="gra-section-5__anatel"><img src="<?php echo get_template_directory_uri(); ?>/assets/images/casa-empresa/logo.svg" alt=""></span>
             Em conformidade com a resolução da ANEEL (nº 482/2012, nº 687/2015 e Lei nº 14.300/2022), garantimos transparência, segurança e legalidade em todo seu processo de adesão.
         </p>
     </section>
@@ -139,27 +141,27 @@ Theme Name: Para casa e empresa
         <div class="gra-section-6__content">
             <div class="gra-section-6__content-left">
                 <span class="gra-section-6__content-icon yellow">
-                    <img src="./assets/images/casa-empresa/building.svg" alt="">
+                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/casa-empresa/building.svg" alt="">
                 </span>
                 <p class="gra-section-6__content-title">Parceria comercial <br>com a Guará Energia</p>
                 <p class="gra-section-6__content-subtitle">Ideal para você que deseja crescer com a gente, compartilhando compromisso de levar energia limpa a mais pessoas</p>
                 <a href="" class="gra-btn-link gra-uppercase yellow">
                     Saiba Mais
                     <span>
-                        <img src="./assets/images/icons/arrow-tright-dk.svg" alt="">
+                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/arrow-tright-dk.svg" alt="">
                     </span>
                 </a>
             </div>
             <div class="gra-section-6__content-right">
                 <span class="gra-section-6__content-icon green">
-                    <img src="./assets/images/casa-empresa/like.svg" alt="">
+                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/casa-empresa/like.svg" alt="">
                 </span>
                 <p class="gra-section-6__content-title">Guará <br>Colab</p>
                 <p class="gra-section-6__content-subtitle">Forneça energia limpa aos seus colaboradores e clientes contribuindo com um planeta mais sustentável</p>
                 <a href="" class="gra-btn-link green gra-uppercase">
                     Saiba Mais
                     <span>
-                        <img src="./assets/images/icons/arrow-right.svg" alt="">
+                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/arrow-right.svg" alt="">
                     </span>
                 </a>
             </div>

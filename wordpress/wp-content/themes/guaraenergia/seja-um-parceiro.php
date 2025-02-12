@@ -1,8 +1,10 @@
-/*
-Theme Name: Parceiro
-*/
+<!-- Template Name: Parceiro -->
 
-<?php get_template_part('head')?>
+<?php get_template_part('head', null, 
+ array( 
+    'title' => "Seja um parceiro",
+    'css' => 'seja-um-parceiro'
+))?>
 <?php get_template_part('header')?>
 <section class="gra-section-1">
     <div class="gra-container">
@@ -15,7 +17,7 @@ Theme Name: Parceiro
         <a href="" class="gra-btn-link yellow gra-uppercase">
             Quero ser um parceiro
             <span>
-                <img src="./assets/images/icons/arrow-tright-dk.svg" alt="">
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/arrow-tright-dk.svg" alt="">
             </span>
         </a>
     </div>
@@ -37,7 +39,7 @@ Theme Name: Parceiro
                     <a href="" class="gra-btn-link green gra-uppercase">
                         Quero ser um parceiro
                         <span>
-                            <img src="./assets/images/icons/arrow-right.svg" alt="">
+                            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/arrow-right.svg" alt="">
                         </span>
                     </a>
                 </div>
@@ -113,7 +115,7 @@ Theme Name: Parceiro
                 <div class="gra-section-4__slider-item">
                     <p>Sed ultricies blandit magna. Pellentesque aliquam id erat a mollis. Donec auctor, ligula euismod laoreet condimentum, lacus nibh egestas justo auctor pellentesque.</p>
                     <div class="gra-section-4__slider-user">
-                        <img src="./assets/images/seja-um-parceiro/user.png" alt="">
+                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/seja-um-parceiro/user.png" alt="">
                         <p>
                             <b>Carlos Andrade</b>
                             <span>
@@ -128,7 +130,7 @@ Theme Name: Parceiro
                 <div class="gra-section-4__slider-item">
                     <p>Sed ultricies blandit magna. Pellentesque aliquam id erat a mollis. Donec auctor, ligula euismod laoreet condimentum, lacus nibh egestas justo auctor pellentesque.</p>
                     <div class="gra-section-4__slider-user">
-                        <img src="./assets/images/seja-um-parceiro/user.png" alt="">
+                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/seja-um-parceiro/user.png" alt="">
                         <p>
                             <b>Carlos Andrade</b>
                             <span>
@@ -143,7 +145,7 @@ Theme Name: Parceiro
                 <div class="gra-section-4__slider-item">
                     <p>Sed ultricies blandit magna. Pellentesque aliquam id erat a mollis. Donec auctor, ligula euismod laoreet condimentum, lacus nibh egestas justo auctor pellentesque.</p>
                     <div class="gra-section-4__slider-user">
-                        <img src="./assets/images/seja-um-parceiro/user.png" alt="">
+                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/seja-um-parceiro/user.png" alt="">
                         <p>
                             <b>Carlos Andrade</b>
                             <span>
@@ -158,7 +160,7 @@ Theme Name: Parceiro
                 <div class="gra-section-4__slider-item">
                     <p>Sed ultricies blandit magna. Pellentesque aliquam id erat a mollis. Donec auctor, ligula euismod laoreet condimentum, lacus nibh egestas justo auctor pellentesque.</p>
                     <div class="gra-section-4__slider-user">
-                        <img src="./assets/images/seja-um-parceiro/user.png" alt="">
+                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/seja-um-parceiro/user.png" alt="">
                         <p>
                             <b>Carlos Andrade</b>
                             <span>

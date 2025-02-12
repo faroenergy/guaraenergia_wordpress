@@ -1,8 +1,10 @@
-/*
-Theme Name: Guará Colab
-*/
+<!-- Template Name: Guará Colab -->
 
-<?php get_template_part('head')?>
+<?php get_template_part('head', null, 
+ array( 
+    'title' => "Guará Colab",
+    'css' => 'guara-colab'
+))?>
 <?php get_template_part('header')?>
 <section class="gra-section-1">
     <div class="gra-container">
@@ -12,7 +14,7 @@ Theme Name: Guará Colab
         <a href="" class="gra-btn-link yellow gra-uppercase">
             Quero Economizar
             <span>
-                <img src="./assets/images/icons/arrow-tright-dk.svg" alt="">
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/arrow-tright-dk.svg" alt="">
             </span>
         </a>
     </div>
@@ -33,7 +35,7 @@ Theme Name: Guará Colab
                     <a href="" class="gra-btn-link green gra-uppercase">
                         Quero Indicar
                         <span>
-                            <img src="./assets/images/icons/arrow-right.svg" alt="">
+                            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/arrow-right.svg" alt="">
                         </span>
                     </a>
                 </div>
@@ -76,13 +78,13 @@ sua equipe e comunidade
         <div class="gra-section-3__content">
             <div class="gra-section-3__item yellow">
                 <div class="gra-section-3__icon">
-                    <img src="./assets/images/guara-colab/map.svg" alt="">
+                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/guara-colab/map.svg" alt="">
                 </div>
                 <p>Seus clientes e colaboradores precisam residir nos estados atendidos pela Guará Energia: Paraná, Mato Grosso do Sul, Minas Gerais, Distrito Federal, Maranhão, Tocantins e Ceará</p>
             </div>
             <div class="gra-section-3__item green">
                 <div class="gra-section-3__icon">
-                    <img src="./assets/images/guara-colab/tick-circle.svg" alt="">
+                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/guara-colab/tick-circle.svg" alt="">
                 </div>
                 <p>Seus clientes e colaboradores precisam se enquadrar no Grupo B, que é caracterizado por consumidores de baixa tensão, além disso, é necessário que eles tenham o consumo médio de 150 kWh/mês</p>
             </div>
@@ -90,7 +92,7 @@ sua equipe e comunidade
                 <div class="gra-section-3__item-wrapper">
 
                     <div class="gra-section-3__icon">
-                        <img src="./assets/images/guara-colab/crown.svg" alt="">
+                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/guara-colab/crown.svg" alt="">
                     </div>
                     <p>Colaboradores e clientes das empresas <br>participantes da Colab <span>terão benefícios adicionais</span></p>
                 </div>
@@ -138,7 +140,7 @@ sua equipe e comunidade
             <a href="" class="gra-btn-link yellow gra-uppercase">
                 inscrever minha empresa
                 <span>
-                    <img src="./assets/images/icons/arrow-tright-dk.svg" alt="">
+                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/arrow-tright-dk.svg" alt="">
                 </span>
             </a>
         </div>

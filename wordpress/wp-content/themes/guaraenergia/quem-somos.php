@@ -1,8 +1,10 @@
-/*
-Theme Name: Quem Somos
-*/
+<!-- Template Name: Quem Somos -->
 
-<?php get_template_part('head')?>
+<?php get_template_part('head', null, 
+ array( 
+    'title' => "Quem Somos",
+    'css' => 'quem-somos'
+))?>
 <?php get_template_part('header')?>
 <section class="gra-section-1">
     <div class="gra-container">
@@ -15,7 +17,7 @@ Theme Name: Quem Somos
         <a href="" class="gra-btn-link yellow gra-uppercase">
             Quero energia limpa
             <span>
-                <img src="./assets/images/icons/arrow-tright-dk.svg" alt="">
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/arrow-tright-dk.svg" alt="">
             </span>
         </a>
     </div>
@@ -35,7 +37,7 @@ Theme Name: Quem Somos
     <div class="gra-container gra-section-4__content">
         <div class="gra-section-4__content-block">
             <div class="gra-section-4__content-icon">
-                <img src="./assets/images/quem-somos/location-tick.svg" alt="">
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/quem-somos/location-tick.svg" alt="">
             </div>
             <p class="gra-section-4__content-text">
                 Onde <b>atuamos <br>no Brasil</b>
@@ -48,7 +50,7 @@ Theme Name: Quem Somos
         </div>
         <div class="gra-section-4__content-block">
             <div class="gra-section-4__content-icon">
-                <img src="./assets/images/quem-somos/money-recive.svg" alt="">
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/quem-somos/money-recive.svg" alt="">
             </div>
             <p class="gra-section-4__content-text">
                 <b>7 mil endereços</b> pagando menos energia
@@ -60,7 +62,7 @@ Theme Name: Quem Somos
         </div>
         <div class="gra-section-4__content-block">
             <div class="gra-section-4__content-icon">
-                <img src="./assets/images/quem-somos/cloud-cross.svg" alt="">
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/quem-somos/cloud-cross.svg" alt="">
             </div>
             <p class="gra-section-4__content-text">
                 <b>Emissão de<br></b> gases
@@ -71,7 +73,7 @@ Theme Name: Quem Somos
         </div>
         <div class="gra-section-4__content-block">
             <div class="gra-section-4__content-icon">
-                <img src="./assets/images/quem-somos/tree.svg" alt="">
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/quem-somos/tree.svg" alt="">
             </div>
             <p class="gra-section-4__content-text">
                 Reflorestamento
@@ -88,12 +90,12 @@ Theme Name: Quem Somos
             <p class="gra-section-6__title">
                 Na Guará Energia <b>você vai encontrar:</b>
             </p>
-            <img src="./assets/images/quem-somos/banner1.png" alt="">
+            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/quem-somos/banner1.png" alt="">
         </div>
         <div class="gra-section-6__bottom">
-            <img src="./assets/images/quem-somos/banner2.png" alt="">
-            <img src="./assets/images/quem-somos/banner3.png" alt="">
-            <img src="./assets/images/quem-somos/banner4.png" alt="">
+            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/quem-somos/banner2.png" alt="">
+            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/quem-somos/banner3.png" alt="">
+            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/quem-somos/banner4.png" alt="">
         </div>
     </div>
 </section>

@@ -1,8 +1,10 @@
-/*
-Theme Name: Home
-*/
+<!-- Template Name: Home -->
 
-<?php get_template_part('head')?>
+<?php get_template_part('head', null, 
+ array( 
+    'title' => "Home",
+    'css' => 'home'
+))?>
 <?php get_template_part('header')?>
 <section class="gra-section-1">
     <div class="gra-container">
@@ -13,7 +15,7 @@ Theme Name: Home
             <a href="" class="gra-btn-link green gra-uppercase">
                 Quero Economizar
                 <span>
-                    <img src="./assets/images/icons/arrow-right.svg" alt="">
+                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/arrow-right.svg" alt="">
                 </span>
             </a>
         </div>
@@ -39,7 +41,7 @@ Theme Name: Home
                 <a href="" class="gra-btn-link green gra-uppercase">
                     Quero Economizar
                     <span>
-                        <img src="./assets/images/icons/arrow-right.svg" alt="">
+                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/arrow-right.svg" alt="">
                     </span>
                 </a>
             </div>
@@ -55,14 +57,14 @@ Theme Name: Home
             <div class="gra-section-3__content">
                 <div class="gra-section-3__content-block white">
                     <div class="gra-section-3__content-icon">
-                        <img src="./assets/images/icons/flag-2.svg" alt="">
+                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/flag-2.svg" alt="">
                     </div>
                     <p class="gra-section-3__content-title">Nossa <b>missão</b></p>
                     <p class="gra-section-3__content-text">Democratizar o acesso à energia limpa de forma simples e transparente, potencializando a transição energética dos nossos consumidores, com foco na prestação de um atendimento humanizado e ágil.</p>
                 </div>
                 <div class="gra-section-3__content-block green">
                     <div class="gra-section-3__content-icon">
-                        <img src="./assets/images/icons/eye.svg" alt="">
+                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/eye.svg" alt="">
                     </div>
                     <p class="gra-section-3__content-title">Nossa <b>visão</b></p>
                     <p class="gra-section-3__content-text">Ser reconhecida pelo fornecimento de energia solar aos brasileiros, com ênfase em inovação e tecnologia, destacando-se como uma referência em atendimento humanizado e eficaz, sustentada por uma cultura centrada na experiência do cliente e na criação de produtos e serviços que atendam às necessidades emergentes do nosso público.</p>
@@ -75,7 +77,7 @@ Theme Name: Home
     <div class="gra-container gra-section-4__content">
         <div class="gra-section-4__content-block">
             <div class="gra-section-4__content-icon">
-                <img src="./assets/images/icons/cloud-cross.svg" alt="">
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/cloud-cross.svg" alt="">
             </div>
             <p class="gra-section-4__content-text">
                 <b>XX toneladas de CO2 na evitadas</b> na atmosfera
@@ -83,7 +85,7 @@ Theme Name: Home
         </div>
         <div class="gra-section-4__content-block">
             <div class="gra-section-4__content-icon">
-                <img src="./assets/images/icons/money-recive.svg" alt="">
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/money-recive.svg" alt="">
             </div>
             <p class="gra-section-4__content-text">
                 <b>7 mil endereços</b> atendidos
@@ -91,7 +93,7 @@ Theme Name: Home
         </div>
         <div class="gra-section-4__content-block">
             <div class="gra-section-4__content-icon">
-                <img src="./assets/images/icons/tree.svg" alt="">
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/tree.svg" alt="">
             </div>
             <p class="gra-section-4__content-text">
                 <b>XX árvores plantadas</b> ao longo da nossa atuação
@@ -127,25 +129,25 @@ Theme Name: Home
             </p>
             <div class="gra-section-6__content-imgs">
                 <div class="gra-section-6__content-img">
-                    <img src="./assets/images/home/section-6-1.png" alt="">
+                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/home/section-6-1.png" alt="">
                     <p class="gra-section-6__content-text">
                         Nossas usinas produzem <b>energia limpa e sustentável</b>
                     </p>
                 </div>
                 <div class="gra-section-6__content-img">
-                    <img src="./assets/images/home/section-6-2.png" alt="">
+                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/home/section-6-2.png" alt="">
                     <p class="gra-section-6__content-text">
                         Injetamos a <b>energia</b> produzida em nossas usinas na <b>rede de distribuição</b> da sua região
                     </p>
                 </div>
                 <div class="gra-section-6__content-img">
-                    <img src="./assets/images/home/section-6-3.png" alt="">
+                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/home/section-6-3.png" alt="">
                     <p class="gra-section-6__content-text">
                         A energia injetada se transforma em <b>créditos de energia</b> na sua conta de luz
                     </p>
                 </div>
                 <div class="gra-section-6__content-img">
-                    <img src="./assets/images/home/section-6-4.png" alt="">
+                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/home/section-6-4.png" alt="">
                     <p class="gra-section-6__content-text">
                         Esses <b>créditos de energia</b> viram <b>desconto</b> na sua conta de luz
                     </p>
@@ -156,7 +158,7 @@ Theme Name: Home
             <a href="" class="gra-btn-link gra-uppercase yellow icon-green">
                 Saiba mais
                 <span>
-                    <img src="./assets/images/icons/arrow-right.svg" alt="">
+                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/arrow-right.svg" alt="">
                 </span>
             </a>
         </div>

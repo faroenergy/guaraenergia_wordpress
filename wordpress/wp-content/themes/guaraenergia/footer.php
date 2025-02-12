@@ -68,7 +68,7 @@
             </div>
         </div>
         <div class="gra-footer__right">
-            <img src="./assets/images/logo.svg" alt="">
+            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/logo.svg" alt="">
             <p>
                 Copyright © 2024 Guará Energia<br>
                 Todos os direitos reservados
@@ -77,7 +77,7 @@
     </div>
 </footer>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.2/min/tiny-slider.js"></script>
-    <script src="./assets/script.js"></script>
+    <script src="<?php echo get_template_directory_uri(); ?>/assets/script.js"></script>
 
     <script>
         if (document.querySelector('.jsSliderDepoimentos')) {
