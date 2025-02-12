@@ -15,19 +15,19 @@
                 </button>
                 <ul class="gra-header__dropdown-list">
                     <li class="gra-header__dropdown-item">
-                        <a class="gra-header__dropdown-link" href="#">
+                        <a class="gra-header__dropdown-link" href="/para-casa-e-empresa">
                             Para casa ou negócio
                         </a>
                     </li>
                     <li class="gra-header__dropdown-item">
-                        <a class="gra-header__dropdown-link" href="#">
+                        <a class="gra-header__dropdown-link" href="/guara-colab">
                             Guará Colab
                         </a>
                     </li>
                 </ul>
             </div>
             <div class="gra-separator gra-desktop-hide"></div>
-            <a class="gra-header__link" href="#">
+            <a class="gra-header__link" href="/parceiro">
                 <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/flash.svg" alt="">
                 Seja um parceiro
             </a>
