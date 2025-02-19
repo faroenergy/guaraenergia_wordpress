@@ -12,10 +12,11 @@
     $page_id = 17;
 ?>
 
-<section class="gra-section-1">
-    <?php
-        $bloco_1 = get_field('bloco_1', $page_id);
-    ?>
+<?php
+    $bloco_1 = get_field('bloco_1', $page_id);
+?>
+
+<section class="gra-section-1" style="background-image:url(<?php echo $bloco_1['imagem'] ?>)">
 
     <div class="gra-container">
         <h1 class="gra-section-1__title">
