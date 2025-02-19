@@ -14,9 +14,14 @@
 body {
     color: $primary-dk-1;
     background-color: #fff;
+    font-weight: 400;
     @media (max-width: $container-md - 1) {
         padding-top: 70px;
     }
+}
+
+button {
+    cursor: pointer;
 }
 
 .gra-uppercase {

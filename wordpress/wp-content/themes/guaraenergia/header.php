@@ -1,6 +1,6 @@
 <header class="gra-header">
     <div class="gra-container gra-container--flex">
-        <a href="" class="gra-header__logo">
+        <a href="/" class="gra-header__logo">
             <img src="<?php echo get_template_directory_uri(); ?>/assets/images/logo.svg" alt="">
         </a>
         <button class="gra-header__menu-btn jsHeaderMenuBtn">
@@ -15,30 +15,30 @@
                 </button>
                 <ul class="gra-header__dropdown-list">
                     <li class="gra-header__dropdown-item">
-                        <a class="gra-header__dropdown-link" href="/para-casa-e-empresa">
+                        <a class="gra-header__dropdown-link" href="<?php echo do_shortcode('[wpcode id="157"]') ?>">
                             Para casa ou negócio
                         </a>
                     </li>
                     <li class="gra-header__dropdown-item">
-                        <a class="gra-header__dropdown-link" href="/guara-colab">
+                        <a class="gra-header__dropdown-link" href="<?php echo do_shortcode('[wpcode id="160"]') ?>">
                             Guará Colab
                         </a>
                     </li>
                 </ul>
             </div>
             <div class="gra-separator gra-desktop-hide"></div>
-            <a class="gra-header__link" href="/parceiro">
+            <a class="gra-header__link" href="<?php echo do_shortcode('[wpcode id="162"]') ?>">
                 <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/flash.svg" alt="">
                 Seja um parceiro
             </a>
             <div class="gra-separator gra-desktop-hide"></div>
-            <a class="gra-header__btn-link gra-btn-link white bd-green-mobile" href="#">
+            <a class="gra-header__btn-link gra-btn-link white bd-green-mobile" href="<?php echo do_shortcode('[wpcode id="166"]') ?>">
                 Quero economizar
                 <span>
                     <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/arrow-right.svg" alt="">
                 </span>
             </a>
-            <a class="gra-header__btn-link gra-btn-link yellow bd-yellow-mobile" href="#">
+            <a class="gra-header__btn-link gra-btn-link yellow bd-yellow-mobile" href="<?php echo do_shortcode('[wpcode id="164"]') ?>">
                 Área do cliente
                 <span>
                     <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/profile.svg" alt="">

@@ -67,7 +67,7 @@
     &__left {
         max-width: 570px;
         &-title {
-            max-width: 292px;
+            max-width: 316px;
             font-size: 40px;
             font-weight: 500;
             line-height: 1.125;
@@ -156,13 +156,26 @@
         height: 433px;
         background-image: url(../images/casa-empresa/video.png);
         background-repeat: no-repeat;
+        background-size: cover;
+        @media (max-width: $container-lg - 1) {
+            width: 604px;
+            height: 384px;
+        }
         @media (max-width: $container-md - 1) {
+            position: relative;
             max-width: 570px;
             width: 100%;
             height: auto;
             padding-top: 40.7%;
             background-position: center;
-            background-size: contain;
+            background-size: cover;
+            iframe {
+                position: absolute;
+                top: 0;
+            }
+        }
+        @media (max-width: $container-xs - 1) {
+            padding-top: 63.7%;
         }
         cursor: pointer;
         &:hover {
@@ -173,8 +186,10 @@
         max-width: 320px;
         font-size: 40px;
         line-height: 1.125;
+        margin-left: 20px;
         @media (max-width: $container-md - 1) {
             margin-top: 16px;
+            margin-left: 0;
             font-size: 24px;
             text-align: center;
         }

@@ -6,16 +6,22 @@
     'css' => 'para-casa-empresa'
 ))?>
 <?php get_template_part('header')?>
-<section class="gra-section-1">
+
+<?php
+    $page_id = 19;
+?>
+
+<?php
+    $bloco_1 = get_field('bloco_1', $page_id);
+?>
+<section class="gra-section-1" style="background-image:url(<?php echo $bloco_1['imagem'] ?>)">
     <div class="gra-container">
-        <h1 class="gra-section-1__title">
-            <b>Garanta até 30% de economia</b> na sua conta de energia!
-        </h1>
+        <?php echo $bloco_1['titulo'] ?>
         <p class="gra-section-1__subtitle">
-            Faça sua contratação de forma 100% digital e sem burocracias.
+            <?php echo $bloco_1['texto'] ?>
         </p>
-        <a href="" class="gra-btn-link yellow">
-            Quero Economizar
+        <a href="<?php echo do_shortcode('[wpcode id="166"]') ?>" class="gra-btn-link yellow">
+            <?php echo $bloco_1['botao'] ?>
             <span>
                 <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/arrow-tright-dk.svg" alt="">
             </span>
@@ -23,17 +29,14 @@
     </div>
 </section>
 <section class="gra-section-2">
+    <?php
+        $bloco_2 = get_field('bloco_2', $page_id);
+    ?>
     <div class="gra-container">
         <div class="gra-section-2__painel">
             <div class="gra-section-2__left">
-                <div class="gra-section-2__left-title">Energia para sua casa ou negócio
-                </div>
-                <p class="gra-section-2__left-text">
-                    Geramos energia limpa em nossas usinas e entregamos a você por meio da rede da sua distribuidora atual, transformando-a em créditos de energia.
-                    <br>
-                    <br>
-                    Esses créditos reduzem os custos da sua fatura de forma simples, sem a necessidade de obras, instalações ou investimentos.
-                </p>
+                <div class="gra-section-2__left-title"><?php echo $bloco_2['titulo'] ?></div>
+                <?php echo $bloco_2['texto'] ?>
             </div>
             <div class="gra-section-2__right">
                 <ul class="gra-section-2__right-list">
@@ -41,24 +44,24 @@
                         <span class="gra-section-2__right-list-icon">
                             <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/cloud-cross.svg" alt="">
                         </span>
-                        Sem obras ou instalações
+                        <?php echo $bloco_2['itens_direita']['item_1'] ?>
                     </li>
                     <li  class="gra-section-2__right-list-item">
                         <span class="gra-section-2__right-list-icon">
                             <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/electricity.svg" alt="">
                         </span>
-                        Utiliza a fiação existente
+                        <?php echo $bloco_2['itens_direita']['item_2'] ?>
                     </li>
                     <li  class="gra-section-2__right-list-item">
                         <span class="gra-section-2__right-list-icon">
                             <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/cloud-add.svg" alt="">
                         </span>
-                        Você pode contratar de forma 100% digital
+                        <?php echo $bloco_2['itens_direita']['item_3'] ?>
                     </li>
                 </ul>
                 <div class="gra-text-center-mb">
-                    <a href="" class="gra-btn-link yellow gra-uppercase">
-                        Tenho Interesse
+                    <a href="<?php echo do_shortcode('[wpcode id="166"]') ?>" class="gra-btn-link yellow gra-uppercase">
+                        <?php echo $bloco_2['botao'] ?>
                         <span>
                             <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/arrow-tright-dk.svg" alt="">
                         </span>
@@ -71,50 +74,60 @@
 <div class="gra-container">
     <div class="gra-separator"></div>
 </div>
-<section class="gra-section-3">
-    <div class="gra-container">
-        <div class="gra-section-3__video">
 
-        </div>
-        <p class="gra-section-3__text">
-            Assista ao vídeo
-            e <b>nos conheça um
-            pouco mais</b>
-        </p>
+<section class="gra-section-3">
+    <?php
+        $bloco_3 = get_field('bloco_3', $page_id);
+    ?>
+    <div class="gra-container">
+        <div class="gra-section-3__video jsVideoPlayer" data-video-id="<?php echo do_shortcode('[wpcode id="181"]') ?>"></div>
+        <?php echo $bloco_3['titulo'] ?>
     </div>
 </section>
+
 <section class="gra-section-4">
+    <?php
+        $bloco_4 = get_field('bloco_4', $page_id);
+    ?>
     <div class="gra-container">
         <div class="gra-section-4__title">
-            A adesão à nossa energia limpa é feita online
+            <?php echo $bloco_4['titulo'] ?>
         </div>
         <div class="gra-section-4__subtitle">
-            É muito fácil, confira o passo a passo:
+            <?php echo $bloco_4['subtitulo'] ?>
         </div>
         <ol class="gra-section-4__items">
             <li class="gra-section-4__item yellow">
                 <div class="gra-section-4__item-ordem">01</div>
-                <p class="gra-section-4__item-texto">Faça seu cadastro no nosso site</p>
+                <p class="gra-section-4__item-texto">
+                    <?php echo $bloco_4['passo_1_texto'] ?>
+                </p>
             </li>
             <li class="gra-section-4__arrow"></li>
             <li class="gra-section-4__item white">
                 <div class="gra-section-4__item-ordem">02</div>
-                <p class="gra-section-4__item-texto">Envia uma cópia dos seus documentos (Última conta de luz e RG/CNH ou Contrato Social) e faça upload na área do cliente</p>
+                <p class="gra-section-4__item-texto">
+                    <?php echo $bloco_4['passo_2_texto'] ?>
+                </p>
             </li>
             <li class="gra-section-4__arrow"></li>
             <li class="gra-section-4__item yellow">
                 <div class="gra-section-4__item-ordem">03</div>
-                <p class="gra-section-4__item-texto">Assine o termo de adesão que enviaremos a você digitalmente</p>
+                <p class="gra-section-4__item-texto">
+                    <?php echo $bloco_4['passo_3_texto'] ?>
+                </p>
             </li>
             <li class="gra-section-4__arrow"></li>
             <li class="gra-section-4__item white">
                 <div class="gra-section-4__item-ordem">04</div>
-                <p class="gra-section-4__item-texto">Comece a receber seus créditos de energia</p>
+                <p class="gra-section-4__item-texto">
+                    <?php echo $bloco_4['passo_4_texto'] ?>
+                </p>
             </li>
         </ol>
         <div class="gra-text-center">
-            <a href="" class="gra-btn-link yellow gra-uppercase">
-                Tenho Interesse
+            <a href="<?php echo do_shortcode('[wpcode id="166"]') ?>" class="gra-btn-link yellow gra-uppercase">
+                <?php echo $bloco_4['botao'] ?>
                 <span>
                     <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/arrow-tright-dk.svg" alt="">
                 </span>
@@ -122,31 +135,41 @@
         </div>
     </div>
 </section>
+
 <div class="gra-container">
+    <?php
+        $bloco_5 = get_field('bloco_5', $page_id);
+    ?>
     <section class="gra-section-5">
         <p class="gra-section-5__left-text">
-            Garantimos transparência, segurança e legalidade
+            <?php echo $bloco_5['titulo'] ?>
         </p>
         <p class="gra-section-5__right-text">
             <span class="gra-section-5__anatel"><img src="<?php echo get_template_directory_uri(); ?>/assets/images/casa-empresa/logo.svg" alt=""></span>
-            Em conformidade com a resolução da ANEEL (nº 482/2012, nº 687/2015 e Lei nº 14.300/2022), garantimos transparência, segurança e legalidade em todo seu processo de adesão.
+            <?php echo $bloco_5['texto'] ?>
         </p>
     </section>
 </div>
+
 <section class="gra-section-6">
+    <?php
+        $bloco_6 = get_field('bloco_6', $page_id);
+    ?>
     <div class="gra-container">
-        <p class="gra-section-6__title">
-            Encontre a <b>solução ideal para você!</b>
-        </p>
+        <?php echo $bloco_6['titulo'] ?>
         <div class="gra-section-6__content">
             <div class="gra-section-6__content-left">
                 <span class="gra-section-6__content-icon yellow">
                     <img src="<?php echo get_template_directory_uri(); ?>/assets/images/casa-empresa/building.svg" alt="">
                 </span>
-                <p class="gra-section-6__content-title">Parceria comercial <br>com a Guará Energia</p>
-                <p class="gra-section-6__content-subtitle">Ideal para você que deseja crescer com a gente, compartilhando compromisso de levar energia limpa a mais pessoas</p>
-                <a href="" class="gra-btn-link gra-uppercase yellow">
-                    Saiba Mais
+                <p class="gra-section-6__content-title">
+                    <?php echo $bloco_6['bloco_esquerda']['titulo'] ?>
+                </p>
+                <p class="gra-section-6__content-subtitle">
+                    <?php echo $bloco_6['bloco_esquerda']['texto'] ?>
+                </p>
+                <a href="<?php echo do_shortcode('[wpcode id="162"]') ?>" class="gra-btn-link gra-uppercase yellow">
+                    <?php echo $bloco_6['bloco_esquerda']['botao'] ?>
                     <span>
                         <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/arrow-tright-dk.svg" alt="">
                     </span>
@@ -156,10 +179,14 @@
                 <span class="gra-section-6__content-icon green">
                     <img src="<?php echo get_template_directory_uri(); ?>/assets/images/casa-empresa/like.svg" alt="">
                 </span>
-                <p class="gra-section-6__content-title">Guará <br>Colab</p>
-                <p class="gra-section-6__content-subtitle">Forneça energia limpa aos seus colaboradores e clientes contribuindo com um planeta mais sustentável</p>
-                <a href="" class="gra-btn-link green gra-uppercase">
-                    Saiba Mais
+                <p class="gra-section-6__content-title">
+                    <?php echo $bloco_6['bloco_direita']['titulo'] ?>
+                </p>
+                <p class="gra-section-6__content-subtitle">
+                    <?php echo $bloco_6['bloco_direita']['texto'] ?>
+                </p>
+                <a href="<?php echo do_shortcode('[wpcode id="160"]') ?>" class="gra-btn-link green gra-uppercase">
+                    <?php echo $bloco_6['bloco_direita']['botao'] ?>
                     <span>
                         <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/arrow-right.svg" alt="">
                     </span>

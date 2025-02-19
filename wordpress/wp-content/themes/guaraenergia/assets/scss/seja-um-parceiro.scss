@@ -201,13 +201,26 @@
         height: 433px;
         background-image: url(../images/casa-empresa/video.png);
         background-repeat: no-repeat;
+        background-size: cover;
+        @media (max-width: $container-lg - 1) {
+            width: 604px;
+            height: 384px;
+        }
         @media (max-width: $container-md - 1) {
+            position: relative;
             max-width: 570px;
             width: 100%;
             height: auto;
             padding-top: 40.7%;
             background-position: center;
-            background-size: contain;
+            background-size: cover;
+            iframe {
+                position: absolute;
+                top: 0;
+            }
+        }
+        @media (max-width: $container-xs - 1) {
+            padding-top: 63.7%;
         }
         cursor: pointer;
         &:hover {
@@ -218,8 +231,10 @@
         max-width: 320px;
         font-size: 40px;
         line-height: 1.125;
+        margin-left: 20px;
         @media (max-width: $container-md - 1) {
             margin-top: 16px;
+            margin-left: 0;
             font-size: 24px;
             text-align: center;
         }
@@ -339,6 +354,85 @@
     .gra-separator {
         @media (min-width: $container-md) {
             margin: 60px 0;
+        }
+    }
+}
+
+.gra-contact-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 40px;
+    row-gap: 20px;
+    @media (max-width: $container-md - 1) {
+        display: flex;
+        flex-direction: column;
+        column-gap: 16px;
+        row-gap: 16px;
+    }
+    br {
+        display: none;
+    }
+    &__field {
+        &.full {
+            grid-column: span 2;
+        }
+    }
+    input, select, textarea {
+        display: block;
+        width: 100%;
+        padding: 13px 63px;
+        height: 70px;
+        border-radius: 25px;
+        border: 1px solid $primary;
+        color: $primary;
+        background-color: rgba(0,0,0,0);
+        @media (max-width: $container-md - 1) {
+            padding: 13px;
+            height: auto;
+            max-height: 150px;
+        }
+    }
+    
+    label > span {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: 600;
+        @media (max-width: $container-md - 1) {
+            font-size: 14px;
+        }
+    }
+
+    textarea {
+        height: auto;
+    }
+}
+
+.screen-reader-response {
+    display: none;
+}
+
+.wpcf7-not-valid-tip {
+    color: red;
+}
+
+.wpcf7-response-output {
+    margin-top: 10px;
+    font-size: 18px;
+    color: red;
+}
+
+@media (min-width: $container-md) {
+    .gra-section-4 .tns-inner {
+        overflow: hidden;
+        max-height: 417px;
+    }
+    
+    .gra-section-4__slider {
+        overflow: hidden;
+        max-height: 357px;
+        min-height: 357px;
+        > div {
+            min-height: 357px;
         }
     }
 }

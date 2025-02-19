@@ -6,58 +6,64 @@
     'css' => 'guara-colab'
 ))?>
 <?php get_template_part('header')?>
-<section class="gra-section-1">
+
+<?php
+    $page_id = 13;
+?>
+
+<?php
+    $bloco_1 = get_field('bloco_1', $page_id);
+?>
+
+<section class="gra-section-1" style="background-image:url(<?php echo $bloco_1['imagem'] ?>)">
     <div class="gra-container">
-        <h1 class="gra-section-1__title">
-            Forneça energia limpa <br>para os <span>seus colaboradores e clientes.</span>
-        </h1>
-        <a href="" class="gra-btn-link yellow gra-uppercase">
-            Quero Economizar
+        <?php echo $bloco_1['titulo'] ?>
+        <button data-scroll-btn=".gra-section-5" class="gra-btn-link yellow gra-uppercase">
+            <?php echo $bloco_1['botao'] ?>
             <span>
                 <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/arrow-tright-dk.svg" alt="">
             </span>
-        </a>
+        </button>
     </div>
 </section>
+
+<?php
+    $bloco_2 = get_field('bloco_2', $page_id);
+    $bloco_2_direita = $bloco_2['bloco_direita'];
+?>
 <section class="gra-section-2">
     <div class="gra-container">
         <div class="gra-section-2__painel">
             <div class="gra-section-2__left">
-                <div class="gra-section-2__left-title">Você sabia que sua
-                    empresa pode oferecer
-                    energia limpa para
-                    colaboradores e clientes?
-                </div>
+                <div class="gra-section-2__left-title"><?php echo $bloco_2['titulo'] ?></div>
                 <p class="gra-section-2__left-text">
-                    Com uma parceria estratégica, ajudamos você a proporcionar uma fonte de energia sustentável e econômica para todos os seus colaboradores e clientes, sem a necessidade de obras ou instalações
+                    <?php echo $bloco_2['texto'] ?>
                 </p>
                 <div class="gra-text-center-mb">
-                    <a href="" class="gra-btn-link green gra-uppercase">
-                        Quero Indicar
+                    <button data-scroll-btn=".gra-section-5" class="gra-btn-link green gra-uppercase">
+                        <?php echo $bloco_2['botao'] ?>
                         <span>
                             <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/arrow-right.svg" alt="">
                         </span>
-                    </a>
+                    </button>
                 </div>
             </div>
             <div class="gra-section-2__right">
                 <div class="gra-section-2__right-title">
-                    <span>Vantagens</span> para sua empresa
+                    <?php echo $bloco_2_direita['titulo'] ?>
                 </div>
                 <ul class="gra-section-2__right-list">
                     <li  class="gra-section-2__right-item">
                         <span class="gra-section-2__right-number">01</span>
-                        Alcance suas metas ESG
-de forma prática e eficiente
+                        <?php echo $bloco_2_direita['item_1'] ?>
                     </li>
                     <li  class="gra-section-2__right-item">
                         <span class="gra-section-2__right-number">02</span>
-                        Seja referência em sustentabilidade no mercado
+                        <?php echo $bloco_2_direita['item_2'] ?>
                     </li>
                     <li  class="gra-section-2__right-item">
                         <span class="gra-section-2__right-number">03</span>
-                        Amplie os benefícios para
-sua equipe e comunidade
+                        <?php echo $bloco_2_direita['item_3'] ?>
                     </li>
                 </ul>
             </div>
@@ -67,82 +73,84 @@ sua equipe e comunidade
 <div class="gra-container">
     <div class="gra-separator"></div>
 </div>
+
+<?php
+    $bloco_3 = get_field('bloco_3', $page_id);
+?>
+
 <section class="gra-section-3">
     <div class="gra-container">
         <div class="gra-section-3__title">
-            Quem pode receber energia limpa através da nossa parceria?
+            <?php echo $bloco_3['titulo'] ?>
         </div>
         <div class="gra-section-3__subtitle">
-        Todos os seus clientes e colaboradores podem receber energia limpa através da nossa parceria, pasta que eles sigam os critérios abaixo
+            <?php echo $bloco_3['texto'] ?>
         </div>
         <div class="gra-section-3__content">
             <div class="gra-section-3__item yellow">
                 <div class="gra-section-3__icon">
                     <img src="<?php echo get_template_directory_uri(); ?>/assets/images/guara-colab/map.svg" alt="">
                 </div>
-                <p>Seus clientes e colaboradores precisam residir nos estados atendidos pela Guará Energia: Paraná, Mato Grosso do Sul, Minas Gerais, Distrito Federal, Maranhão, Tocantins e Ceará</p>
+                <p><?php echo $bloco_3['bloco_1_texto'] ?></p>
             </div>
             <div class="gra-section-3__item green">
                 <div class="gra-section-3__icon">
                     <img src="<?php echo get_template_directory_uri(); ?>/assets/images/guara-colab/tick-circle.svg" alt="">
                 </div>
-                <p>Seus clientes e colaboradores precisam se enquadrar no Grupo B, que é caracterizado por consumidores de baixa tensão, além disso, é necessário que eles tenham o consumo médio de 150 kWh/mês</p>
+                <p><?php echo $bloco_3['bloco_2_texto'] ?></p>
             </div>
             <div class="gra-section-3__item green-dk">
                 <div class="gra-section-3__item-wrapper">
-
                     <div class="gra-section-3__icon">
                         <img src="<?php echo get_template_directory_uri(); ?>/assets/images/guara-colab/crown.svg" alt="">
                     </div>
-                    <p>Colaboradores e clientes das empresas <br>participantes da Colab <span>terão benefícios adicionais</span></p>
+                    <?php echo $bloco_3['bloco_3_texto'] ?>
                 </div>
             </div>
         </div>
     </div>
 </section>
+
+<?php
+    $bloco_4 = get_field('bloco_4', $page_id);
+?>
+
 <section class="gra-section-4">
     <div class="gra-container">
         <div class="gra-section-4__title">
-            Para começar nossa parceira é muito simples:
+            <?php echo $bloco_4['titulo'] ?>
         </div>
         <div class="gra-section-4__subtitle">
-            Preencha o cadastro se a sua empresa quiser participar do Guará Colab ou se você quer indicar alguma empresa que queira fornecer energia limpa. Mostre o passo a passo para os colaboradores ou clientes para ver como é fácil.
-
+            <?php echo $bloco_4['texto'] ?>
         </div>
         <ol class="gra-section-4__items">
             <li class="gra-section-4__item yellow">
                 <div class="gra-section-4__item-ordem">01</div>
-                <p class="gra-section-4__item-texto">Cadastre no
-                    nosso site</p>
+                <p class="gra-section-4__item-texto"><?php echo $bloco_4['item_1'] ?></p>
             </li>
             <li class="gra-section-4__arrow"></li>
             <li class="gra-section-4__item green">
                 <div class="gra-section-4__item-ordem">02</div>
-                <p class="gra-section-4__item-texto">Nosso time comercial entrará
-                    em contato para gerarmos seu termo de adesão</p>
+                <p class="gra-section-4__item-texto"><?php echo $bloco_4['item_2'] ?></p>
             </li>
             <li class="gra-section-4__arrow"></li>
             <li class="gra-section-4__item yellow">
                 <div class="gra-section-4__item-ordem">03</div>
-                <p class="gra-section-4__item-texto">Seus clientes e colaboradores
-                    receberão um link personalizado para
-                    se cadastrarem na nossa plataforma</p>
+                <p class="gra-section-4__item-texto"><?php echo $bloco_4['item_3'] ?></p>
             </li>
             <li class="gra-section-4__arrow"></li>
             <li class="gra-section-4__item green">
                 <div class="gra-section-4__item-ordem">04</div>
-                <p class="gra-section-4__item-texto">Seus clientes e colaboradores
-                    começaram a receber nossa energia
-                    limpa e com menor custo</p>
+                <p class="gra-section-4__item-texto"><?php echo $bloco_4['item_4'] ?></p>
             </li>
         </ol>
         <div class="gra-text-center">
-            <a href="" class="gra-btn-link yellow gra-uppercase">
-                inscrever minha empresa
+            <button data-scroll-btn=".gra-section-5" class="gra-btn-link yellow gra-uppercase">
+                <?php echo $bloco_4['botao'] ?>
                 <span>
                     <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/arrow-tright-dk.svg" alt="">
                 </span>
-            </a>
+            </button>
         </div>
     </div>
 </section>
@@ -152,6 +160,13 @@ sua equipe e comunidade
             Formulário
         </div>
         <div class="gra-separator"></div>
+        <div>
+            <?php echo do_shortcode('[contact-form-7 id="f003e47" title="Guará Colab"]') ?>
+        </div>
     </div>
 </section>
-<?php get_template_part('footer')?>
+
+<?php get_template_part('footer', null,  
+ array( 
+    'name' => 'guara-colab'
+))?>

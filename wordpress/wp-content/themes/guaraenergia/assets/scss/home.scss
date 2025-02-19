@@ -4,6 +4,7 @@
     padding: 6px 30px;
     border-radius: 100px;
     line-height: 36px;
+    font-weight: 500;
     background-color: $secondary;
     color: $primary-dk-1;
 }
@@ -51,7 +52,7 @@
         }
     }
     .gra-section__left {
-        max-width: 567px;
+        max-width: 583px;
     }
     .gra-btn-link {
         margin-top: 63px;
@@ -86,11 +87,11 @@
         }
     }
     &__content {
-        max-width: 380px;
+        max-width: 388px;
         margin-left: auto;
         margin-right: 85px;
         &-title {
-            max-width: 360px;
+            max-width: 366px;
             font-size: 40px;
             line-height: 1.125;
             font-weight: 500;
@@ -111,7 +112,7 @@
                 }
             }
         }
-        &-list {
+        ul {
             margin: 30px 0 30px 30px;
             font-size: 18px;
             line-height: 1.3334;
@@ -251,7 +252,7 @@
             max-width: 350px;
             flex: 1;
         }
-        &-text {
+        p {
             max-width: 274px;
             margin: 0 auto;
             font-size: 26px;
@@ -302,7 +303,6 @@
             display: block;
             width: 620px;
             height: 100%;
-            background-image: url(../images/home/section-5.png);
             background-repeat: no-repeat;
             background-position: top right;
             z-index: 1;
@@ -339,17 +339,20 @@
                 }
             }
         }
-        &-subtitle, &-list {
+        p + p, ul {
             font-size: 20px;
             line-height: 1.5;
         }
-        &-list {
+        ul {
             margin-top: 30px;
             margin-left: 20px;
             @media (max-width: $container-md - 1) {
                 margin-top: 16px;
             }
             span {
+                font-weight: 500;
+            }
+            b {
                 font-weight: 500;
             }
         }
