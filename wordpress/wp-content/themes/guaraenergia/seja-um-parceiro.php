@@ -57,7 +57,7 @@
             </div>
             <div class="gra-section-2__right">
                 <div class="gra-section-2__right-title">
-                    <?php echo $bloco_2['bloco_direita']['title'] ?>
+                    <?php echo $bloco_2['bloco_direita']['titulo'] ?>
                 </div>
                 <ul class="gra-section-2__right-list">
                     <li  class="gra-section-2__right-item">

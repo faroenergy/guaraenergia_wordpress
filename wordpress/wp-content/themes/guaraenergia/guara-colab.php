@@ -120,9 +120,6 @@
         <div class="gra-section-4__title">
             <?php echo $bloco_4['titulo'] ?>
         </div>
-        <div class="gra-section-4__subtitle">
-            <?php echo $bloco_4['texto'] ?>
-        </div>
         <ol class="gra-section-4__items">
             <li class="gra-section-4__item yellow">
                 <div class="gra-section-4__item-ordem">01</div>

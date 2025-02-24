@@ -72,4 +72,13 @@
             }
         });
     }
+
+    if (sq('.jsShowMoreHomeFaq')) {
+        sq('.jsShowMoreHomeFaq').onclick = function() {
+            this.parentElement.remove();
+            document.querySelectorAll('.jsHomeFaq').forEach(function(item) {
+                item.style.display = '';
+            });
+        }
+    }
 })();

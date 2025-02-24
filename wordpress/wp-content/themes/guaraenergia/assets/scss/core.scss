@@ -15,6 +15,9 @@ body {
     color: $primary-dk-1;
     background-color: #fff;
     font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility !important;
     @media (max-width: $container-md - 1) {
         padding-top: 70px;
     }
@@ -258,7 +261,7 @@ button {
     }
     &.yellow {
         background-color: $secondary;
-        color: $primary-dk-2;
+        color: $primary;
         span {
             background-color: #fff;
         }
@@ -301,18 +304,18 @@ button {
     }
     &__list {
         list-style: none;
-        font-size: 12px;
+        font-size: 14px;
         a {
             color: #fff;
         }
     }
     &__left {
-        max-width: 451px;
+        max-width: 533px;
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 16px;
         line-height: 1.5;
-        font-size: 12px;
+        font-size: 14px;
         @media (max-width: $container-xs - 1) {
             grid-template-columns: 1fr;
         }

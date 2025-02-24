@@ -45,10 +45,14 @@
         margin-top: 30px;
         font-size: 24px;
         line-height: 1.4;
-        color: $primary-dk-1;
+        color: $primary;
         @media (max-width: $container-md - 1) {
             font-size: 20px;
             margin-top: 16px;
+        }
+
+        p b {
+            font-weight: 600;
         }
     }
     .gra-section__left {
@@ -87,7 +91,7 @@
         }
     }
     &__content {
-        max-width: 388px;
+        max-width: 393px;
         margin-left: auto;
         margin-right: 85px;
         &-title {
@@ -95,7 +99,7 @@
             font-size: 40px;
             line-height: 1.125;
             font-weight: 500;
-            color: #000;
+            color: $primary;
             @media (max-width: $container-md - 1) {
                 font-size: 24px;
             }
@@ -212,7 +216,7 @@
             }
             &.white {
                 background-color: #fff;
-                color: $primary-dk-1;
+                color: $primary;
                 .gra-section-3__content-icon {
                     // back
                     background-color: $primary-dk-1;
@@ -464,10 +468,46 @@
             margin-bottom: 0;
         }
         summary {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             font-size: 18px;
             line-height: 45px;
             font-weight: 500;
             color: $primary;
+            &::after {
+                content: '';
+                display: inline-block;
+                width: 24px;
+                height: 14px;
+                background-image: url(../images/icons/chevron-down3.svg);
+                background-repeat: no-repeat;
+                background-position: center right;
+            }
+        }
+        &[open] {
+            summary {
+                &::after {
+                    transform: scaleY(-1);
+                }
+            }
+        }
+    }
+
+    .gra-btn {
+        display: inline-flex;
+        align-items: center;
+        color: $primary;
+        background: 0;
+        gap: 14px;
+        font-size: 20px;
+        font-weight: 500;
+        img {
+            margin-top: 8px;
         }
     }
 }
+
+details > summary {
+    list-style: none;
+  }

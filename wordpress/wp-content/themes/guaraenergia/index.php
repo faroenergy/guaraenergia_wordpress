@@ -166,7 +166,7 @@
     </div>
 </section>
 
-<section class="gra-section-7">
+<section class="gra-section-7" id="faq">
     <?php
         $bloco_7 = get_field('bloco_7', $page_id);
     ?>
@@ -176,15 +176,28 @@
         <div class="gra-separator"></div>
         <?php
             $start = 1; // Starting value for the loop
-            $end = 7;   // Final value to reach
+            $end = 10;   // Final value to reach
+            $flag = false;
+            $count = 0;
             for ( $i = $start; $i <= $end; $i++ ):
                 if ($bloco_7['faq_' . $i]['ativo'] === true):
+                    $count++;
                     $blocoFaq = $bloco_7['faq_' . $i];
-        ?>
-            <details>
+            ?>
+            <details class="jsHomeFaq" <?php if($count > 3): ?> style="display:none" <?php endif; ?>>
                 <summary><?php echo $blocoFaq['titulo']; ?></summary>
                 <?php echo $blocoFaq['texto']; ?>
             </details>
+
+            <?php if ($count == 4): ?>
+                <?php $flag = true; ?>
+                <div style="text-align:center">
+                    <button class="gra-btn jsShowMoreHomeFaq">
+                        Ver mais perguntas
+                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/chevron-down2.svg" />
+                    </button>
+                </div>
+            <?php endif; ?>
         <?php
             endif;
             endfor;
