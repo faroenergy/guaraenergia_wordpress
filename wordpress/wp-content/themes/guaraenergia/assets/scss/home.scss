@@ -497,6 +497,7 @@
     .gra-btn {
         display: inline-flex;
         align-items: center;
+        margin-bottom: 16px;
         color: $primary;
         background: 0;
         gap: 14px;
@@ -504,6 +505,18 @@
         font-weight: 500;
         img {
             margin-top: 8px;
+        }
+        &.gra-active {
+            .gra-btn-faq-more {
+                display: none;
+            }
+            .gra-btn-faq-less {
+                display: inline !important;
+            }
+            img {
+                transform: scaleY(-1);
+                margin-top: -4px;
+            }
         }
     }
 }

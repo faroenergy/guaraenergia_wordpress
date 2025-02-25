@@ -184,20 +184,22 @@
                     $count++;
                     $blocoFaq = $bloco_7['faq_' . $i];
             ?>
+            <?php if ($count == 4): ?>
+                <?php $flag = true; ?>
+                <div style="text-align:center">
+                    <button class="gra-btn jsShowMoreHomeFaq">
+                        <span class="gra-btn-faq-more jsFaqMoreText">Ver mais perguntas</span>
+                        <span class="gra-btn-faq-less jsFaqLessText" style="display:none">Ver menos</span>
+                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/chevron-down2.svg" />
+                    </button>
+                </div>
+            <?php endif; ?>
+                
             <details class="jsHomeFaq" <?php if($count > 3): ?> style="display:none" <?php endif; ?>>
                 <summary><?php echo $blocoFaq['titulo']; ?></summary>
                 <?php echo $blocoFaq['texto']; ?>
             </details>
 
-            <?php if ($count == 4): ?>
-                <?php $flag = true; ?>
-                <div style="text-align:center">
-                    <button class="gra-btn jsShowMoreHomeFaq">
-                        Ver mais perguntas
-                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/chevron-down2.svg" />
-                    </button>
-                </div>
-            <?php endif; ?>
         <?php
             endif;
             endfor;

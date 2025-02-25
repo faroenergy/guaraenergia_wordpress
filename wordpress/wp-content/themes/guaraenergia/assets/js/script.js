@@ -74,11 +74,26 @@
     }
 
     if (sq('.jsShowMoreHomeFaq')) {
+        var onceShowHidden = false;
+
         sq('.jsShowMoreHomeFaq').onclick = function() {
-            this.parentElement.remove();
+            this.classList.toggle('gra-active');
+
             document.querySelectorAll('.jsHomeFaq').forEach(function(item) {
-                item.style.display = '';
+                if (item.offsetTop === 0) {
+                    if (!onceShowHidden) {
+                        item.classList.add('gra-faq-hidden');
+                    }
+
+                    item.style.display = '';
+                } else {
+                    if (item.classList.contains('gra-faq-hidden')) {
+                        item.style.display = 'none';
+                    }
+                }
             });
+
+            onceShowHidden = true;
         }
     }
 })();

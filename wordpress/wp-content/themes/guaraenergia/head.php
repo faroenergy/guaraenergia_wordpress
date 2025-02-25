@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo $args['title']; ?></title>
+    <title><?php echo $args['title']; ?> | Guará Energia</title>
     <style>
         @font-face { 
             font-family: Graphik;
@@ -38,7 +38,15 @@
     <?php if ($args['css'] == 'seja-um-parceiro'): ?>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.4/tiny-slider.css">
     <?php endif; ?>
+    <link rel="icon" type="image/x-icon" href="<?php echo get_template_directory_uri(); ?>/assets/images/icons/favicon.svg">
     <link href="<?php echo get_template_directory_uri(); ?>/assets/css/<?php echo $args['css']; ?>.css" rel="stylesheet">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-RB8551CLJ4"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
 
+        gtag('config', 'G-RB8551CLJ4');
+    </script>
 </head>
 <body>
