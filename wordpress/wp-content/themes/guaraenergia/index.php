@@ -176,7 +176,7 @@
         <div class="gra-separator"></div>
         <?php
             $start = 1; // Starting value for the loop
-            $end = 10;   // Final value to reach
+            $end = 20;   // Final value to reach
             $flag = false;
             $count = 0;
             for ( $i = $start; $i <= $end; $i++ ):
@@ -190,7 +190,7 @@
                     <button class="gra-btn jsShowMoreHomeFaq">
                         <span class="gra-btn-faq-more jsFaqMoreText">Ver mais perguntas</span>
                         <span class="gra-btn-faq-less jsFaqLessText" style="display:none">Ver menos</span>
-                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/chevron-down2.svg" />
+                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/chevron-down4.svg" />
                     </button>
                 </div>
             <?php endif; ?>

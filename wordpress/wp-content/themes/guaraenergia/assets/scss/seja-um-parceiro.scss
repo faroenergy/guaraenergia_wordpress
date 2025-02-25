@@ -56,7 +56,7 @@
             max-width: 570px;
             border-radius: 16px;
             margin: 0 auto;
-            padding: 16px;
+            padding: 0;
             flex-direction: column;
             justify-content: center;
             align-items: center;
@@ -96,6 +96,10 @@
         }
         .gra-btn-link {
             margin-top: 39px;
+            @media (max-width: $container-md - 1) {
+                margin-top: 12px;
+                margin-bottom: 24px;
+            }
         }
     }
     &__right {
@@ -104,7 +108,7 @@
         border-radius: 50px;
         background-color: $secondary;
         @media (max-width: $container-md - 1) {
-            padding: 16px;
+            padding: 24px;
             border-radius: 24px;
         }
         &-title {
@@ -195,7 +199,7 @@
             max-width: 1125px;
         }
         @media (max-width: $container-md - 1) {
-            flex-direction: column;
+            flex-direction: column-reverse;
             margin-bottom: 24px;
         }
     }
@@ -236,7 +240,7 @@
         line-height: 1.125;
         margin-left: 20px;
         @media (max-width: $container-md - 1) {
-            margin-top: 16px;
+            margin-bottom: 16px;
             margin-left: 0;
             font-size: 24px;
             text-align: center;
@@ -372,7 +376,7 @@
         display: flex;
         flex-direction: column;
         column-gap: 16px;
-        row-gap: 16px;
+        row-gap: 24px;
     }
     br {
         display: none;

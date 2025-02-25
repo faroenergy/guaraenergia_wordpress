@@ -53,6 +53,8 @@ button {
     
     @media (max-width: $container-lg - 1) {
         max-width: $container-md;
+        padding-left: $gutterMobile;
+        padding-right: $gutterMobile;
     }
 
     &--flex {
@@ -298,6 +300,7 @@ button {
         margin-top: 0;
         border-radius: 0;
         padding: 24px 0;
+        background-image: none;
     }
     &__link {
         color: #fff;
@@ -330,7 +333,7 @@ button {
             gap: 16px;
             margin-top: 24px;
             img {
-                max-width: 200px;
+                max-width: 150px;
             }
         }
     }
@@ -371,5 +374,11 @@ button {
 @media (max-width: $container-md - 1) {
     br {
         display: none;
+    }
+}
+
+.gra-footer {
+    br {
+        display: block;
     }
 }

@@ -58,7 +58,7 @@
             max-width: 570px;
             border-radius: 16px;
             margin: 0 auto;
-            padding: 16px;
+            padding: 16px 0;
             flex-direction: column;
             justify-content: center;
             align-items: center;
@@ -148,7 +148,7 @@
             max-width: 1125px;
         }
         @media (max-width: $container-md - 1) {
-            flex-direction: column;
+            flex-direction: column-rever;
             margin-bottom: 24px;
         }
     }
@@ -189,7 +189,7 @@
         line-height: 1.125;
         margin-left: 20px;
         @media (max-width: $container-md - 1) {
-            margin-top: 16px;
+            margin-bottom: 16px;
             margin-left: 0;
             font-size: 24px;
             text-align: center;

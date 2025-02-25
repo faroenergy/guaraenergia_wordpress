@@ -62,7 +62,7 @@
             max-width: 570px;
             border-radius: 16px;
             margin: 0 auto;
-            padding: 16px;
+            padding: 0;
             flex-direction: column;
             justify-content: center;
             align-items: center;
@@ -102,6 +102,10 @@
         }
         .gra-btn-link {
             margin-top: 39px;
+            @media (max-width: $container-md - 1) {
+                margin-top: 12px;
+                margin-bottom: 24px;
+            }
         }
     }
     &__right {
@@ -111,7 +115,7 @@
         background-color: $primary;
         color: #fff;
         @media (max-width: $container-md - 1) {
-            padding: 16px;
+            padding: 24px;
             border-radius: 24px;
         }
         &-title {
@@ -330,10 +334,11 @@
         margin-top: 63px;
         margin-bottom: 42px;
         @media (max-width: $container-md - 1) {
-            flex-direction: column;
+            flex-wrap: wrap;
             justify-content: center;
-            gap: 32px;
-            margin: 16px 0;
+            // gap: 32px;
+            margin: 16px -12px;
+            row-gap: 24px;
         }
     }
     &__arrow {
@@ -356,17 +361,29 @@
         &:first-child::after {
             display: none;
         }
-        &:first-child {
-            max-width: 129px;
+        @media (min-width: $container-md) {
+            &:first-child {
+                max-width: 129px;
+            }
+            &:nth-child(3) {
+                max-width: 244px;
+            }
+            &:nth-child(5) {
+                max-width: 263px;
+            }
+            &:last-child {
+                max-width: 255px;
+            }
         }
-        &:nth-child(3) {
-            max-width: 244px;
+
+        @media (max-width: $container-md - 1) {
+            max-width: none;
+            width: 50%;
+            padding: 0 12px;
         }
-        &:nth-child(5) {
-            max-width: 263px;
-        }
-        &:last-child {
-            max-width: 255px;
+
+        @media (max-width: 400px) {
+            width: 100%;
         }
 
         @media (max-width: $container-md - 1) {
@@ -386,6 +403,7 @@
                 width: $size;
                 height: $size;
                 line-height: $size;
+                font-size: 30px;
             }
         }
         &-texto {
@@ -451,7 +469,7 @@
         display: flex;
         flex-direction: column;
         column-gap: 16px;
-        row-gap: 16px;
+        row-gap: 24px;
     }
     br {
         display: none;
