@@ -184,16 +184,6 @@
                     $count++;
                     $blocoFaq = $bloco_7['faq_' . $i];
             ?>
-            <?php if ($count == 4): ?>
-                <?php $flag = true; ?>
-                <div style="text-align:center">
-                    <button class="gra-btn jsShowMoreHomeFaq">
-                        <span class="gra-btn-faq-more jsFaqMoreText">Ver mais perguntas</span>
-                        <span class="gra-btn-faq-less jsFaqLessText" style="display:none">Ver menos</span>
-                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/chevron-down4.svg" />
-                    </button>
-                </div>
-            <?php endif; ?>
                 
             <details class="jsHomeFaq" <?php if($count > 3): ?> style="display:none" <?php endif; ?>>
                 <summary><?php echo $blocoFaq['titulo']; ?></summary>
@@ -204,6 +194,17 @@
             endif;
             endfor;
         ?>
+
+        <?php if ($count > 3): ?>
+            <?php $flag = true; ?>
+            <div style="text-align:center">
+                <button class="gra-btn jsShowMoreHomeFaq">
+                    <span class="gra-btn-faq-more jsFaqMoreText">Ver mais perguntas</span>
+                    <span class="gra-btn-faq-less jsFaqLessText" style="display:none">Ver menos</span>
+                    <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/chevron-down4.svg" />
+                </button>
+            </div>
+        <?php endif; ?>
     </div>
 </section>
 <?php get_template_part('footer')?>
