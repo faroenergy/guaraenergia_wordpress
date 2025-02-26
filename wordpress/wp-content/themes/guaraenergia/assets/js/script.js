@@ -31,15 +31,22 @@
         const videoId = videoPlay.getAttribute('data-video-id');
         let played = false;
 
-        if (videoId) {
+        if (window.innerWidth > 992) {
+            if (videoId) {
+                videoPlay.innerHTML = `<iframe width="100%" height="100%" src="https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen style="border-radius:37px"></iframe>`;
+            }
+        } else {
             videoPlay.onclick = function() {
                 if (!played) {
                     played = true;
-                    this.innerHTML = `<iframe width="100%" height="100%" src="https://www.youtube.com/embed/${videoId}?autoplay=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen style="border-radius:37px"></iframe>`;
+                    videoPlay.innerHTML = `<iframe width="100%" height="100%" src="https://www.youtube.com/embed/${videoId}?autoplay=1&mute=1&loop=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen style="border-radius:37px"></iframe>`;
                 }
             };
         }
+        
     }
+
+
     const scrollToLink = document.querySelectorAll('[data-scroll-btn]')
 
     if (scrollToLink) {
