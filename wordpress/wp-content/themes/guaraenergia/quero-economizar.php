@@ -14,33 +14,17 @@
     $passo_1 = get_field('passo_1', $page_id);
 ?>
 
-<section>
-    <div>
-        <div>1</div>
-        <div>1</div>
+<section class="gra-step-form">
+    <div class="gra-step-form__wrapper">
+        <div class="gra-step-form__side">1</div>
+        <div  class="gra-step-form__content">
+            <div  class="gra-step-form__content-inner">1</div>
+            <div  class="gra-step-form__content-inner">1</div>
+            <div  class="gra-step-form__content-inner">1</div>
+            <div  class="gra-step-form__content-inner">1</div>
+            <div  class="gra-step-form__content-inner">1</div>
+            <div  class="gra-step-form__content-inner">1</div>
+        </div>
     </div>
-    <div>
-        <div>1</div>
-        <div>1</div>
-    </div>
-    <div>
-        <div>1</div>
-        <div>1</div>
-    </div>
-    <div>
-        <div>1</div>
-        <div>1</div>
-    </div>
-    <div>
-        <div>1</div>
-        <div>1</div>
-    </div>
-    <div>
-        <div>1</div>
-        <div>1</div>
-    </div>
-    <div>
-        <div>1</div>
-        <div>1</div>
-    </div>
+    
 </section>

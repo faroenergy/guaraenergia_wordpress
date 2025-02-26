@@ -1,0 +1,28 @@
+@import './variables.scss';
+
+body, html {
+    padding: 0;
+    height: 100vh;
+}
+
+.gra-step-form {
+    height: 100%;
+    &__wrapper {
+        display: flex;
+        height: 100%;
+    }
+    &__side {
+        width: 533px;
+        background-color: $primary;
+        height: 100%;
+    }
+    &__content {
+        flex: 1;
+        background-color: #fff;
+        height: 100%;
+        overflow: auto;
+        &-inner {
+            padding: 16px;
+        }
+    }
+}
