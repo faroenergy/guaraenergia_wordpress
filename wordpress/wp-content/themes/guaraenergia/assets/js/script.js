@@ -43,9 +43,7 @@
                 }
             };
         }
-        
     }
-
 
     const scrollToLink = document.querySelectorAll('[data-scroll-btn]')
 
