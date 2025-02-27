@@ -258,9 +258,6 @@
                 border-radius: 50%;
                 background-color: $secondary
             }
-            span {
-                color: $secondary;
-            }
 
             @media (max-width: $container-md - 1) {
                 font-size: 16px;

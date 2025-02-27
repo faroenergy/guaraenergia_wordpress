@@ -260,18 +260,7 @@
         }
 
         @media (min-width: $container-md) {
-            &:first-child {
-                max-width: 145px;
-            }
-            &:nth-child(3) {
-                max-width: 332px;
-            }
-            &:nth-child(5) {
-                max-width: 205px;
-            }
-            &:last-child {
-                max-width: 143px;
-            }
+            flex: 1;
         }
 
         @media (max-width: $container-md - 1) {

@@ -96,13 +96,15 @@
     </div>
 </section>
 
-<div class="gra-container">
-    <div class="gra-separator"></div>
-</div>
 
 <?php
     $bloco_4 = get_field('bloco_4', $page_id);
 ?>
+
+<?php if ($bloco_4['depoimentos_ativo'] === true): ?>
+    <div class="gra-container">
+        <div class="gra-separator"></div>
+    </div>
 <section class="gra-section-4">
     <div class="gra-container">
         <div class="gra-section-4__top">
@@ -153,6 +155,9 @@
         </div>
     </div>
 </section>
+<?php
+    endif;
+?>
 <section class="gra-section-5">
     <div class="gra-container">
         <div class="gra-section-5__title">
