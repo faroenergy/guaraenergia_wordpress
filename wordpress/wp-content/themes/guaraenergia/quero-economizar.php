@@ -6,6 +6,7 @@
     'css' => 'quero-economizar'
 ))?>
 
+
 <?php
     $page_id = 407;
 ?>
@@ -21,6 +22,7 @@
     $sem_usinas = get_field('sem_usinas', $page_id);
     $passos_lateral = get_field('passos_lateral', $page_id);
     $texto_privacidade = get_field('texto_privacidade', $page_id);
+    $validade = $passo_3['validade'];
 ?>
 
 <section class="gra-step-form">
@@ -61,83 +63,141 @@
                         <?php echo $passo_1['opcao_2']; ?>
                     </button>
                 </div>
-                <div style="text-align:right;width:100%">
-                    <button class="gra-btn-link green gra-uppercase jsNextStep">
-                        <?php echo $passo_1['botao'] ?>
-                        <span>
-                            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/arrow-right.svg" alt="">
-                        </span>
-                    </button>
-                </div>
-                <div class="gra-step-footer">
-                    <div class="gra-step-footer__text"><?php echo $texto_privacidade; ?></div>
-                    <div class="gra-step-footer__links">
-                        <a>Precisa de ajuda?</a>
-                        <a href="/#faq">FAQ</a>
-                    </div>
-                </div>
+                <?php get_template_part('templates/quero-economizar/footer', null, array('botao' => $passo_1['botao'], 'texto_privacidade' => $texto_privacidade))?>
             </div>
             <div class="gra-step-form__content-inner" step-side="2" step-side-inner="0" step="2" style="display:none">
                <div class="gra-title"><?php echo $passo_2['titulo']; ?></div>
-               <div style="text-align:right;width:100%">
-                    <button class="gra-btn-link green gra-uppercase jsNextStep">
-                        <?php echo $passo_2['botao'] ?>
-                        <span>
-                            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/arrow-right.svg" alt="">
-                        </span>
-                    </button>
-                </div>
-                <div class="gra-step-footer">
-                    <div class="gra-step-footer__text"><?php echo $texto_privacidade; ?></div>
-                    <div class="gra-step-footer__links">
-                        <a>Precisa de ajuda?</a>
-                        <a href="/#faq">FAQ</a>
+               <hr class="gra-separator" />           
+               <div class="gra-content">
+                    <div class="gra-col">
+                        <input type="text" placeholder="Nome Completo" />
+                    </div>
+                    <div class="gra-col gra-col--half">
+                        <input placeholder="E-mail" type="text" />
+                    </div>
+                    <div class="gra-col gra-col--half">
+                        <input placeholder="Confirme o e-mail" type="text" />
+                    </div>
+                    <div class="gra-col">
+                        <input type="text" placeholder="CEP" />
+                    </div>
+                    <div class="gra-col">
+                        <input type="text" placeholder="Código do Parceiro/Cupom Promocional (opcional)" />
+                        <div class="gra-tooltip-icon gra-tooltip-icon--info"></div>
+                        <span class="gra-tooltip">Caso você tenha nos conhecido através de um parceiro comercial coloque neste campo o código do parceiro.</span>
+                    </div>
+                    <div class="gra-col">
+                        <input type="text" placeholder="Média do Valor em R$ pago na fatura de energia" />
                     </div>
                 </div>
+                <?php get_template_part('templates/quero-economizar/footer', null, array('botao' => $passo_2['botao'], 'texto_privacidade' => $texto_privacidade))?>
             </div>
             <div class="gra-step-form__content-inner" step-side="2.5" step="2.5" style="display:none">
                <div class="gra-title"><?php echo $sem_usinas['titulo']; ?></div>
                <div class="gra-subtitle"><?php echo $sem_usinas['subtitulo']; ?></div>
             </div>
-            <div class="gra-step-form__content-inner" step-side="2" step-side-inner="1" step="3" style="display:none" data-validade="<?php echo $passo_3['validade']; ?>">
+            <div class="gra-step-form__content-inner" step-side="2" step-side-inner="1" step="3" style="display:none">
                 <div class="gra-title"><?php echo $passo_3['titulo']; ?></div>
-                <?php echo $passo_3['plano_1']; ?>
-                <?php echo $passo_3['plano_2']; ?>
-                <?php echo $passo_3['plano_3']; ?>
-                <?php echo $passo_3['texto_extra']; ?>
-                <?php echo $passo_3['botao']; ?>
-                <div class="gra-step-footer">
-                    <div class="gra-step-footer__text"><?php echo $texto_privacidade; ?></div>
-                    <div class="gra-step-footer__links">
-                        <a>Precisa de ajuda?</a>
-                        <a href="/#faq">FAQ</a>
+                <div>
+                    <div class="gra-info-header-top">
+                        <p class="gra-info-header"><img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/quero-economizar/user.svg" alt="">Cliente: <b>Fabricio Silva</b></p>
+                        <p class="gra-info-header"><img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/quero-economizar/bulb.svg" alt="">Distribuidora: <b>Enel</b></p>
+                    </div>
+                    <div class="gra-info-header-top2">
+                        <div>
+                            Data da proposta: <span class="jsDataProposta"></span>
+                        </div>
+                        <div>
+                            Validade: <span class="jsDataValidade" data-validade="<?php echo $validade ?>"></span>
+                        </div>
                     </div>
                 </div>
+                <hr class="gra-separator" />
+                <div class="gra-planos">
+                    <div class="gra-planos__item green">
+                        <p class="gra-planos__item-title"><?php echo $passo_3['plano_1']; ?></p>
+                        <p class="gra-planos__item-desconto"><span>Tenha</span> <b>10% de economia</b></p>
+                        <p class="gra-planos__item-valor">Economize até <br><b>R$1.000/ano</b></p>
+                    </div>
+                    <div class="gra-planos__item yellow">
+                        <p class="gra-planos__item-title"><?php echo $passo_3['plano_2']; ?></p>
+                        <p class="gra-planos__item-desconto"><span>Tenha</span> <b>12% de economia</b></p>
+                        <p class="gra-planos__item-valor">Economize até <br><b>R$1.200/ano</b></p>
+                    </div>
+                    <div class="gra-planos__item gray">
+                        <p class="gra-planos__item-title"><?php echo $passo_3['plano_3']; ?></p>
+                        <p class="gra-planos__item-desconto"><span>Tenha</span> <b>15% de economia</b></p>
+                        <p class="gra-planos__item-valor">Economize até <br><b>R$1.500/ano</b></p>
+                    </div>
+                </div>
+                <p class="gra-texto-extra"><?php echo $passo_3['texto_extra']; ?></p>
+                <?php get_template_part('templates/quero-economizar/footer', null, array('botao' => $passo_3['botao'], 'texto_privacidade' => $texto_privacidade))?>
             </div>
             <div class="gra-step-form__content-inner" step-side="2" step-side-inner="2" step="4" style="display:none">
-                <?php echo $passo_4['titulo']; ?>
-                <?php echo $passo_4['botao']; ?>
-                <div class="gra-step-footer">
-                    <div class="gra-step-footer__text"><?php echo $texto_privacidade; ?></div>
-                    <div class="gra-step-footer__links">
-                        <a>Precisa de ajuda?</a>
-                        <a href="/#faq">FAQ</a>
+                <div class="gra-title"><?php echo $passo_4['titulo']; ?></div>
+                <hr class="gra-separator" />           
+                <div class="gra-content">
+                    <div class="gra-col">
+                        <input type="text" placeholder="Nome Completo" disabled />
+                        <div class="gra-tooltip-icon gra-tooltip-icon--lock"></div>
+                    </div>
+                    <div class="gra-col gra-col--half">
+                        <input placeholder="CPF" type="text" />
+                    </div>
+                    <div class="gra-col gra-col--half">
+                        <input placeholder="CEP" type="text" />
+                    </div>
+                    <div class="gra-col gra-col--half">
+                        <input type="text" disabled value="Distribuidora: Enel" />
+                        <div class="gra-tooltip-icon gra-tooltip-icon--lock"></div>
+                    </div>
+                    <div class="gra-col gra-col--half">
+                        <input type="text" placeholder="Nº de instalação" />
+                        <div class="gra-tooltip-icon gra-tooltip-icon--info"></div>
+                        <!-- <span class="gra-tooltip">Caso você tenha nos conhecido através de um parceiro comercial coloque neste campo o código do parceiro.</span> -->
+                    </div>
+                    <div class="gra-col gra-col--half">
+                        <input type="text" placeholder="Anexe sua última fatura " />
+                        <div class="gra-tooltip-icon gra-tooltip-icon--clip"></div>
+                    </div>
+                    <div class="gra-col gra-col--half">
+                        <input type="text" placeholder="Anexe seu documento" />
+                        <div class="gra-tooltip-icon gra-tooltip-icon--clip"></div>
                     </div>
                 </div>
+                <?php get_template_part('templates/quero-economizar/footer', null, array('botao' => $passo_4['botao'], 'texto_privacidade' => $texto_privacidade))?>
             </div>
             <div class="gra-step-form__content-inner" step-side="2" step-side-inner="2" step="5" style="display:none">
-                <?php echo $passo_5['titulo']; ?>
-                <?php echo $passo_5['botao']; ?>
+                <div class="gra-title"><?php echo $passo_5['titulo']; ?></div>
+                <hr class="gra-separator" />           
+                <div class="gra-content"></div>
+                <?php get_template_part('templates/quero-economizar/footer', null, array('botao' => $passo_5['botao'], 'texto_privacidade' => $texto_privacidade))?>
             </div>
-            <div class="gra-step-form__content-inner" step-side="2" step-side-inner="3" step="6" style="display:none">
-                <?php echo $passo_6['titulo']; ?>
-                <?php echo $passo_6['subtitulo']; ?>
-                <?php echo $passo_6['botao']; ?>
+            <div class="gra-step-form__content-inner" step-side="2" step-side-inner="2" step="6" style="display:none">
+                <div class="gra-title"><?php echo $passo_6['titulo']; ?></div>
+                <div class="gra-subtitle"><?php echo $passo_6['subtitulo']; ?></div>
+                <hr class="gra-separator" />           
+                <div class="gra-content">
+                    <div class="gra-col">
+                        <input type="text" placeholder="Digite o código enviado para seu email" />
+                    </div>
+                    <div class="gra-col">
+                        <a href="#" class="gra-col-resend-code">Reenviar código</a>
+                    </div>
+                    <div class="gra-col">
+                        <input placeholder="Crie sua senha" type="text" />
+                    </div>
+                    <div class="gra-col">
+                        <input placeholder="Confirme sua senha" type="text" />
+                    </div>
+                </div>
+                <?php get_template_part('templates/quero-economizar/footer', null, array('botao' => $passo_6['botao'], 'texto_privacidade' => $texto_privacidade))?>
             </div>
             <div class="gra-step-form__content-inner" step-side="3" step="7" style="display:none">
                 <?php echo $passo_7['titulo']; ?>
                 <?php echo $passo_7['subtitulo']; ?>
                 <?php echo $passo_7['botao']; ?>
+                <?php get_template_part('templates/quero-economizar/footer', null, array('botao' => $passo_7['botao'], 'texto_privacidade' => $texto_privacidade))?>
             </div>
         </div>
     </div>
@@ -155,6 +215,7 @@
             self.currentStep = self.start;
             self.lastStep = self.start;
             const initialStep = self.showStep(self.start);
+            self.startEvents();
         },
 
         showStep: function(step) {
@@ -165,19 +226,57 @@
             self.lastStep = step;
 
             self.constrolStepVisibity('', step);
-            self.startEvents(step);
+            self.stepEvents(step);
         },
 
-        startEvents: function(step) {
+        startEvents: function() {
             const self = this;
 
-            const nextStep = document.querySelectorAll('.jsNextStep');
+            const NextStep = document.querySelectorAll('.jsNextStep');
+            const PrevStep = document.querySelectorAll('.jsPrevStep');
 
-            nextStep.forEach(function(item) {
+            NextStep.forEach(function(item) {
                 item.onclick = function() {
                     self.showStep(self.currentStep + 1);             
                 };
             });
+
+            PrevStep.forEach(function(item) {
+                item.onclick = function() {
+                    self.showStep(self.currentStep - 1);             
+                };
+            });
+        },
+
+        stepEvents: function(step) {
+
+            if (step === 3) {
+                const dataPropostaEl = document.querySelector('.jsDataProposta');
+                const dataValidadeEl = document.querySelector('.jsDataValidade');
+
+                const validade = parseInt(dataValidadeEl.getAttribute('data-validade')) - 1;
+
+                if (validade < 0) {
+                    validade = 0;
+                }
+
+                const today = new Date();
+                const today_dd = String(today.getDate()).padStart(2, '0');
+                const today_mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+                const today_yyyy = today.getFullYear();
+
+                const next = new Date();
+                next.setDate(next.getDate() + validade)
+                const next_dd = String(next.getDate()).padStart(2, '0');
+                const next_mm = String(next.getMonth() + 1).padStart(2, '0'); //January is 0!
+                const next_yyyy = next.getFullYear();
+
+                let todayDate = today_dd + '/' + today_mm + '/' + today_yyyy;
+                let nextDate = next_dd + '/' + next_mm + '/' + next_yyyy;
+
+                dataPropostaEl.textContent = todayDate;
+                dataValidadeEl.textContent = nextDate;
+            }
         },
 
         constrolStepVisibity: function(blockOrNone, step) {
@@ -189,7 +288,7 @@
             const stepSideInner = stepEl.getAttribute('step-side-inner');
             
             if (stepSideInner !== null) {
-                document.querySelector(`.jsStepSide [step-side="${step}"]`).setAttribute('step-side-inner', stepSideInner);
+                document.querySelector(`.jsStepSide [step-side="${stepSide}"]`).setAttribute('step-side-inner', stepSideInner);
             }
 
             stepEl.style.display = blockOrNone;
