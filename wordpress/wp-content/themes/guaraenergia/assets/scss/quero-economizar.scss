@@ -192,12 +192,17 @@ body, html {
                     border: 1px solid #C1C1C1;
                     background-color: #fff;
                     text-align: left;
-                    transition: .3s padding-left;
+                    transition: .3s all;
                     &:hover {
                         padding-left: 70px;
                     }
                     &:hover, &:focus {
                         background-color: #F5F5F5;
+                    }
+                    &.active {
+                        padding-left: 70px;
+                        background-color: #F5F5F5;
+                        box-shadow: 0 0 1px 1px #064A3C;
                     }
                     &::before {
                         content: '';
@@ -330,6 +335,9 @@ body, html {
                     &[disabled] {
                         background-color: #F5F5F5;
                     }
+                    &.gra-error {
+                        border-color: red;
+                    }
                 }
             }
             &[step="6"] {
@@ -375,12 +383,19 @@ body, html {
             display: flex;
             align-items: center;
             justify-content: space-between;
+
             &__item {
                 max-width: 205px;
                 width: 100%;
                 padding: 20px 10px;
                 border-radius: 25px;
                 text-align: center;
+                cursor: pointer;
+                transition: .3s all;
+                &:hover, &.active {
+                    transform: translateY(-8px);
+                    box-shadow: 0 0 10px 1px #064A3C;
+                }
                 &.green {
                     color: #fff;
                     background-color: $primary-dk-1;
@@ -425,10 +440,28 @@ body, html {
                     }
                 }
             }
+
+            &.gra-item-active {
+                .gra-planos__item:not(.active) {
+                    opacity: .5;
+                    &:hover {
+                        transform: none;
+                        box-shadow: none;
+                        opacity: 1;
+                    }
+                }
+            }
         }
         .gra-btns-footer {
             display: flex;
             justify-content: space-between;
         }
     }
+}
+
+
+.gra-error-msg {
+    padding: 4px 10px 0;
+    color: red;
+    font-size: 12px;
 }

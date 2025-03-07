@@ -280,6 +280,13 @@ button {
             background-color: $primary;
         }
     }
+    &.disabled {
+        opacity: .5;
+        cursor: not-allowed;
+    }
+    &.gra-right-corner {
+        margin-left: auto;
+    }
 }
 
 .gra-footer {

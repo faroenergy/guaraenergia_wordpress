@@ -1,8 +1,10 @@
 <div class="gra-btns-footer">
-    <button class="gra-btn-back jsPrevStep">
-        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/quero-economizar/arrow-back.svg" alt="">
-    </button>
-    <button class="gra-btn-link green gra-uppercase jsNextStep">
+    <?php if ($args['go_back'] === true): ?>
+        <button class="gra-btn-back jsPrevStep">
+            <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/quero-economizar/arrow-back.svg" alt="">
+        </button>
+    <?php endif; ?>
+    <button class="gra-btn-link green gra-uppercase gra-right-corner jsNextStep">
         <?php echo $args['botao'] ?>
         <span>
             <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/arrow-right.svg" alt="">
