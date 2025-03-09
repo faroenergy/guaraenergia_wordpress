@@ -14,8 +14,5 @@
 
 <div class="gra-step-footer">
     <div class="gra-step-footer__text"><?php echo $args['texto_privacidade']; ?></div>
-    <div class="gra-step-footer__links">
-        <a>Precisa de ajuda?</a>
-        <a href="/#faq">FAQ</a>
-    </div>
+    <?php get_template_part('templates/quero-economizar/footer-links'); ?>
 </div>

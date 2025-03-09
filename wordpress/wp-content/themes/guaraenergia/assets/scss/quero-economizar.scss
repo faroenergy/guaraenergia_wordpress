@@ -314,7 +314,7 @@ body, html {
                 input {
                     display: block;
                     width: 100%;
-                    padding: 10px 43px;
+                    padding: 20px 43px 0;
                     border-radius: 20px;
                     font-size: 16px;
                     line-height: 3;
@@ -325,6 +325,9 @@ body, html {
                     text-align: left;
                     transition: .3s padding-left;
                     font-weight: 500;
+                    &[type="file"] {
+                        padding: 10px 43px;
+                    }
                     &:hover, &:focus {
                         background-color: #F5F5F5;
                     }
@@ -377,6 +380,120 @@ body, html {
                     line-height: 1.25;
                     font-weight: 500;
                 }
+            }
+            &[step="7"] {
+                .gra-title {
+                    max-width: 300px;
+                    font-size: 35px;
+                    font-weight: 600;
+                    line-height: 1.14;
+                    color: $primary;
+                    &::after {
+                        content: '';
+                        display: block;
+                        width: 100px;
+                        height: 5px;
+                        margin-top: 30px;
+                        border-radius: 10px;
+                        background-color: $primary;
+                        @media (max-width: $container-md - 1) {
+                            margin-top: 16px;
+                        }
+                    }
+                }
+                .gra-subtitle {
+                    max-width: 482px;
+                    margin: 30px 0;
+                    font-size: 15px;
+                    line-height: 1.6;
+                    color: $primary;
+                }
+                .gra-content {
+                    padding-top: 125px;
+                }
+                .gra-step-icon {
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 73px;
+                    height: 73px;
+                    margin-bottom: 30px;
+                    background-color: $secondary;
+                    border-radius: 20px;
+                }
+
+                .gra-step-footer {
+                    max-width: 428px;
+                    justify-content: flex-end;
+                }
+            }
+            &[step="8"] {
+                .gra-title {
+                    max-width: 625px;
+                    font-size: 35px;
+                    font-weight: 600;
+                    line-height: 1.14;
+                    color: $primary;
+                    &::after {
+                        content: '';
+                        display: block;
+                        width: 100px;
+                        height: 5px;
+                        margin-top: 30px;
+                        border-radius: 10px;
+                        background-color: $primary;
+                        @media (max-width: $container-md - 1) {
+                            margin-top: 16px;
+                        }
+                    }
+                }
+                .gra-subtitle {
+                    max-width: 450px;
+                    margin: 30px 0;
+                    font-size: 16px;
+                    line-height: 1.5;
+                    color: $primary;
+                }
+                .gra-content {
+                    padding-top: 125px;
+                }
+                .gra-step-icon {
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 73px;
+                    height: 73px;
+                    margin-bottom: 30px;
+                    background-color: $secondary;
+                    border-radius: 20px;
+                }
+
+                .gra-link {
+                    display: flex;
+                    align-items: center;                
+                    font-size: 16px;
+                    line-height: 1.5;
+                    color: $primary;
+                }
+
+                .gra-link-icon {
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 33px;
+                    height: 33px;
+                    margin-right: 20px;
+                    font-weight: 500;
+                    border-radius: 50%;
+                    background-color: $primary;
+                }
+            }
+            label {
+                position: absolute;
+                left: 54px;
+                top: 12px;
+                font-weight: 500;
+                color: $primary;
             }
         }
         .gra-planos {
