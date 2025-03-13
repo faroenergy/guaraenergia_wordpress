@@ -108,6 +108,8 @@
     </div>
 </section>
 
+
+<?php if (get_field('video_ativo', $page_id) === true): ?>
 <div class="gra-container">
     <div class="gra-separator"></div>
 </div>
@@ -121,7 +123,7 @@
         <?php echo $bloco_3['titulo'] ?>
     </div>
 </section>
-
+<?php endif ?>
 
 <?php
     $bloco_4 = get_field('bloco_4', $page_id);
