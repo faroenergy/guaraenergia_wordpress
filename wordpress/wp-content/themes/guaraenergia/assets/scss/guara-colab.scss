@@ -15,7 +15,7 @@
         font-weight: 600;
         color: #fff;
         @media (max-width: $container-md - 1) {
-            font-size: 30px;
+            font-size: 38px;
             br {
                 display: none;
             }
@@ -43,13 +43,26 @@
         }
     }
 
+    &__title {
+        @media (max-width: $container-md - 1) {
+            color: $primary;
+        }
+    }
+    &__subtitle {
+        @media (max-width: $container-md - 1) {
+            color: $primary;
+        }
+    }
+
     @media (max-width: $container-md - 1) {
         height: auto;
-        padding: 32px 0;
-        background-position: center, center right -520px;
-        margin-bottom: 16px;
-        background-image: linear-gradient(to right,rgba(0,0,0,.9), rgba(0,0,0,.6)), url(../images/guara-colab/banner.png);
-        background-repeat: repeat, no-repeat;
+        padding: 243px 0 0;
+        margin-bottom: 0;
+        background-position: top center;
+
+        + .gra-container {
+            margin: 48px 0;
+        }
     }
 }
 
@@ -67,6 +80,9 @@
             justify-content: center;
             align-items: center;
             gap: 16px;
+            align-items: center;
+            gap: 32px;
+            align-items: flex-start;
         }
     }
     &__left {
@@ -115,7 +131,7 @@
         background-color: $primary;
         color: #fff;
         @media (max-width: $container-md - 1) {
-            padding: 24px;
+            padding: 42px 27px 51px;
             border-radius: 24px;
         }
         &-title {
@@ -125,7 +141,7 @@
             font-weight: 500;
             @media (max-width: $container-md - 1) {
                 font-size: 24px;
-                margin-bottom: 16px;
+                margin-bottom: 34px;
             }
         }
         &-list {
@@ -139,18 +155,18 @@
 
             @media (max-width: $container-md - 1) {
                 gap: 20px;
-                font-size: 20px;
+                font-size: 17px;
             }
         }
         &-number {
-            width: 60px;
-            height: 60px;
+            width: 45px;
+            height: 45px;
             flex-shrink: 0;
             border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 18px;
+            font-size: 16px;
             line-height: 1;
         }
         &-item {
@@ -181,6 +197,12 @@
     }
 }
 
+@media (max-width: $container-md - 1) {
+    .gra-section-2 + .gra-container {
+        margin: 58px 0;
+    }
+}
+
 .gra-section-3 {
     padding-bottom: 90px;
     color: $primary-dk-1;
@@ -193,7 +215,7 @@
         line-height: 1.125;
         @media (max-width: $container-md - 1) {
             font-size: 24px;
-            margin-bottom: 16px;
+            margin-bottom: 47px;
         }
     }
     &__subtitle {
@@ -202,6 +224,7 @@
         margin-bottom: 40px;
         @media (max-width: $container-md - 1) {
             margin-bottom: 20px;
+            display: none;
         }
     }
     &__content {
@@ -211,6 +234,7 @@
         @media (max-width: $container-md - 1) {
             gap: 10px;
             flex-direction: column;
+            gap: 27px;
         }
     }
     &__item {
@@ -222,9 +246,9 @@
         font-size: 21px;
         line-height: 1.25;
         @media (max-width: $container-md - 1) {
-            gap: 16px;
-            border-radius: 24px;
-            padding: 24px;
+            gap: 23px;
+            border-radius: 50px;
+            padding: 38px;
             font-size: 16px;
         }
         &.yellow {
@@ -302,14 +326,14 @@
     background-color: #F0F0F0;
     color: $primary-dk-1;
     @media (max-width: $container-md - 1) {
-        padding: 24px 0;
+        padding: 50px 0;
     }
     &__title {
         margin-bottom: 24px;
         font-size: 40px;
         line-height: 1.125;
         @media (max-width: $container-md - 1) {
-            margin-bottom: 12px;
+            margin-bottom: 42px;
             font-size: 30px;
             text-align: center;
         }
@@ -334,8 +358,11 @@
             flex-wrap: wrap;
             justify-content: center;
             // gap: 32px;
-            margin: 16px -12px;
-            row-gap: 24px;
+            
+            flex-direction: column;
+            gap: 52px;
+            margin-top: 0;
+            margin-bottom: 20px;
         }
     }
     &__arrow {
@@ -355,10 +382,10 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        &:first-child::after {
-            display: none;
-        }
         @media (min-width: $container-md) {
+            &:first-child::after {
+                display: none;
+            }
             &:first-child {
                 max-width: 129px;
             }
@@ -372,11 +399,37 @@
                 max-width: 255px;
             }
         }
+        
+        &:last-child::after {
+            display: none;
+        }
+
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        @media (max-width: $container-md - 1) {
+            &::after {
+                content: '';
+                position: absolute;
+                display: block;
+                width: 50px;
+                height: 50px;
+                top: 120px;
+                left: 35px;
+                background-image: url(../images/icons/arrow-right-dk.svg);
+                background-repeat: no-repeat;
+                background-position: center;
+                transform: rotate(90deg);
+                z-index: 1;
+            }
+        }
 
         @media (max-width: $container-md - 1) {
             max-width: none;
-            width: 50%;
-            padding: 0 12px;
+            width: 100%;
+            flex-direction: row;
         }
 
         @media (max-width: 400px) {
@@ -395,22 +448,17 @@
             border-radius: 50%;
             color: $primary;
             font-size: 40px;
-            @media (max-width: $container-md - 1) {
-                $size: 60px;
-                width: $size;
-                height: $size;
-                line-height: $size;
-                font-size: 30px;
-            }
+            flex-shrink: 0;
+            margin-right: 26px;
         }
         &-texto {
             margin-top: 25px;
             font-size: 18px;
             line-height: 1.22;
-            font-weight: 400;
             @media (max-width: $container-md - 1) {
-                margin-top: 12px;
-                font-size: 16px;
+                margin-top: 0px;
+                font-size: 18px;
+                text-align: left;
             }
             
         }
@@ -423,6 +471,10 @@
             .gra-section-4__item-ordem {
                 color: #fff;
                 background-color: $primary;
+                @media (max-width: $container-md - 1) {
+                    background-color: #fff;
+                    color: $primary;
+                }
             }
         }
 

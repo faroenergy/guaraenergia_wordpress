@@ -41,9 +41,22 @@
 <?php
     $bloco_2 = get_field('bloco_2', $page_id);
 ?>
+
+<style>
+    @media (min-width: 1012px) {
+        .gra-section-2__wrapper {
+            background-image:url(<?php echo $bloco_2['imagem'] ?>)       
+        }
+    }
+    @media (max-width: 1011px) {
+        .gra-section-2__wrapper {
+            background-image:url(<?php echo $bloco_2['imagem_mobile'] ?>)       
+        }
+    }
+</style>
 <section class="gra-section-2">
     <div class="gra-container">
-        <div class="gra-section-2__wrapper" style="background-image:url(<?php echo $bloco_2['imagem'] ?>)">
+        <div class="gra-section-2__wrapper">
             <div class="gra-section-2__content">
                 <p class="gra-section-2__content-title"><?php echo $bloco_2['titulo']; ?></p>
                 <?php echo $bloco_2['subtitulo']; ?>

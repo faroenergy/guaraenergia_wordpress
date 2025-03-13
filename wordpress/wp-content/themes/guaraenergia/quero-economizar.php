@@ -26,9 +26,16 @@
 ?>
 
 <section class="gra-step-form">
+    <header class="gra-header">
+        <div class="gra-container gra-container--flex">
+            <a href="/" class="gra-header__logo">
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/images/logo.svg" alt="">
+            </a>
+        </div>
+    </header>
     <div class="gra-step-form__wrapper">
         <div class="gra-step-form__side jsStepSide">
-            <img class="gra-step-form__side-logo" src="<?php echo get_template_directory_uri(); ?>/assets/images/logo.svg" />
+            <a href="/" class="gra-step-form__side-logo"><img src="<?php echo get_template_directory_uri(); ?>/assets/images/logo.svg" /></a>
             <div step-side="1" style="display:none;background-image:url(<?php echo $passo_1['imagem'] ?>)"></div>
             <div step-side="2" step-side-inner style="display:none">
                 <p class="gra-step-item">
@@ -71,33 +78,33 @@
                <div class="gra-content">
                     <div class="gra-col gra-col--half">
                         <input class="jsField jsFieldFirstName" type="text" minlength="3" />
-                        <label>Nome</label>
+                        <label>Nome*</label>
                     </div>
                     <div class="gra-col gra-col--half">
                         <input class="jsField jsFieldLastName" type="text" minlength="3" />
-                        <label>Sobrenome</label>
+                        <label>Sobrenome*</label>
                     </div>
                     <div class="gra-col gra-col--half">
                         <input class="jsField jsSameField jsFieldEmail" type="email" />
-                        <label>E-mail</label>
+                        <label>E-mail*</label>
                     </div>
                     <div class="gra-col gra-col--half">
                         <input class="jsField jsSameField" type="email" />
-                        <label>Confirme o e-mail</label>
+                        <label>Confirme o e-mail*</label>
                     </div>
                     <div class="gra-col">
                         <input class="jsField" type="text" mask-cep />
-                        <label>CEP</label>
+                        <label>CEP*</label>
                     </div>
                     <div class="gra-col">
                         <input class="jsField jsOptional" type="text" />
-                        <label>Código do Parceiro/Cupom Promocional (opcional)</label>
+                        <label>Código do Parceiro/Cupom Promocional</label>
                         <div class="gra-tooltip-icon gra-tooltip-icon--info"></div>
                         <span class="gra-tooltip">Caso você tenha nos conhecido através de um parceiro comercial coloque neste campo o código do parceiro.</span>
                     </div>
                     <div class="gra-col">
                         <input class="jsField" type="text" minlength="3" />
-                        <label>Média do Valor em R$ pago na fatura de energia</label>
+                        <label class="gra-label-small">Média do Valor em R$ pago na fatura de energia*</label>
                     </div>
                 </div>
                 <?php get_template_part('templates/quero-economizar/footer', null, array('botao' => $passo_2['botao'], 'go_back' => true, 'texto_privacidade' => $texto_privacidade))?>
@@ -120,20 +127,26 @@
                 </div>
                 <hr class="gra-separator" />
                 <div class="gra-planos">
-                    <div class="gra-planos__item green jsPlanoItem">
-                        <p class="gra-planos__item-title"><?php echo $passo_3['plano_1']; ?></p>
+                    <div class="gra-planos__item gray jsPlanoItem">
+                        <div>
+                            <p class="gra-planos__item-title"><?php echo $passo_3['plano_1']; ?></p>
+                            <p class="gra-planos__item-valor">Economize até <br><b>R$1.000/ano</b></p>
+                        </div>
                         <p class="gra-planos__item-desconto"><span>Tenha</span> <b>10% de economia</b></p>
-                        <p class="gra-planos__item-valor">Economize até <br><b>R$1.000/ano</b></p>
                     </div>
                     <div class="gra-planos__item yellow jsPlanoItem">
-                        <p class="gra-planos__item-title"><?php echo $passo_3['plano_2']; ?></p>
+                        <div>
+                            <p class="gra-planos__item-title"><?php echo $passo_3['plano_2']; ?></p>
+                            <p class="gra-planos__item-valor">Economize até <br><b>R$1.200/ano</b></p>
+                        </div>
                         <p class="gra-planos__item-desconto"><span>Tenha</span> <b>12% de economia</b></p>
-                        <p class="gra-planos__item-valor">Economize até <br><b>R$1.200/ano</b></p>
                     </div>
-                    <div class="gra-planos__item gray jsPlanoItem">
-                        <p class="gra-planos__item-title"><?php echo $passo_3['plano_3']; ?></p>
+                    <div class="gra-planos__item green jsPlanoItem">
+                        <div>
+                            <p class="gra-planos__item-title"><?php echo $passo_3['plano_3']; ?></p>
+                            <p class="gra-planos__item-valor">Economize até <br><b>R$1.500/ano</b></p>
+                        </div>
                         <p class="gra-planos__item-desconto"><span>Tenha</span> <b>15% de economia</b></p>
-                        <p class="gra-planos__item-valor">Economize até <br><b>R$1.500/ano</b></p>
                     </div>
                 </div>
                 <p class="gra-texto-extra"><?php echo $passo_3['texto_extra']; ?></p>
@@ -145,25 +158,25 @@
                 <div class="gra-content">
                     <div class="gra-col">
                         <input class="jsField jsFieldFullName" type="text" disabled />
-                        <label>Nome Completo</label>
+                        <label>Nome Completo*</label>
                         <div class="gra-tooltip-icon gra-tooltip-icon--lock"></div>
                     </div>
                     <div class="gra-col gra-col--half">
                         <input class="jsField" mask-cpf type="text" />
-                        <label>CPF</label>
+                        <label>CPF*</label>
                     </div>
                     <div class="gra-col gra-col--half">
                         <input class="jsField" mask-cep type="text" />
-                        <label>CEP</label>
+                        <label>CEP*</label>
                     </div>
                     <div class="gra-col gra-col--half">
                         <input class="jsField" type="text" disabled value="Enel" />
-                        <label>Distribuidora</label>
+                        <label>Distribuidora*</label>
                         <div class="gra-tooltip-icon gra-tooltip-icon--lock"></div>
                     </div>
                     <div class="gra-col gra-col--half">
                         <input class="jsField" type="text" minlength="3" />
-                        <label>Nº de instalação</label>
+                        <label>Nº de instalação*</label>
                         <div class="gra-tooltip-icon gra-tooltip-icon--info"></div>
                         <!-- <span class="gra-tooltip">Caso você tenha nos conhecido através de um parceiro comercial coloque neste campo o código do parceiro.</span> -->
                     </div>
@@ -191,18 +204,18 @@
                 <div class="gra-content">
                     <div class="gra-col">
                         <input class="jsField" minlength="4" type="text" mask-number />
-                        <label>Digite o código enviado para seu email</label>
+                        <label>Digite o código enviado para seu email*</label>
                     </div>
                     <div class="gra-col">
                         <a href="#" class="gra-col-resend-code">Reenviar código</a>
                     </div>
                     <div class="gra-col">
                         <input class="jsField jsSameField" minlength="4" type="password" />
-                        <label>Crie sua senha</label>
+                        <label>Crie sua senha*</label>
                     </div>
                     <div class="gra-col">
                         <input class="jsField jsSameField" minlength="4" type="password" />
-                        <label>Confirme sua senha</label>
+                        <label>Confirme sua senha*</label>
                     </div>
                 </div>
                 <?php get_template_part('templates/quero-economizar/footer', null, array('botao' => $passo_6['botao'], 'go_back' => true, 'texto_privacidade' => $texto_privacidade))?>
@@ -242,8 +255,18 @@
             </div>
         </div>
     </div>
-    
 </section>
+<div class="gra-popup jsPopUpAlert jsClosePopUpAlert" style="display:none">
+    <div class="gra-popup__info">
+        <button class="gra-popup__info-close jsClosePopUpAlert"></button>
+        <div class="gra-popup__info-title">
+            Atenção
+        </div>
+        <p class="gra-popup__info-text">
+            Durante o preenchimento do cadastro, pediremos os dados do titular da conta de energia. Por isso, solicitamos que o cadastro seja feito pelo próprio titular.
+        </p>
+    </div>
+</div>
 
 <script src="<?php echo get_template_directory_uri(); ?>/assets/js/vanilla-masker.min.js"></script>
  <script>
@@ -251,11 +274,12 @@
         
         const StepController = {
             dev: false,
-            start: 1,
+            start: 3,
             stepContainer: null,
             firstName: "Guará",
             lastName: "Energia",
             email: "contato@guaraenergia.com.br",
+            popUpStart: false,
     
             init: function() {
                 const self = this;
@@ -443,10 +467,26 @@
     
                 if (step === 1) {
                     (function() {
+                        if (!self.popUpStart) {
+                            popUpStart = true;
+                            document.querySelector('.jsPopUpAlert').style.display = '';
+
+                            document.querySelectorAll('.jsClosePopUpAlert').forEach(function(item) {
+                                item.onclick = function(e) {
+                                    var itemTarget = e.target;
+                                    if (itemTarget.classList.contains('jsClosePopUpAlert')) {
+                                        document.querySelector('.jsPopUpAlert').style.display = 'none';
+                                    }
+                                }
+                            });
+                        }
+                    })();
+                    
+                    (function() {
                         if (!self.stepContainer.querySelector('.jsContratacaoOption.active')) {
                             self.stepContainer.querySelector('.jsNextStep').classList.add('disabled');
                         }
-                    }());
+                    })();
 
                     (function() {
                         const contratacaoItem = self.stepContainer.querySelectorAll('.jsContratacaoOption');
@@ -482,7 +522,7 @@
                         }
 
                         self.stepContainer.querySelector('.jsFieldFullName').textContent = `${self.firstName} ${self.lastName}`;
-                    }());
+                    })();
     
                     (function() {
                         const dataPropostaEl = self.stepContainer.querySelector('.jsDataProposta');

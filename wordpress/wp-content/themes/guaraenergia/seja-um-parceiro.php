@@ -16,7 +16,20 @@
     $bloco_1 = get_field('bloco_1', $page_id);
 ?>
 
-<section class="gra-section-1" style="background-image:url(<?php echo $bloco_1['imagem'] ?>)">
+<style>
+    @media (min-width: 1012px) {
+        .gra-section-1 {
+            background-image:url(<?php echo $bloco_1['imagem'] ?>)       
+        }
+    }
+    @media (max-width: 1011px) {
+        .gra-section-1 {
+            background-image:url(<?php echo $bloco_1['imagem_mobile'] ?>)       
+        }
+    }
+</style>
+
+<section class="gra-section-1">
 
     <div class="gra-container">
         <h1 class="gra-section-1__title">
@@ -33,6 +46,11 @@
         </button>
     </div>
 </section>
+
+<div class="gra-container gra-desktop-hide">
+    <div class="gra-separator"></div>
+</div>
+
 <section class="gra-section-2">
     <?php
         $bloco_2 = get_field('bloco_2', $page_id);
@@ -46,7 +64,7 @@
 
                 <?php echo $bloco_2['texto'] ?>
                 
-                <div class="gra-text-center-mb">
+                <div class="gra-text-center-mb gra-mobile-hide">
                     <button data-scroll-btn=".gra-section-5" class="gra-btn-link green gra-uppercase">
                         <?php echo $bloco_2['botao'] ?>
                         <span>
@@ -77,6 +95,14 @@
                         <?php echo $bloco_2['bloco_direita']['item_4'] ?>
                     </li>
                 </ul>
+            </div>
+            <div class="gra-text-center-mb gra-desktop-hide">
+                <button data-scroll-btn=".gra-section-5" class="gra-btn-link green gra-uppercase">
+                    <?php echo $bloco_2['botao'] ?>
+                    <span>
+                        <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/arrow-right.svg" alt="">
+                    </span>
+                </button>
             </div>
         </div>
     </div>

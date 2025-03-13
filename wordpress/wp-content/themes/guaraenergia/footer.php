@@ -33,6 +33,8 @@
     </div>
 </footer>
 
+<?php echo do_shortcode('[wpcode id="497"]'); ?>
+
 <?php if ($args['name']): ?>
     <?php if ($args['name'] == 'seja-um-parceiro'): ?>
         <script src="<?php echo get_template_directory_uri(); ?>/assets/js/tiny-slider.js"></script>

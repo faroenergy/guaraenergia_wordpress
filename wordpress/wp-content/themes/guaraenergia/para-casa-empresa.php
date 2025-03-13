@@ -14,7 +14,21 @@
 <?php
     $bloco_1 = get_field('bloco_1', $page_id);
 ?>
-<section class="gra-section-1" style="background-image:url(<?php echo $bloco_1['imagem'] ?>)">
+
+<style>
+    @media (min-width: 1012px) {
+        .gra-section-1 {
+            background-image:url(<?php echo $bloco_1['imagem'] ?>)       
+        }
+    }
+    @media (max-width: 1011px) {
+        .gra-section-1 {
+            background-image:url(<?php echo $bloco_1['imagem_mobile'] ?>)       
+        }
+    }
+</style>
+
+<section class="gra-section-1">
     <div class="gra-container">
         <?php echo $bloco_1['titulo'] ?>
         <p class="gra-section-1__subtitle">
@@ -71,19 +85,23 @@
         </div>
     </div>
 </section>
-<div class="gra-container">
-    <div class="gra-separator"></div>
-</div>
 
-<section class="gra-section-3">
-    <?php
-        $bloco_3 = get_field('bloco_3', $page_id);
-    ?>
+    
+<?php if (get_field('video_ativo', $page_id) === true): ?>
     <div class="gra-container">
-        <div class="gra-section-3__video jsVideoPlayer" data-video-id="<?php echo do_shortcode('[wpcode id="181"]') ?>"></div>
-        <?php echo $bloco_3['titulo'] ?>
+        <div class="gra-separator"></div>
     </div>
-</section>
+
+    <section class="gra-section-3">
+        <?php
+            $bloco_3 = get_field('bloco_3', $page_id);
+        ?>
+        <div class="gra-container">
+            <div class="gra-section-3__video jsVideoPlayer" data-video-id="<?php echo do_shortcode('[wpcode id="181"]') ?>"></div>
+            <?php echo $bloco_3['titulo'] ?>
+        </div>
+    </section>
+<?php endif ?>
 
 <section class="gra-section-4">
     <?php

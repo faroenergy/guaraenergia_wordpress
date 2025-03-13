@@ -5,26 +5,52 @@ body, html {
     height: 100vh;
 }
 
+.gra-header {
+    position: static;
+}
+
+@media (min-width: $container-md) {
+    .gra-header {
+        display: none
+    }
+}
+
 .gra-step-form {
     height: 100%;
     &__wrapper {
         display: flex;
         height: 100%;
+        @media (max-width: $container-md - 1) {
+            flex-direction: column;
+            height: auto;
+        }
     }
     &__side {
         position: relative;
         width: 583px;
         background-color: $primary;
         height: 100%;
+        @media (max-width: 1368px) {
+            width: 490px;
+        }
+        @media (max-width: $container-md - 1) {
+            width: 100%;
+        }
         [step-side] {
             height: 100%;
             background-position: center;
             background-repeat: no-repeat;
+            @media (max-width: $container-md - 1) {
+                display: none;
+            }
         }
         &-logo {
             position: absolute;
             top: 16px;
             left: 120px;
+            @media (max-width: $container-md - 1) {
+                display: none;
+            }
         }
         .gra-step-item {
             position: relative;
@@ -37,6 +63,9 @@ body, html {
             }
             ~ .gra-step-item {
                 margin-top: -8px;
+            }
+            &:last-child {
+                height: auto;
             }
             &::before {
                 content: '';
@@ -66,8 +95,11 @@ body, html {
             }
         }
         [step-side="2"] {
-            padding: 172px 44px 172px 134px;
+            padding: 172px 44px 0 134px;
             color: #fff;
+            @media (max-width: 1368px) {
+                padding-left: 100px;
+            }
             &[step-side-inner="1"] {
                 .gra-step-item:first-child {
                     &::before {
@@ -107,6 +139,10 @@ body, html {
         overflow: auto;
         border-radius: 50px 0 0 0;
         margin-left: -50px;
+        @media (max-width: $container-md - 1) {
+            border-radius: 0;
+            margin: 0;
+        }
         &-inner {
             .gra-step-footer {
                 display: flex;
@@ -145,6 +181,10 @@ body, html {
             margin: 0 auto;
             &[step="1"] {
                 padding: 80px 0;
+                @media (max-width: 1280px) {
+                    padding-left: 40px;
+                    padding-right: 40px;
+                }
                 .gra-title {
                     max-width: 506px;
                     font-size: 35px;
@@ -193,14 +233,21 @@ body, html {
                     background-color: #fff;
                     text-align: left;
                     transition: .3s all;
-                    &:hover {
-                        padding-left: 70px;
+                    @media (max-width: $container-md - 1) {
+                        padding: 13px 33px;
+                        line-height: 1.25;
                     }
+                    
                     &:hover, &:focus {
                         background-color: #F5F5F5;
                     }
-                    &.active {
+                    &.active, &:hover {
                         padding-left: 70px;
+                        @media (max-width: $container-md - 1) {
+                            padding-left: 60px;
+                        }
+                    }
+                    &.active {
                         background-color: #F5F5F5;
                         box-shadow: 0 0 1px 1px #064A3C;
                     }
@@ -224,6 +271,10 @@ body, html {
                     background-color: #AFAFAF;
                 }
                 padding: 74px 0 0;
+                @media (max-width: 1280px) {
+                    padding-left: 40px;
+                    padding-right: 40px;
+                }
                 .gra-title {
                     font-size: 24px;
                     font-weight: 500;
@@ -495,6 +546,10 @@ body, html {
                 font-weight: 500;
                 color: $primary;
             }
+
+            @media (max-width: $container-md - 1) {
+                padding: 22px !important;
+            }
         }
         .gra-planos {
             display: flex;
@@ -503,12 +558,21 @@ body, html {
 
             &__item {
                 max-width: 205px;
+                height: 251px;
                 width: 100%;
                 padding: 20px 10px;
                 border-radius: 25px;
                 text-align: center;
                 cursor: pointer;
                 transition: .3s all;
+                display: flex;
+                flex-direction: column;
+                > div {
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: space-between;
+                    height: 100%;
+                }
                 &:hover, &.active {
                     transform: translateY(-8px);
                     box-shadow: 0 0 10px 1px #064A3C;
@@ -532,6 +596,7 @@ body, html {
                         background-color: #fff;
                     }
                 }
+                position: relative;
                 &-title {
                     max-width: 122px;
                     margin: 0 auto;
@@ -539,6 +604,9 @@ body, html {
                     font-weight: 500;
                 }
                 &-desconto {
+                    position: absolute;
+                    top: 55px;
+                    width: 185px;
                     padding: 20px;
                     margin: 20px 0;
                     border-radius: 20px;
@@ -581,4 +649,155 @@ body, html {
     padding: 4px 10px 0;
     color: red;
     font-size: 12px;
+}
+
+.gra-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    color: $primary;
+    background-color: rgba(0,0,0,0.9);
+    z-index: 1;
+    &__info {
+        position: relative;
+        max-width: 645px;
+        padding: 43px 22px 43px 43px;
+        background-color: #fff;
+        border-radius: 20px;
+        @media (max-width: 700px) {
+            max-width: 90%;
+        }
+        &-title {
+            font-size: 24px;
+            font-weight: 500;
+            line-height: 1.16;
+            &::after {
+                content: '';
+                display: block;
+                width: 100px;
+                height: 5px;
+                margin-top: 30px;
+                border-radius: 10px;
+                background-color: $primary;
+                @media (max-width: $container-md - 1) {
+                    margin-top: 16px;
+                }
+            }
+        }
+        &-text {
+            margin-top: 25px;
+            font-size: 21px;
+            font-weight: 500;
+            line-height: 1.33;
+        }
+        &-close {
+            position: absolute;
+            top: 22px;
+            right: 22px;
+            width: 55px;
+            height: 55px;
+            background-image: url(../images/quero-economizar/close.svg);
+            background-repeat: no-repeat;
+        }
+    }
+}
+
+
+
+@media (max-width: $container-md - 1) {
+    .gra-title {
+        font-size: 30px;
+        line-height: 1.16;
+    }
+    
+    .gra-subtitle {
+        margin-top: 16px !important;
+    }
+    
+    .gra-content {
+        padding-top: 22px !important;
+        margin-top: 22px !important;
+        margin-bottom: 22px !important;
+    }
+    .gra-step-form__content-inner .gra-step-footer {
+        padding-top: 35px;
+        padding-bottom: 18px;
+        flex-direction: column-reverse;
+        align-items: flex-start;
+    }
+    .gra-step-form__content-inner .gra-step-footer__links {
+        flex-direction: row;
+        margin-bottom: 10px;
+    }
+
+    body {
+        border-bottom: 8px solid $secondary;
+    }
+
+    .gra-step-form__content-inner[step="2"] .gra-separator, .gra-step-form__content-inner[step="3"] .gra-separator, .gra-step-form__content-inner[step="4"] .gra-separator, .gra-step-form__content-inner[step="5"] .gra-separator, .gra-step-form__content-inner[step="6"] .gra-separator {
+        margin: 22px 0 0;
+        + .gra-content {
+            padding-top: 0 !important
+        }
+    }
+
+    .gra-step-form__content-inner[step="2"] .gra-col--half, .gra-step-form__content-inner[step="4"] .gra-col--half, .gra-step-form__content-inner[step="6"] .gra-col--half {
+        width: 100%;
+    }
+
+    .gra-step-form__content-inner[step="2"] input, .gra-step-form__content-inner[step="4"] input, .gra-step-form__content-inner[step="6"] input {
+        padding: 20px 20px 0;
+    }
+
+    .gra-step-form__content-inner label {
+        position: absolute;
+        left: 0;
+        top: 12px;
+        font-weight: 500;
+        font-size: 12px;
+        width: 100%;
+        padding-left: 30px;
+        padding-right: 10px;
+        &.gra-label-small {
+            font-size: 11px;
+        }
+    }
+
+    .gra-step-form__content-inner[step="2"] .gra-col .gra-tooltip-icon, .gra-step-form__content-inner[step="4"] .gra-col .gra-tooltip-icon, .gra-step-form__content-inner[step="6"] .gra-col .gra-tooltip-icon {
+        top: 15px;
+        right: 29px;
+    }
+    .gra-step-form__content-inner[step="2"] .gra-col .gra-tooltip, .gra-step-form__content-inner[step="4"] .gra-col .gra-tooltip, .gra-step-form__content-inner[step="6"] .gra-col .gra-tooltip {
+        top: 45px;
+        left: 60%;
+        padding: 12px;
+    }
+    .gra-step-form__content-inner[step="2"] .gra-col .gra-tooltip::before, .gra-step-form__content-inner[step="4"] .gra-col .gra-tooltip::before, .gra-step-form__content-inner[step="6"] .gra-col .gra-tooltip::before {
+        right: 17px;
+    }
+    .gra-step-form__content-inner[step="3"] .gra-info-header-top {
+        flex-wrap: wrap;
+        flex-direction: column;
+        gap: 5px;
+    }
+    .gra-step-form__content .gra-planos {
+        flex-direction: column;
+        gap: 22px;
+        padding-top: 22px;
+    }
+    .gra-step-form__content .gra-planos__item {
+        max-width: 364px;
+        flex-direction: row;
+        height: 150px;
+    }
+
+    .gra-step-form__content .gra-planos__item-desconto {
+        position: static;
+        width: 169px;
+    }
 }

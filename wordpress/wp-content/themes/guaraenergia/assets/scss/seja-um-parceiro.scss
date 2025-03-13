@@ -15,7 +15,7 @@
         font-weight: 600;
         color: $secondary;
         @media (max-width: $container-md - 1) {
-            font-size: 30px;
+            font-size: 38px;
         }
     }
     &__subtitle {
@@ -37,13 +37,26 @@
         }
     }
 
+    &__title {
+        @media (max-width: $container-md - 1) {
+            color: $primary;
+        }
+    }
+    &__subtitle {
+        @media (max-width: $container-md - 1) {
+            color: $primary;
+        }
+    }
+
     @media (max-width: $container-md - 1) {
         height: auto;
-        padding: 32px 0;
-        background-position: center, center right -520px;
-        margin-bottom: 16px;
-        background-image: linear-gradient(to right,rgba(0,0,0,.9), rgba(0,0,0,.6)), url(../images/seja-um-parceiro/banner.png);
-        background-repeat: repeat, no-repeat;
+        padding: 243px 0 0;
+        margin-bottom: 0;
+        background-position: top center;
+
+        + .gra-container {
+            margin: 48px 0;
+        }
     }
 }
 
@@ -60,7 +73,8 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            gap: 16px;
+            gap: 32px;
+            align-items: flex-start;
         }
     }
     &__left {
