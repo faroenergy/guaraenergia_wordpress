@@ -300,7 +300,7 @@
         
         const StepController = {
             dev: true,
-            start: 3,
+            start: 1,
             stepContainer: null,
             firstName: "Guará",
             lastName: "Energia",
