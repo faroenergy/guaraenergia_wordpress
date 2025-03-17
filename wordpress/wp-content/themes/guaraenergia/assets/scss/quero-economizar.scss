@@ -40,9 +40,6 @@ body, html {
             height: 100%;
             background-position: center;
             background-repeat: no-repeat;
-            @media (max-width: $container-md - 1) {
-                display: none;
-            }
         }
         &-logo {
             position: absolute;
@@ -711,8 +708,12 @@ body, html {
 
 @media (max-width: $container-md - 1) {
     .gra-title {
-        font-size: 30px;
-        line-height: 1.16;
+        font-size: 30px !important;
+        line-height: 1.16 !important;
+    }
+
+    .gra-btn-link.gra-right-corner {
+        margin-left: 0;
     }
     
     .gra-subtitle {
@@ -733,6 +734,7 @@ body, html {
     .gra-step-form__content-inner .gra-step-footer__links {
         flex-direction: row;
         margin-bottom: 10px;
+        gap: 16px;
     }
 
     body {
@@ -751,7 +753,8 @@ body, html {
     }
 
     .gra-step-form__content-inner[step="2"] input, .gra-step-form__content-inner[step="4"] input, .gra-step-form__content-inner[step="6"] input {
-        padding: 20px 20px 0;
+        padding: 16px 20px 0;
+        font-size: 14px;
     }
 
     .gra-step-form__content-inner label {
@@ -780,6 +783,20 @@ body, html {
     .gra-step-form__content-inner[step="2"] .gra-col .gra-tooltip::before, .gra-step-form__content-inner[step="4"] .gra-col .gra-tooltip::before, .gra-step-form__content-inner[step="6"] .gra-col .gra-tooltip::before {
         right: 17px;
     }
+    .gra-step-form__content-inner[step="2"], .gra-step-form__content-inner[step="4"], .gra-step-form__content-inner[step="5"], .gra-step-form__content-inner[step="6"] {
+        .gra-separator {
+            display: none;
+        }
+    }
+    .gra-step-form__content-inner[step="7"], .gra-step-form__content-inner[step="8"] {
+        .gra-step-icon {
+            display: none;
+        }
+        .gra-content {
+            padding-top: 0 !important;
+            margin-top: 10px !important;
+        }
+    }
     .gra-step-form__content-inner[step="3"] .gra-info-header-top {
         flex-wrap: wrap;
         flex-direction: column;
@@ -798,6 +815,56 @@ body, html {
 
     .gra-step-form__content .gra-planos__item-desconto {
         position: static;
-        width: 169px;
+        width: 160px;
+        flex-shrink: 0;
+        padding: 15px 0;
+    }
+
+    .gra-step-form__content-inner[step="2"], .gra-step-form__content-inner[step="3"], .gra-step-form__content-inner[step="4"], .gra-step-form__content-inner[step="5"], .gra-step-form__content-inner[step="6"]  {
+        .gra-title {
+            font-size: 20px !important;
+        }
+        &::after {
+            margin-top: 24px !important;
+        }
+        .gra-content {
+            margin-top: 38px !important;
+        }
+    }
+    
+    .gra-step-form__content-inner[step="3"] .gra-info-header-top .gra-info-header {
+        font-size: 15px;
+    }
+
+    .gra-step-form__content-inner[step="3"] .gra-info-header-top2 {
+        gap: 27px;
+        font-size: 12px;
+    }
+
+    .gra-popup__info {
+        padding: 24px;
+    }
+
+    .gra-popup__info-text {
+        font-size: 18px;
+    }
+
+    .gra-step-form__content-inner[step="8"] .gra-title {
+        font-size: 24px !important;
+    }
+
+    .gra-step-form__side [step-side] {
+        &[step-side="3"] {
+            height: 211px;
+            background-size: 130%;
+        }
+        &[step-side="4"] {
+            height: 211px;
+            background-size: 110%;
+        }
+        &:not([step-side="3"]):not([step-side="4"]) {
+            display: none;
+        }
     }
 }
+

@@ -25,6 +25,29 @@
     $validade = $passo_3['validade'];
 ?>
 
+<style>
+    @media (max-width: 1011px) {
+        .gra-step-form__side [step-side="3"] {
+            background-image: url(<?php echo $passo_7['imagem_mobile'] ?>)
+        }
+    }
+    @media (min-width: 1012px) {
+        .gra-step-form__side [step-side="3"] {
+            background-image: url(<?php echo $passo_7['imagem'] ?>)
+        }
+    }
+    @media (min-width: 1012px) {
+        .gra-step-form__side [step-side="4"] {
+            background-image: url(<?php echo $sem_usinas['imagem'] ?>)
+        }
+    }
+    @media (max-width: 1011px) {
+        .gra-step-form__side [step-side="4"] {
+            background-image: url(<?php echo $sem_usinas['imagem_mobile'] ?>)
+        }
+    }
+</style>
+
 <section class="gra-step-form">
     <header class="gra-header">
         <div class="gra-container gra-container--flex">
@@ -55,8 +78,8 @@
                     <span><?php echo $passos_lateral['04']; ?></span>
                 </p>
             </div>
-            <div step-side="4" style="display:none;background-image:url(<?php echo $sem_usinas['imagem'] ?>)"></div>
-            <div step-side="3" style="display:none;background-image:url(<?php echo $passo_7['imagem'] ?>)"></div>
+            <div step-side="3" style="display:none"></div>
+            <div step-side="4" style="display:none"></div>
         </div>
         <div class="gra-step-form__content jsStepContent">
             <div class="gra-step-form__content-inner" step-side="1" step="1" style="display:none">
@@ -273,7 +296,7 @@
     (function() {
         
         const StepController = {
-            dev: false,
+            dev: true,
             start: 1,
             stepContainer: null,
             firstName: "Guará",
@@ -468,7 +491,7 @@
                 if (step === 1) {
                     (function() {
                         if (!self.popUpStart) {
-                            popUpStart = true;
+                            self.popUpStart = true;
                             document.querySelector('.jsPopUpAlert').style.display = '';
 
                             document.querySelectorAll('.jsClosePopUpAlert').forEach(function(item) {
