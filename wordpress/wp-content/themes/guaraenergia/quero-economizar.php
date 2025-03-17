@@ -133,7 +133,8 @@
                 <?php get_template_part('templates/quero-economizar/footer', null, array('botao' => $passo_2['botao'], 'go_back' => true, 'texto_privacidade' => $texto_privacidade))?>
             </div>
             <div class="gra-step-form__content-inner" step-side="2" step-side-inner="1" step="3" style="display:none">
-                <div class="gra-title"><?php echo $passo_3['titulo']; ?></div>
+                <div class="gra-title gra-hide-print"><?php echo $passo_3['titulo']; ?></div>
+                <div class="gra-title gra-show-print"><?php echo $passo_3['titulo_print']; ?></div>
                 <div>
                     <div class="gra-info-header-top">
                         <p class="gra-info-header"><img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/quero-economizar/user.svg" alt="">Cliente: <b class="jsFieldFullName"></b></p>
@@ -173,7 +174,9 @@
                     </div>
                 </div>
                 <p class="gra-texto-extra"><?php echo $passo_3['texto_extra']; ?></p>
-                <?php get_template_part('templates/quero-economizar/footer', null, array('botao' => $passo_3['botao'], 'go_back' => true, 'texto_privacidade' => $texto_privacidade))?>
+                <div class="gra-hide-print">
+                    <?php get_template_part('templates/quero-economizar/footer', null, array('botao' => $passo_3['botao'], 'go_back' => true, 'texto_privacidade' => $texto_privacidade, 'baixar_proposta' => true))?>
+                </div>
             </div>
             <div class="gra-step-form__content-inner" step-side="2" step-side-inner="2" step="4" style="display:none">
                 <div class="gra-title"><?php echo $passo_4['titulo']; ?></div>
@@ -297,7 +300,7 @@
         
         const StepController = {
             dev: true,
-            start: 1,
+            start: 3,
             stepContainer: null,
             firstName: "Guará",
             lastName: "Energia",
