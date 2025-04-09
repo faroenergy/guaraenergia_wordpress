@@ -116,17 +116,18 @@
                         <label>Confirme o e-mail*</label>
                     </div>
                     <div class="gra-col">
-                        <input class="jsField" type="text" mask-cep />
+                        <input class="jsField jsFieldSearchCEP" type="text" mask-cep />
                         <label>CEP*</label>
+                        <div class="lds-ring" style="display:none"><div></div><div></div><div></div><div></div></div>
                     </div>
                     <div class="gra-col">
-                        <input class="jsField jsOptional" type="text" />
+                        <input class="jsField jsOptional jsFieldCodePartner" type="text" />
                         <label>Código do Parceiro/Cupom Promocional</label>
                         <div class="gra-tooltip-icon gra-tooltip-icon--info"></div>
                         <span class="gra-tooltip">Caso você tenha nos conhecido através de um parceiro comercial coloque neste campo o código do parceiro.</span>
                     </div>
                     <div class="gra-col">
-                        <input class="jsField" type="text" minlength="3" />
+                        <input class="jsField jsFieldAverage" type="text" minlength="4" mask-money />
                         <label class="gra-label-small">Média do Valor em R$ pago na fatura de energia*</label>
                     </div>
                 </div>
@@ -138,7 +139,7 @@
                 <div>
                     <div class="gra-info-header-top">
                         <p class="gra-info-header"><img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/quero-economizar/user.svg" alt="">Cliente: <b class="jsFieldFullName"></b></p>
-                        <p class="gra-info-header"><img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/quero-economizar/bulb.svg" alt="">Distribuidora: <b>Enel</b></p>
+                        <p class="gra-info-header"><img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/quero-economizar/bulb.svg" alt="">Distribuidora: <b class="jsFieldDistribuidora"></b></p>
                     </div>
                     <div class="gra-info-header-top2">
                         <div>
@@ -150,27 +151,27 @@
                     </div>
                 </div>
                 <hr class="gra-separator" />
-                <div class="gra-planos">
-                    <div class="gra-planos__item gray jsPlanoItem">
+                <div class="gra-planos jsPlanoItemWrapper">
+                    <div class="gra-planos__item gray jsPlanoItem" data-plano-item="0">
                         <div>
                             <p class="gra-planos__item-title"><?php echo $passo_3['plano_1']; ?></p>
-                            <p class="gra-planos__item-valor">Economize até <br><b>R$1.000/ano</b></p>
+                            <p class="gra-planos__item-valor">Economize até <br><b>R$<span class="jsPlanoYearEconomy"></span>/ano</b></p>
                         </div>
-                        <p class="gra-planos__item-desconto"><span>Tenha</span> <b>10% de economia</b></p>
+                        <p class="gra-planos__item-desconto"><span>Tenha</span> <b><span class="jsPlanoDiscount"><span>% de economia</b></p>
                     </div>
-                    <div class="gra-planos__item yellow jsPlanoItem">
+                    <div class="gra-planos__item yellow jsPlanoItem" data-plano-item="2">
                         <div>
                             <p class="gra-planos__item-title"><?php echo $passo_3['plano_2']; ?></p>
-                            <p class="gra-planos__item-valor">Economize até <br><b>R$1.200/ano</b></p>
+                            <p class="gra-planos__item-valor">Economize até <br><b>R$<span class="jsPlanoYearEconomy"></span>/ano</b></p>
                         </div>
-                        <p class="gra-planos__item-desconto"><span>Tenha</span> <b>12% de economia</b></p>
+                        <p class="gra-planos__item-desconto"><span>Tenha</span> <b><span class="jsPlanoDiscount"><span>% de economia</b></p>
                     </div>
-                    <div class="gra-planos__item green jsPlanoItem">
+                    <div class="gra-planos__item green jsPlanoItem" data-plano-item="3">
                         <div>
                             <p class="gra-planos__item-title"><?php echo $passo_3['plano_3']; ?></p>
-                            <p class="gra-planos__item-valor">Economize até <br><b>R$1.500/ano</b></p>
+                            <p class="gra-planos__item-valor">Economize até <br><b>R$<span class="jsPlanoYearEconomy"></span>/ano</b></p>
                         </div>
-                        <p class="gra-planos__item-desconto"><span>Tenha</span> <b>15% de economia</b></p>
+                        <p class="gra-planos__item-desconto"><span>Tenha</span> <b><span class="jsPlanoDiscount"><span>% de economia</b></p>
                     </div>
                 </div>
                 <p class="gra-texto-extra"><?php echo $passo_3['texto_extra']; ?></p>
@@ -288,9 +289,7 @@
         <div class="gra-popup__info-title">
             Atenção
         </div>
-        <p class="gra-popup__info-text">
-            Durante o preenchimento do cadastro, pediremos os dados do titular da conta de energia. Por isso, solicitamos que o cadastro seja feito pelo próprio titular.
-        </p>
+        <p class="gra-popup__info-text jsPopUpAlertTxt"></p>
     </div>
 </div>
 
@@ -299,13 +298,23 @@
     (function() {
         
         const StepController = {
-            dev: true,
-            start: 1,
+            dev: false,
+            start: 2,
             stepContainer: null,
             firstName: "Guará",
             lastName: "Energia",
             email: "contato@guaraenergia.com.br",
             popUpStart: false,
+            installation_id: null,
+            needNewPlano: true,
+            distribuidora: null,
+            cep: null,
+
+            planosText: [
+                '<?php echo $passo_3['plano_1']; ?>',
+                '<?php echo $passo_3['plano_2']; ?>',
+                '<?php echo $passo_3['plano_3']; ?>'
+            ],
     
             init: function() {
                 const self = this;
@@ -335,6 +344,7 @@
     
                 NextStep.forEach(function(item) {
                     item.onclick = function() {
+                        item.blur();
                         
                         if (self.dev) {
                             self.showStep(self.currentStep + 1);   
@@ -353,24 +363,86 @@
     
                 PrevStep.forEach(function(item) {
                     item.onclick = function() {
+                        item.blur();
                         self.showStep(self.currentStep - 1);             
                     };
+                });
+
+                document.querySelectorAll('.jsField').forEach(function(item) {
+                    item.addEventListener('focus', function() {
+                        item.classList.remove('gra-error');
+
+                        if (item.parentElement.querySelector('.gra-error-msg')) {
+                            item.parentElement.querySelector('.gra-error-msg').remove();
+                        }
+                    });
+                });
+
+                document.querySelectorAll('.jsClosePopUpAlert').forEach(function(item) {
+                    item.onclick = function(e) {
+                        var itemTarget = e.target;
+                        if (itemTarget.classList.contains('jsClosePopUpAlert')) {
+                            self.controlAlert();
+                        }
+                    }
                 });
             },
 
             validationBeforeNextStep: {
                 '2': function(callback) {
-                    let accept = false;
 
                     if (StepController.validateWrongFields()) {
-                        StepController.firstName = StepController.stepContainer.querySelector('.jsFieldFirstName').value;
-                        StepController.lastName = StepController.stepContainer.querySelector('.jsFieldLastName').value;
-                        StepController.email = StepController.stepContainer.querySelector('.jsFieldEmail').value;
 
-                        if (accept) {
-                            callback();
+                        StepController.stepContainer.classList.add('gra-loading');
+                        
+                        if (StepController.installation_id !== null) {
+                            StepController.firstName = StepController.stepContainer.querySelector('.jsFieldFirstName').value;
+                            StepController.lastName = StepController.stepContainer.querySelector('.jsFieldLastName').value;
+                            StepController.email = StepController.stepContainer.querySelector('.jsFieldEmail').value;
+                            StepController.cep = StepController.stepContainer.querySelector('.jsFieldSearchCEP').value.replaceAll('.', '').replaceAll('-', '');
+                            StepController.codePartner = StepController.stepContainer.querySelector('.jsFieldCodePartner').value;
+                            StepController.averageConsumption = StepController.stepContainer('.jsFieldAverage').value.replaceAll('.', '').replaceAll(',', '.');
+                            
+
+                            (async function() {
+                                try {
+                                    const response = await fetch('https://api.guaraenergia.com/client/register/', {
+                                        method: "POST",
+                                        headers: {
+                                            'Content-Type': 'application/json'
+                                        },
+                                        body: JSON.stringify({
+                                            type: 'cpf',
+                                            name: StepController.firstName + ' ' + StepController.lastName,
+                                            email: StepController.email,
+                                            zip_code: StepController.cep,
+                                            average_consumption: StepController.averageConsumption,
+                                            partner_code: StepController.codePartner,
+                                            installation_address_number: '',
+                                            installation_address_complement: '',
+                                            phone: ''
+                                        })
+                                    });
+                                    
+                                    if (!response.ok) {
+                                        StepController.stepContainer.classList.remove('gra-loading');
+                                        throw new Error(`Response status: ${response.status}`);
+                                    }
+                                    
+                                    const data = await response.json();
+
+                                    StepController.stepContainer.classList.remove('gra-loading');
+                                    callback();
+                                    
+                                } catch (error) {
+                                    StepController.stepContainer.classList.remove('gra-loading');
+                                }
+                            })();
+
                         } else {
-                            StepController.showStep(8);
+                            setTimeout(() => {
+                                StepController.showStep(8);
+                            }, 1000);
                         }
                     }
                 },
@@ -481,11 +553,29 @@
 
                 fields.forEach(el => {
                     if (el.hasAttribute('mask-cpf')) {
-                        VMasker(el).maskPattern("999.999.999-99")
+                        VMasker(el).maskPattern("999.999.999-99");
+
                     } else if (el.hasAttribute('mask-cep')) {
-                        VMasker(el).maskPattern("99.999-999")
+                        VMasker(el).maskPattern("99.999-999");
+
+                    } else if (el.hasAttribute('mask-money')) {
+                        VMasker(el).maskMoney({
+                            precision: 2,
+                            separator: ',',
+                            delimiter: '.',
+                        });
                     }
                 });
+            },
+
+            controlAlert: function(show = false, text = '') {
+                if (show) {
+                    document.querySelector('.jsPopUpAlert').style.display = '';
+                    document.querySelector('.jsPopUpAlertTxt').textContent = text;
+                } else {
+                    document.querySelector('.jsPopUpAlert').style.display = 'none';
+                    document.querySelector('.jsPopUpAlertTxt').textContent = '';
+                }
             },
     
             stepEvents: function(step) {
@@ -495,16 +585,8 @@
                     (function() {
                         if (!self.popUpStart) {
                             self.popUpStart = true;
-                            document.querySelector('.jsPopUpAlert').style.display = '';
-
-                            document.querySelectorAll('.jsClosePopUpAlert').forEach(function(item) {
-                                item.onclick = function(e) {
-                                    var itemTarget = e.target;
-                                    if (itemTarget.classList.contains('jsClosePopUpAlert')) {
-                                        document.querySelector('.jsPopUpAlert').style.display = 'none';
-                                    }
-                                }
-                            });
+                            
+                            self.controlAlert(true, 'Durante o preenchimento do cadastro, pediremos os dados do titular da conta de energia. Por isso, solicitamos que o cadastro seja feito pelo próprio titular.')
                         }
                     })();
                     
@@ -540,6 +622,56 @@
                         self.stepContainer.querySelector('.jsFieldFullName').value = `${self.firstName} ${self.lastName}`;
                     }
 
+                    if (step === 2) {
+                        let value = null, valueLength = null, btn = null;
+                        
+                        self.stepContainer.querySelector('.jsFieldSearchCEP').oninput = async function() {
+                            btn = this;
+                            value = this.value;
+                            valueLength = value.length;
+                            
+                            if (valueLength === 10) {
+                                btn.disabled = true;
+                                value = value.replaceAll('.', '').replaceAll('-', '');
+
+                                const queryParams = new URLSearchParams({
+                                    zip_code: value
+                                }).toString();
+
+                                const url = `https://api.guaraenergia.com/utility-address?${queryParams}`;
+
+                                try {
+                                    const response = await fetch(url, {
+                                        method: "GET",
+                                        headers: {
+                                            'Content-Type': 'application/json'
+                                        }
+                                    });
+                                    
+                                    if (!response.ok) {
+                                        btn.disabled = false;
+                                        btn.focus();
+                                        throw new Error(`Response status: ${response.status}`);
+                                    }
+                                    
+                                    const data = await response.json();
+                                    
+                                    self.needNewPlano = true;
+                                    self.distribuidora = data.utility_type + ' - ' + data.utility_name;
+                                    self.installation_id = data.utility_id;
+                                    btn.disabled = false;
+                                    btn.focus();
+                                    
+                                } catch (error) {
+                                    btn.disabled = false;
+                                    btn.focus();
+                                    self.controlAlert(true, 'Não foi possível encontrar o CEP. Por favor, verifique se digitou corretamente.');
+                                }
+
+                            }
+                        }
+                    }
+
                 } else if (step === 3) {
                     
                     (function() {
@@ -548,36 +680,58 @@
                         }
 
                         self.stepContainer.querySelector('.jsFieldFullName').textContent = `${self.firstName} ${self.lastName}`;
+                        self.stepContainer.querySelector('.jsFieldDistribuidora').textContent = self.distribuidora;
                     })();
-    
-                    (function() {
-                        const dataPropostaEl = self.stepContainer.querySelector('.jsDataProposta');
-                        const dataValidadeEl = self.stepContainer.querySelector('.jsDataValidade');
-        
-                        const validade = parseInt(dataValidadeEl.getAttribute('data-validade')) - 1;
-        
-                        if (validade < 0) {
-                            validade = 0;
+
+                    if (self.needNewPlano) {
+                        self.stepContainer.querySelector('.jsNextStep').classList.add('disabled');
+                        
+                        if (self.stepContainer.querySelector('.jsPlanoItem.active')) {
+                            self.stepContainer.querySelector('.jsPlanoItem.active').removeClass('active');
                         }
-        
-                        const today = new Date();
-                        const today_dd = String(today.getDate()).padStart(2, '0');
-                        const today_mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-                        const today_yyyy = today.getFullYear();
-        
-                        const next = new Date();
-                        next.setDate(next.getDate() + validade)
-                        const next_dd = String(next.getDate()).padStart(2, '0');
-                        const next_mm = String(next.getMonth() + 1).padStart(2, '0'); //January is 0!
-                        const next_yyyy = next.getFullYear();
-        
-                        let todayDate = today_dd + '/' + today_mm + '/' + today_yyyy;
-                        let nextDate = next_dd + '/' + next_mm + '/' + next_yyyy;
-        
-                        dataPropostaEl.textContent = todayDate;
-                        dataValidadeEl.textContent = nextDate;
-                    })();
+
+                        (function() {
+                            const dataPropostaEl = self.stepContainer.querySelector('.jsDataProposta');
+                            const dataValidadeEl = self.stepContainer.querySelector('.jsDataValidade');
     
+                            function valueToBr(num) {
+                                return num < 1000 ? num.toString() : (num / 1000).toFixed(3);
+                            }
+    
+                            function dataAtualFormatada(date){
+                                var data = new Date(date),
+                                dia  = data.getDate().toString().padStart(2, '0'),
+                                mes  = (data.getMonth()+1).toString().padStart(2, '0'),
+                                ano  = data.getFullYear();
+                                return dia + "/" + mes + "/" + ano;
+                            }
+                                    
+                            fetch(`https://api.guaraenergia.com/propose/?installation_id=${self.installation_id}`)
+                            
+                            .then(function(resp) {
+                                return resp.json()
+                            })
+                            
+                            .then(function (json) {
+                                dataPropostaEl.textContent = dataAtualFormatada(json.emission_date);
+                                dataValidadeEl.textContent = dataAtualFormatada(json.due_date);
+    
+                                const installation = json.installation_discount[0];
+    
+                                for (const [key, value] of Object.entries(installation.discounts)) {
+                                    document.querySelector(`.jsPlanoItem[data-plano-item="${key}"] .jsPlanoDiscount`).textContent = value * 100;
+                                }
+                                
+                                for (const [key1, value2] of Object.entries(installation.yearly_economy)) {
+                                    document.querySelector(`.jsPlanoItem[data-plano-item="${key}"] .jsPlanoYearEconomy`).textContent = valueToBr(value);
+                                }
+    
+    
+                                self.needNewPlano = false;
+                            });
+                        })();
+                    }
+
                     (function() {
                         const planosItem = self.stepContainer.querySelectorAll('.jsPlanoItem');
                         let planoActive = null;
