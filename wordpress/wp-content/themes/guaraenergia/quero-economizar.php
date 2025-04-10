@@ -115,13 +115,17 @@
                         <input class="jsField jsSameField" type="email" />
                         <label>Confirme o e-mail*</label>
                     </div>
-                    <div class="gra-col">
+                    <div class="gra-col gra-col--half">
                         <input class="jsField jsFieldSearchCEP" type="text" mask-cep />
                         <label>CEP*</label>
                         <div class="lds-ring" style="display:none"><div></div><div></div><div></div><div></div></div>
                     </div>
+                    <div class="gra-col gra-col--half">
+                        <input class="jsField jsFieldPhone" type="text" mask-phone />
+                        <label>Telefone*</label>
+                    </div>
                     <div class="gra-col">
-                        <input class="jsField jsOptional jsFieldCodePartner" type="text" />
+                        <input class="jsField jsFieldCodePartner" type="text" />
                         <label>Código do Parceiro/Cupom Promocional</label>
                         <div class="gra-tooltip-icon gra-tooltip-icon--info"></div>
                         <span class="gra-tooltip">Caso você tenha nos conhecido através de um parceiro comercial coloque neste campo o código do parceiro.</span>
@@ -197,12 +201,12 @@
                         <label>CEP*</label>
                     </div>
                     <div class="gra-col gra-col--half">
-                        <input class="jsField" type="text" disabled value="Enel" />
+                        <input class="jsField jsInstallationName" type="text" disabled />
                         <label>Distribuidora*</label>
                         <div class="gra-tooltip-icon gra-tooltip-icon--lock"></div>
                     </div>
                     <div class="gra-col gra-col--half">
-                        <input class="jsField" type="text" minlength="3" />
+                        <input class="jsField jsInstallationId" type="text" disabled minlength="3" />
                         <label>Nº de instalação*</label>
                         <div class="gra-tooltip-icon gra-tooltip-icon--info"></div>
                         <!-- <span class="gra-tooltip">Caso você tenha nos conhecido através de um parceiro comercial coloque neste campo o código do parceiro.</span> -->
@@ -305,10 +309,13 @@
             lastName: "Energia",
             email: "contato@guaraenergia.com.br",
             popUpStart: false,
-            installation_id: null,
+            installation: null,
+            client: null,
+            utility_id: null,
             needNewPlano: true,
             distribuidora: null,
             cep: null,
+            stepStarted: [],
 
             planosText: [
                 '<?php echo $passo_3['plano_1']; ?>',
@@ -334,6 +341,8 @@
     
                 self.constrolStepVisibity('', step);
                 self.stepEvents(step);
+
+                self.stepStarted.push(step);
             },
     
             startEvents: function() {
@@ -350,8 +359,8 @@
                             self.showStep(self.currentStep + 1);   
 
                         } else if (!this.classList.contains('disabled')) {
-                            if (typeof self.validationBeforeNextStep[`${self.currentStep}`] !== 'undefined') {
-                                self.validationBeforeNextStep[`${self.currentStep}`](function() {
+                            if (typeof self.actionBeforeNextStep[`${self.currentStep}`] !== 'undefined') {
+                                self.actionBeforeNextStep[`${self.currentStep}`](function() {
                                     self.showStep(self.currentStep + 1);
                                 })
                             } else {
@@ -388,26 +397,27 @@
                 });
             },
 
-            validationBeforeNextStep: {
+            actionBeforeNextStep: {
                 '2': function(callback) {
 
                     if (StepController.validateWrongFields()) {
 
                         StepController.stepContainer.classList.add('gra-loading');
                         
-                        if (StepController.installation_id !== null) {
+                        if (StepController.utility_id !== null) {
                             StepController.firstName = StepController.stepContainer.querySelector('.jsFieldFirstName').value;
                             StepController.lastName = StepController.stepContainer.querySelector('.jsFieldLastName').value;
                             StepController.email = StepController.stepContainer.querySelector('.jsFieldEmail').value;
                             StepController.cep = StepController.stepContainer.querySelector('.jsFieldSearchCEP').value.replaceAll('.', '').replaceAll('-', '');
+                            StepController.phone = StepController.stepContainer.querySelector('.jsFieldPhone').value.replaceAll('(', '').replaceAll(')', '').replaceAll(' ', '').replaceAll('-', '');
                             StepController.codePartner = StepController.stepContainer.querySelector('.jsFieldCodePartner').value;
-                            StepController.averageConsumption = StepController.stepContainer('.jsFieldAverage').value.replaceAll('.', '').replaceAll(',', '.');
+                            StepController.averageConsumption = StepController.stepContainer.querySelector('.jsFieldAverage').value.replaceAll('.', '').replaceAll(',', '.');
                             
-
                             (async function() {
                                 try {
                                     const response = await fetch('https://api.guaraenergia.com/client/register/', {
                                         method: "POST",
+                                        mode: 'no-cors',
                                         headers: {
                                             'Content-Type': 'application/json'
                                         },
@@ -416,11 +426,11 @@
                                             name: StepController.firstName + ' ' + StepController.lastName,
                                             email: StepController.email,
                                             zip_code: StepController.cep,
-                                            average_consumption: StepController.averageConsumption,
+                                            average_consumption: parseFloat(StepController.averageConsumption),
                                             partner_code: StepController.codePartner,
-                                            installation_address_number: '',
-                                            installation_address_complement: '',
-                                            phone: ''
+                                            // installation_address_number: '',
+                                            // installation_address_complement: '',
+                                            phone: StepController.phone
                                         })
                                     });
                                     
@@ -430,6 +440,8 @@
                                     }
                                     
                                     const data = await response.json();
+                                    StepController.installation = data.installation;
+                                    StepController.client = data.client;
 
                                     StepController.stepContainer.classList.remove('gra-loading');
                                     callback();
@@ -444,6 +456,35 @@
                                 StepController.showStep(8);
                             }, 1000);
                         }
+                    }
+                },
+                '3': function(callback) {
+                    StepController.stepContainer.classList.add('gra-loading');
+
+                    try {
+                        const response = await fetch('https://api.guaraenergia.com/select-propose/ ', {
+                            method: "POST",
+                            mode: 'no-cors',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                installation_id: self.installation.id,
+                                propose_id: parseInt(self.stepContainer.querySelector('.jsPlanoItem.active').getAttribute('data-plano-item')),
+                            })
+                        });
+                        
+                        if (!response.ok) {
+                            throw new Error(`Response status: ${response.status}`);
+                        }
+                        
+                        const data = await response.json();
+                        StepController.stepContainer.classList.remove('gra-loading');
+                        callback();
+                        
+                    } catch (error) {
+                        console.log(error);
+                        StepController.stepContainer.classList.remove('gra-loading');
                     }
                 },
                 '4': function(callback) {
@@ -486,6 +527,11 @@
                             
                         } else if (el.hasAttribute('mask-cep')) {
                             if (el.value.length !== 10) {
+                                addError(el, 'Campo com valor incorreto');
+                            }
+                        
+                        } else if (el.hasAttribute('mask-phone')) {
+                            if (el.value.length < 14) {
                                 addError(el, 'Campo com valor incorreto');
                             }
                             
@@ -551,12 +597,28 @@
 
                 const fields = self.stepContainer.querySelectorAll('.jsField');
 
+                function inputHandler(masks, max, event) {
+                    var c = event.target;
+                    var v = c.value.replace(/\D/g, '');
+                    var m = c.value.length > max ? 1 : 0;
+                    VMasker(c).unMask();
+                    VMasker(c).maskPattern(masks[m]);
+                    c.value = VMasker.toPattern(v, masks[m]);
+                }
+
                 fields.forEach(el => {
                     if (el.hasAttribute('mask-cpf')) {
                         VMasker(el).maskPattern("999.999.999-99");
 
                     } else if (el.hasAttribute('mask-cep')) {
-                        VMasker(el).maskPattern("99.999-999");
+                        var maskCep = ['99.999-999', '99.999-999'];
+                        VMasker(el).maskPattern(maskCep);
+                        el.addEventListener('input', inputHandler.bind(undefined, maskCep, 0), false);
+
+                    } else if (el.hasAttribute('mask-phone')) {
+                        var telMask = ['(99) 9999-99999', '(99) 99999-9999'];
+                        VMasker(el).maskPattern(telMask[0]);
+                        el.addEventListener('input', inputHandler.bind(undefined, telMask, 14), false);
 
                     } else if (el.hasAttribute('mask-money')) {
                         VMasker(el).maskMoney({
@@ -618,12 +680,10 @@
                 } else if (step === 2 || step === 4) {
                     self.createMaskForFields();
 
-                    if (step === 4) {
-                        self.stepContainer.querySelector('.jsFieldFullName').value = `${self.firstName} ${self.lastName}`;
-                    }
-
                     if (step === 2) {
                         let value = null, valueLength = null, btn = null;
+
+                        let customError = false;
                         
                         self.stepContainer.querySelector('.jsFieldSearchCEP').oninput = async function() {
                             btn = this;
@@ -650,30 +710,130 @@
                                     
                                     if (!response.ok) {
                                         btn.disabled = false;
-                                        btn.focus();
-                                        throw new Error(`Response status: ${response.status}`);
+
+                                        if (response.status == 404 || response.status == 400) {
+                                            const data = await response.json();
+                                            
+                                            if (data) {
+                                                if (typeof data.detail !== 'undefined') {
+                                                    customError = true;
+                                                    self.controlAlert(true, data.detail);
+                                                }
+                                            }
+                                        } else {
+                                            throw new Error(`Response status: ${response.status}`);
+                                        }
                                     }
                                     
                                     const data = await response.json();
                                     
                                     self.needNewPlano = true;
                                     self.distribuidora = data.utility_type + ' - ' + data.utility_name;
-                                    self.installation_id = data.utility_id;
+                                    self.utility_id = data.utility_id;
                                     btn.disabled = false;
                                     btn.focus();
                                     
                                 } catch (error) {
                                     btn.disabled = false;
-                                    btn.focus();
-                                    self.controlAlert(true, 'Não foi possível encontrar o CEP. Por favor, verifique se digitou corretamente.');
+
+                                    if (!customError) {
+                                        self.controlAlert(true, 'Não foi possível encontrar o CEP. Por favor, verifique se digitou corretamente.');
+                                        customError = false;
+                                    }
                                 }
 
                             }
                         }
+                    } else if (step === 4) {
+                        self.stepContainer.querySelector('.jsFieldFullName').value = `${self.firstName} ${self.lastName}`;
+                        self.stepContainer.querySelector('.jsInstallationName').value = `${self.installation.utility.name}`;
+                        self.stepContainer.querySelector('.jsInstallationId').value = `${self.installation.id}`;
+
+                        (async function() {
+
+                            const url = `https://api.guaraenergia.com/client/registration-data/?email=${self.client.email}`;
+
+                            try {
+                                const response = await fetch(url, {
+                                    method: "GET",
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    }
+                                });
+                                
+                                if (!response.ok) {
+                                    // btn.disabled = false;
+
+                                    // if (response.status == 404 || response.status == 400) {
+                                    //     const data = await response.json();
+                                        
+                                    //     if (data) {
+                                    //         if (typeof data.detail !== 'undefined') {
+                                    //             customError = true;
+                                    //             self.controlAlert(true, data.detail);
+                                    //         }
+                                    //     }
+                                    // } else {
+                                    // }
+                                    throw new Error(`Response status: ${response.status}`);
+                                }
+                                
+                                const data = await response.json();
+                                
+                                dataPropostaEl.textContent = dataAtualFormatada(data.emission_date);
+                                dataValidadeEl.textContent = dataAtualFormatada(data.due_date);
+
+                                const installation = data.installation_discount[0];
+
+                                for (const [key, value] of Object.entries(installation.discounts)) {
+                                    document.querySelector(`.jsPlanoItem[data-plano-item="${key}"] .jsPlanoDiscount`).textContent = value * 100;
+                                }
+                                
+                                for (const [key1, value2] of Object.entries(installation.yearly_economy)) {
+                                    document.querySelector(`.jsPlanoItem[data-plano-item="${key}"] .jsPlanoYearEconomy`).textContent = valueToBr(value);
+                                }
+
+                                self.needNewPlano = false;
+                                    
+                            } catch (error) {
+                                // btn.disabled = false;
+                                // if (!customError) {
+                                //     self.controlAlert(true, 'Não foi possível encontrar o CEP. Por favor, verifique se digitou corretamente.');
+                                //     customError = false;
+                                // }
+                            }
+                            })();
                     }
+
 
                 } else if (step === 3) {
                     
+                    if (self.stepStarted.indexOf(step) === -1) {
+                        document.querySelector('.gra-btn-download-proposta').addEventListener('click', async function() {
+                            try {
+                                const response = await fetch('https://api.guaraenergia.com/qualify-lead/', {
+                                    method: "POST",
+                                    mode: 'no-cors',
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify({
+                                        installation_id: self.installation.id
+                                    })
+                                });
+                                
+                                if (!response.ok) {
+                                    throw new Error(`Response status: ${response.status}`);
+                                }
+                                
+                                const data = await response.json();
+                                
+                            } catch (error) {
+                                console.log(error);
+                            }
+                        });
+                    }
+
                     (function() {
                         if (!self.stepContainer.querySelector('.jsPlanoItem.active')) {
                             self.stepContainer.querySelector('.jsNextStep').classList.add('disabled');
@@ -705,30 +865,61 @@
                                 ano  = data.getFullYear();
                                 return dia + "/" + mes + "/" + ano;
                             }
+
+                            (async function() {
+
+                                const url = `https://api.guaraenergia.com/propose/?installation_id=${self.installation.id}`;
+    
+                                try {
+                                    const response = await fetch(url, {
+                                        method: "GET",
+                                        headers: {
+                                            'Content-Type': 'application/json'
+                                        }
+                                    });
                                     
-                            fetch(`https://api.guaraenergia.com/propose/?installation_id=${self.installation_id}`)
-                            
-                            .then(function(resp) {
-                                return resp.json()
-                            })
-                            
-                            .then(function (json) {
-                                dataPropostaEl.textContent = dataAtualFormatada(json.emission_date);
-                                dataValidadeEl.textContent = dataAtualFormatada(json.due_date);
+                                    if (!response.ok) {
+                                        // btn.disabled = false;
     
-                                const installation = json.installation_discount[0];
-    
-                                for (const [key, value] of Object.entries(installation.discounts)) {
-                                    document.querySelector(`.jsPlanoItem[data-plano-item="${key}"] .jsPlanoDiscount`).textContent = value * 100;
+                                        // if (response.status == 404 || response.status == 400) {
+                                        //     const data = await response.json();
+                                            
+                                        //     if (data) {
+                                        //         if (typeof data.detail !== 'undefined') {
+                                        //             customError = true;
+                                        //             self.controlAlert(true, data.detail);
+                                        //         }
+                                        //     }
+                                        // } else {
+                                        // }
+                                        throw new Error(`Response status: ${response.status}`);
+                                    }
+                                    
+                                    const data = await response.json();
+                                    
+                                    dataPropostaEl.textContent = dataAtualFormatada(data.emission_date);
+                                    dataValidadeEl.textContent = dataAtualFormatada(data.due_date);
+        
+                                    const installation = data.installation_discount[0];
+        
+                                    for (const [key, value] of Object.entries(installation.discounts)) {
+                                        document.querySelector(`.jsPlanoItem[data-plano-item="${key}"] .jsPlanoDiscount`).textContent = value * 100;
+                                    }
+                                    
+                                    for (const [key1, value2] of Object.entries(installation.yearly_economy)) {
+                                        document.querySelector(`.jsPlanoItem[data-plano-item="${key}"] .jsPlanoYearEconomy`).textContent = valueToBr(value);
+                                    }
+        
+                                    self.needNewPlano = false;
+                                        
+                                } catch (error) {
+                                    // btn.disabled = false;
+                                    // if (!customError) {
+                                    //     self.controlAlert(true, 'Não foi possível encontrar o CEP. Por favor, verifique se digitou corretamente.');
+                                    //     customError = false;
+                                    // }
                                 }
-                                
-                                for (const [key1, value2] of Object.entries(installation.yearly_economy)) {
-                                    document.querySelector(`.jsPlanoItem[data-plano-item="${key}"] .jsPlanoYearEconomy`).textContent = valueToBr(value);
-                                }
-    
-    
-                                self.needNewPlano = false;
-                            });
+                            })();
                         })();
                     }
 
