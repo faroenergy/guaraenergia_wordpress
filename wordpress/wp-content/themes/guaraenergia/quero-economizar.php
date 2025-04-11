@@ -156,26 +156,26 @@
                 </div>
                 <hr class="gra-separator" />
                 <div class="gra-planos jsPlanoItemWrapper">
-                    <div class="gra-planos__item gray jsPlanoItem" data-plano-item="0">
+                    <div class="gra-planos__item gray jsPlanoItem">
                         <div>
                             <p class="gra-planos__item-title"><?php echo $passo_3['plano_1']; ?></p>
                             <p class="gra-planos__item-valor">Economize até <br><b>R$<span class="jsPlanoYearEconomy"></span>/ano</b></p>
                         </div>
-                        <p class="gra-planos__item-desconto"><span>Tenha</span> <b><span class="jsPlanoDiscount"><span>% de economia</b></p>
+                        <p class="gra-planos__item-desconto"><span>Tenha</span> <b><span class="jsPlanoDiscount"></span>% de economia</b></p>
                     </div>
-                    <div class="gra-planos__item yellow jsPlanoItem" data-plano-item="2">
+                    <div class="gra-planos__item yellow jsPlanoItem">
                         <div>
                             <p class="gra-planos__item-title"><?php echo $passo_3['plano_2']; ?></p>
                             <p class="gra-planos__item-valor">Economize até <br><b>R$<span class="jsPlanoYearEconomy"></span>/ano</b></p>
                         </div>
-                        <p class="gra-planos__item-desconto"><span>Tenha</span> <b><span class="jsPlanoDiscount"><span>% de economia</b></p>
+                        <p class="gra-planos__item-desconto"><span>Tenha</span> <b><span class="jsPlanoDiscount"></span>% de economia</b></p>
                     </div>
-                    <div class="gra-planos__item green jsPlanoItem" data-plano-item="3">
+                    <div class="gra-planos__item green jsPlanoItem">
                         <div>
                             <p class="gra-planos__item-title"><?php echo $passo_3['plano_3']; ?></p>
                             <p class="gra-planos__item-valor">Economize até <br><b>R$<span class="jsPlanoYearEconomy"></span>/ano</b></p>
                         </div>
-                        <p class="gra-planos__item-desconto"><span>Tenha</span> <b><span class="jsPlanoDiscount"><span>% de economia</b></p>
+                        <p class="gra-planos__item-desconto"><span>Tenha</span> <b><span class="jsPlanoDiscount"></span>% de economia</b></p>
                     </div>
                 </div>
                 <p class="gra-texto-extra"><?php echo $passo_3['texto_extra']; ?></p>
@@ -193,11 +193,11 @@
                         <div class="gra-tooltip-icon gra-tooltip-icon--lock"></div>
                     </div>
                     <div class="gra-col gra-col--half">
-                        <input class="jsField" mask-cpf type="text" />
+                        <input class="jsField jsFieldCPF" mask-cpf type="text" />
                         <label>CPF*</label>
                     </div>
                     <div class="gra-col gra-col--half">
-                        <input class="jsField" mask-cep type="text" />
+                        <input class="jsField jsClientCEP" type="text" disabled />
                         <label>CEP*</label>
                     </div>
                     <div class="gra-col gra-col--half">
@@ -206,18 +206,23 @@
                         <div class="gra-tooltip-icon gra-tooltip-icon--lock"></div>
                     </div>
                     <div class="gra-col gra-col--half">
-                        <input class="jsField jsInstallationId" type="text" disabled minlength="3" />
+                        <input class="jsField jsInstallationNumber" type="text" minlength="1" />
                         <label>Nº de instalação*</label>
                         <div class="gra-tooltip-icon gra-tooltip-icon--info"></div>
-                        <!-- <span class="gra-tooltip">Caso você tenha nos conhecido através de um parceiro comercial coloque neste campo o código do parceiro.</span> -->
                     </div>
                     <div class="gra-col gra-col--half">
-                        <input class="jsField" type="file" placeholder="Anexe sua última fatura " />
-                        <div class="gra-tooltip-icon gra-tooltip-icon--clip"></div>
+                        <input class="jsField jsBillFile" type="file" placeholder="Anexe sua última fatura" />
+                        <label>
+                            <div class="gra-tooltip-icon gra-tooltip-icon--clip"></div>
+                            Anexe sua última fatura
+                        </label>
                     </div>
                     <div class="gra-col gra-col--half">
-                        <input class="jsField" type="file" placeholder="Anexe seu documento" />
-                        <div class="gra-tooltip-icon gra-tooltip-icon--clip"></div>
+                        <input class="jsField jsIdFile" type="file" placeholder="Anexe seu documento" />
+                        <label>
+                            <div class="gra-tooltip-icon gra-tooltip-icon--clip"></div>
+                            Anexe seu documento
+                        </label>
                     </div>
                 </div>
                 <?php get_template_part('templates/quero-economizar/footer', null, array('botao' => $passo_4['botao'], 'go_back' => true, 'texto_privacidade' => $texto_privacidade))?>
@@ -332,19 +337,6 @@
                 self.startEvents();
             },
     
-            showStep: function(step) {
-                const self = this;
-    
-                if (step !== self.lastStep) self.constrolStepVisibity('none', self.lastStep);
-                self.currentStep = step;
-                self.lastStep = step;
-    
-                self.constrolStepVisibity('', step);
-                self.stepEvents(step);
-
-                self.stepStarted.push(step);
-            },
-    
             startEvents: function() {
                 const self = this;
     
@@ -359,13 +351,9 @@
                             self.showStep(self.currentStep + 1);   
 
                         } else if (!this.classList.contains('disabled')) {
-                            if (typeof self.actionBeforeNextStep[`${self.currentStep}`] !== 'undefined') {
-                                self.actionBeforeNextStep[`${self.currentStep}`](function() {
-                                    self.showStep(self.currentStep + 1);
-                                })
-                            } else {
-                                self.showStep(self.currentStep + 1);      
-                            }
+                            self.stepEventsBeforeNextStep(self.currentStep, function() {
+                                self.showStep(self.currentStep + 1);
+                            });
                         }
                     };
                 });
@@ -391,255 +379,43 @@
                     item.onclick = function(e) {
                         var itemTarget = e.target;
                         if (itemTarget.classList.contains('jsClosePopUpAlert')) {
-                            self.controlAlert();
+                            CustomAlert();
                         }
                     }
                 });
             },
 
-            actionBeforeNextStep: {
-                '2': function(callback) {
-
-                    if (StepController.validateWrongFields()) {
-
-                        StepController.stepContainer.classList.add('gra-loading');
-                        
-                        if (StepController.utility_id !== null) {
-                            StepController.firstName = StepController.stepContainer.querySelector('.jsFieldFirstName').value;
-                            StepController.lastName = StepController.stepContainer.querySelector('.jsFieldLastName').value;
-                            StepController.email = StepController.stepContainer.querySelector('.jsFieldEmail').value;
-                            StepController.cep = StepController.stepContainer.querySelector('.jsFieldSearchCEP').value.replaceAll('.', '').replaceAll('-', '');
-                            StepController.phone = StepController.stepContainer.querySelector('.jsFieldPhone').value.replaceAll('(', '').replaceAll(')', '').replaceAll(' ', '').replaceAll('-', '');
-                            StepController.codePartner = StepController.stepContainer.querySelector('.jsFieldCodePartner').value;
-                            StepController.averageConsumption = StepController.stepContainer.querySelector('.jsFieldAverage').value.replaceAll('.', '').replaceAll(',', '.');
-                            
-                            (async function() {
-                                try {
-                                    const response = await fetch('https://api.guaraenergia.com/client/register/', {
-                                        method: "POST",
-                                        mode: 'no-cors',
-                                        headers: {
-                                            'Content-Type': 'application/json'
-                                        },
-                                        body: JSON.stringify({
-                                            type: 'cpf',
-                                            name: StepController.firstName + ' ' + StepController.lastName,
-                                            email: StepController.email,
-                                            zip_code: StepController.cep,
-                                            average_consumption: parseFloat(StepController.averageConsumption),
-                                            partner_code: StepController.codePartner,
-                                            // installation_address_number: '',
-                                            // installation_address_complement: '',
-                                            phone: StepController.phone
-                                        })
-                                    });
-                                    
-                                    if (!response.ok) {
-                                        StepController.stepContainer.classList.remove('gra-loading');
-                                        throw new Error(`Response status: ${response.status}`);
-                                    }
-                                    
-                                    const data = await response.json();
-                                    StepController.installation = data.installation;
-                                    StepController.client = data.client;
-
-                                    StepController.stepContainer.classList.remove('gra-loading');
-                                    callback();
-                                    
-                                } catch (error) {
-                                    StepController.stepContainer.classList.remove('gra-loading');
-                                }
-                            })();
-
-                        } else {
-                            setTimeout(() => {
-                                StepController.showStep(8);
-                            }, 1000);
-                        }
-                    }
-                },
-                '3': function(callback) {
-                    StepController.stepContainer.classList.add('gra-loading');
-
-                    try {
-                        const response = await fetch('https://api.guaraenergia.com/select-propose/ ', {
-                            method: "POST",
-                            mode: 'no-cors',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify({
-                                installation_id: self.installation.id,
-                                propose_id: parseInt(self.stepContainer.querySelector('.jsPlanoItem.active').getAttribute('data-plano-item')),
-                            })
-                        });
-                        
-                        if (!response.ok) {
-                            throw new Error(`Response status: ${response.status}`);
-                        }
-                        
-                        const data = await response.json();
-                        StepController.stepContainer.classList.remove('gra-loading');
-                        callback();
-                        
-                    } catch (error) {
-                        console.log(error);
-                        StepController.stepContainer.classList.remove('gra-loading');
-                    }
-                },
-                '4': function(callback) {
-                    if (StepController.validateWrongFields()) {
-                        callback();
-                    }
-                },
-                '6': function(callback) {
-                    if (StepController.validateWrongFields()) {
-                        callback();
-                    }
-                }
-             },
-
-            validateWrongFields: function() {
+            showStep: function(step) {
                 const self = this;
-
-                const fields = self.stepContainer.querySelectorAll('.jsField');
-                let valid = true;
-
-                fields.forEach(el => {
-
-                    if (!el.classList.contains('jsOptional')) {
-                        const parent = el.parentElement;
-
-                        el.classList.remove('gra-error');
-
-                        if (parent.querySelector('.gra-error-msg')) {
-                            parent.querySelector('.gra-error-msg').remove();
-                        }
-
-                        if (el.value === '') {
-                            addError(el, 'Campo obrigatório');
-                            
-                            
-                        } else if (el.hasAttribute('mask-cpf')) {
-                            if (el.value.length !== 14) {
-                                addError(el, 'Campo com valor incorreto');
-                            }
-                            
-                        } else if (el.hasAttribute('mask-cep')) {
-                            if (el.value.length !== 10) {
-                                addError(el, 'Campo com valor incorreto');
-                            }
-                        
-                        } else if (el.hasAttribute('mask-phone')) {
-                            if (el.value.length < 14) {
-                                addError(el, 'Campo com valor incorreto');
-                            }
-                            
-                        } else if (el.type === 'email') {
-                            if (!el.checkValidity()) {
-                                addError(el, 'Campo com valor incorreto');
-                            } else if (el.classList.contains('jsSameField')) {
-                                checkForSameField(el);
-                            }
     
-                        } else if (el.hasAttribute('minlength')) {
-                            const count = parseInt(el.getAttribute('minlength'));
-                            if (el.value.length < count) {
-                                addError(el, 'Campo precisa de no mínimo ' + count + ' caracteres');
-                                
-                            } else if (el.classList.contains('jsSameField')) {
-                                checkForSameField(el);
-                            }
-                            
-                        } else if (el.classList.contains('jsSameField')) {
-                            checkForSameField(el);
-                        }
+                if (step !== self.lastStep) self.constrolStepVisibity('none', self.lastStep);
+                self.currentStep = step;
+                self.lastStep = step;
+    
+                self.constrolStepVisibity('', step);
+                self.stepEvents(step);
 
-                    } else {
-                        return valid;
-                    }
-                });
-
-                function addError(el, msg) {
-                    valid = false;
-                    el.classList.add('gra-error');
-
-                    let errorDiv = document.createElement("div");
-                    errorDiv.append(msg);
-                    errorDiv.classList.add('gra-error-msg');
-
-                    el.parentElement.append(errorDiv);
-
-                    return valid;
-                }
-
-                function checkForSameField(el) {
-                    const itens = self.stepContainer.querySelectorAll('.jsSameField');
-                    const baseValue = itens[0].value;
-                    
-                    for (let i = 1; i < itens.length; i++) {
-                        if (itens[i].value !== baseValue) {
-
-                            if (itens[i].parentElement.querySelector('.gra-error-msg')) {
-                                itens[i].parentElement.querySelector('.gra-error-msg').remove();
-                            }
-                            
-                            addError(itens[i], 'Confirme o valor do campo');
-                        }
-                    }
-                }
-
-                return valid;
+                self.stepStarted.push(step);
             },
 
-            createMaskForFields() {
+            constrolStepVisibity: function(blockOrNone, step) {
                 const self = this;
-
-                const fields = self.stepContainer.querySelectorAll('.jsField');
-
-                function inputHandler(masks, max, event) {
-                    var c = event.target;
-                    var v = c.value.replace(/\D/g, '');
-                    var m = c.value.length > max ? 1 : 0;
-                    VMasker(c).unMask();
-                    VMasker(c).maskPattern(masks[m]);
-                    c.value = VMasker.toPattern(v, masks[m]);
-                }
-
-                fields.forEach(el => {
-                    if (el.hasAttribute('mask-cpf')) {
-                        VMasker(el).maskPattern("999.999.999-99");
-
-                    } else if (el.hasAttribute('mask-cep')) {
-                        var maskCep = ['99.999-999', '99.999-999'];
-                        VMasker(el).maskPattern(maskCep);
-                        el.addEventListener('input', inputHandler.bind(undefined, maskCep, 0), false);
-
-                    } else if (el.hasAttribute('mask-phone')) {
-                        var telMask = ['(99) 9999-99999', '(99) 99999-9999'];
-                        VMasker(el).maskPattern(telMask[0]);
-                        el.addEventListener('input', inputHandler.bind(undefined, telMask, 14), false);
-
-                    } else if (el.hasAttribute('mask-money')) {
-                        VMasker(el).maskMoney({
-                            precision: 2,
-                            separator: ',',
-                            delimiter: '.',
-                        });
-                    }
-                });
-            },
-
-            controlAlert: function(show = false, text = '') {
-                if (show) {
-                    document.querySelector('.jsPopUpAlert').style.display = '';
-                    document.querySelector('.jsPopUpAlertTxt').textContent = text;
-                } else {
-                    document.querySelector('.jsPopUpAlert').style.display = 'none';
-                    document.querySelector('.jsPopUpAlertTxt').textContent = '';
-                }
-            },
     
+                self.stepContainer = document.querySelector(`.jsStepContent [step="${step}"]`);
+                
+                const stepSide = self.stepContainer.getAttribute('step-side');
+                const stepElSide = document.querySelector(`.jsStepSide [step-side="${stepSide}"]`);
+    
+                const stepSideInner = self.stepContainer.getAttribute('step-side-inner');
+                
+                if (stepSideInner !== null) {
+                    document.querySelector(`.jsStepSide [step-side="${stepSide}"]`).setAttribute('step-side-inner', stepSideInner);
+                }
+    
+                self.stepContainer.style.display = blockOrNone;
+                stepElSide.style.display = blockOrNone;
+            },
+
             stepEvents: function(step) {
                 const self = this;
     
@@ -648,7 +424,7 @@
                         if (!self.popUpStart) {
                             self.popUpStart = true;
                             
-                            self.controlAlert(true, 'Durante o preenchimento do cadastro, pediremos os dados do titular da conta de energia. Por isso, solicitamos que o cadastro seja feito pelo próprio titular.')
+                            CustomAlert(true, 'Durante o preenchimento do cadastro, pediremos os dados do titular da conta de energia. Por isso, solicitamos que o cadastro seja feito pelo próprio titular.')
                         }
                     })();
                     
@@ -677,10 +453,23 @@
                             }
                         });
                     })();
-                } else if (step === 2 || step === 4) {
-                    self.createMaskForFields();
 
-                    if (step === 2) {
+                } else if (step === 2 || step === 4) {
+                    if (self.stepStarted.indexOf(step) === -1) {
+                        CreateMaskForFields();
+                    }
+                    
+                    if (step === 2 && self.stepStarted.indexOf(step) === -1) {
+
+                        self.stepContainer.querySelector('.jsFieldFirstName').value = '233';
+                        self.stepContainer.querySelector('.jsFieldLastName').value = '233';
+                        self.stepContainer.querySelector('.jsFieldEmail').value = 'fbebber1@gmail.com';
+                        self.stepContainer.querySelector('.jsSameField:not(.jsFieldEmail)').value = 'fbebber1@gmail.com';
+                        self.stepContainer.querySelector('.jsFieldSearchCEP').value = '86.460-000';
+                        self.stepContainer.querySelector('.jsFieldPhone').value = '(11) 11111-1111';
+                        self.stepContainer.querySelector('.jsFieldCodePartner').value = '123';
+                        self.stepContainer.querySelector('.jsFieldAverage').value = '10,00';
+
                         let value = null, valueLength = null, btn = null;
 
                         let customError = false;
@@ -717,7 +506,7 @@
                                             if (data) {
                                                 if (typeof data.detail !== 'undefined') {
                                                     customError = true;
-                                                    self.controlAlert(true, data.detail);
+                                                    CustomAlert(true, data.detail);
                                                 }
                                             }
                                         } else {
@@ -727,8 +516,7 @@
                                     
                                     const data = await response.json();
                                     
-                                    self.needNewPlano = true;
-                                    self.distribuidora = data.utility_type + ' - ' + data.utility_name;
+                                    // self.distribuidora = data.utility_type + ' - ' + data.utility_name;
                                     self.utility_id = data.utility_id;
                                     btn.disabled = false;
                                     btn.focus();
@@ -737,83 +525,31 @@
                                     btn.disabled = false;
 
                                     if (!customError) {
-                                        self.controlAlert(true, 'Não foi possível encontrar o CEP. Por favor, verifique se digitou corretamente.');
+                                        CustomAlert(true, 'Não foi possível encontrar o CEP. Por favor, verifique se digitou corretamente.');
                                         customError = false;
                                     }
                                 }
 
                             }
                         }
+
                     } else if (step === 4) {
-                        self.stepContainer.querySelector('.jsFieldFullName').value = `${self.firstName} ${self.lastName}`;
+                        self.stepContainer.querySelector('.jsFieldFullName').value = `${self.fullName}`;
                         self.stepContainer.querySelector('.jsInstallationName').value = `${self.installation.utility.name}`;
-                        self.stepContainer.querySelector('.jsInstallationId').value = `${self.installation.id}`;
-
-                        (async function() {
-
-                            const url = `https://api.guaraenergia.com/client/registration-data/?email=${self.client.email}`;
-
-                            try {
-                                const response = await fetch(url, {
-                                    method: "GET",
-                                    headers: {
-                                        'Content-Type': 'application/json'
-                                    }
-                                });
-                                
-                                if (!response.ok) {
-                                    // btn.disabled = false;
-
-                                    // if (response.status == 404 || response.status == 400) {
-                                    //     const data = await response.json();
-                                        
-                                    //     if (data) {
-                                    //         if (typeof data.detail !== 'undefined') {
-                                    //             customError = true;
-                                    //             self.controlAlert(true, data.detail);
-                                    //         }
-                                    //     }
-                                    // } else {
-                                    // }
-                                    throw new Error(`Response status: ${response.status}`);
-                                }
-                                
-                                const data = await response.json();
-                                
-                                dataPropostaEl.textContent = dataAtualFormatada(data.emission_date);
-                                dataValidadeEl.textContent = dataAtualFormatada(data.due_date);
-
-                                const installation = data.installation_discount[0];
-
-                                for (const [key, value] of Object.entries(installation.discounts)) {
-                                    document.querySelector(`.jsPlanoItem[data-plano-item="${key}"] .jsPlanoDiscount`).textContent = value * 100;
-                                }
-                                
-                                for (const [key1, value2] of Object.entries(installation.yearly_economy)) {
-                                    document.querySelector(`.jsPlanoItem[data-plano-item="${key}"] .jsPlanoYearEconomy`).textContent = valueToBr(value);
-                                }
-
-                                self.needNewPlano = false;
-                                    
-                            } catch (error) {
-                                // btn.disabled = false;
-                                // if (!customError) {
-                                //     self.controlAlert(true, 'Não foi possível encontrar o CEP. Por favor, verifique se digitou corretamente.');
-                                //     customError = false;
-                                // }
-                            }
-                            })();
+                        self.stepContainer.querySelector('.jsClientCEP').value = `${self.cep}`;
                     }
 
-
                 } else if (step === 3) {
+
+                    self.stepContainer.classList.add('gra-loading');
+
+                    const planoItemActive = self.stepContainer.querySelector('.jsPlanoItem.active');
                     
                     if (self.stepStarted.indexOf(step) === -1) {
                         document.querySelector('.gra-btn-download-proposta').addEventListener('click', async function() {
                             try {
                                 const response = await fetch('https://api.guaraenergia.com/qualify-lead/', {
                                     method: "POST",
-                                    mode: 'no-cors',
                                     headers: {
                                         'Content-Type': 'application/json'
                                     },
@@ -832,23 +568,25 @@
                                 console.log(error);
                             }
                         });
-                    }
+                    };
 
                     (function() {
-                        if (!self.stepContainer.querySelector('.jsPlanoItem.active')) {
+                        if (!planoItemActive) {
                             self.stepContainer.querySelector('.jsNextStep').classList.add('disabled');
                         }
 
-                        self.stepContainer.querySelector('.jsFieldFullName').textContent = `${self.firstName} ${self.lastName}`;
+                        self.stepContainer.querySelector('.jsFieldFullName').textContent = `${self.fullName}`;
                         self.stepContainer.querySelector('.jsFieldDistribuidora').textContent = self.distribuidora;
                     })();
 
                     if (self.needNewPlano) {
                         self.stepContainer.querySelector('.jsNextStep').classList.add('disabled');
                         
-                        if (self.stepContainer.querySelector('.jsPlanoItem.active')) {
-                            self.stepContainer.querySelector('.jsPlanoItem.active').removeClass('active');
-                        }
+                        if (planoItemActive) {
+                            
+                            planoItemActive.classList.remove('active');
+                            planoItemActive.parentElement.classList.remove('gra-item-active');
+                        };
 
                         (function() {
                             const dataPropostaEl = self.stepContainer.querySelector('.jsDataProposta');
@@ -856,7 +594,7 @@
     
                             function valueToBr(num) {
                                 return num < 1000 ? num.toString() : (num / 1000).toFixed(3);
-                            }
+                            };
     
                             function dataAtualFormatada(date){
                                 var data = new Date(date),
@@ -864,7 +602,7 @@
                                 mes  = (data.getMonth()+1).toString().padStart(2, '0'),
                                 ano  = data.getFullYear();
                                 return dia + "/" + mes + "/" + ano;
-                            }
+                            };
 
                             (async function() {
 
@@ -879,20 +617,18 @@
                                     });
                                     
                                     if (!response.ok) {
-                                        // btn.disabled = false;
     
-                                        // if (response.status == 404 || response.status == 400) {
-                                        //     const data = await response.json();
+                                        if (response.status == 404 || response.status == 400) {
+                                            const data = await response.json();
                                             
-                                        //     if (data) {
-                                        //         if (typeof data.detail !== 'undefined') {
-                                        //             customError = true;
-                                        //             self.controlAlert(true, data.detail);
-                                        //         }
-                                        //     }
-                                        // } else {
-                                        // }
-                                        throw new Error(`Response status: ${response.status}`);
+                                            if (data) {
+                                                if (response.status == 400) {
+                                                    self.showStep(8);
+                                                }
+                                            }
+                                        } else {
+                                            throw new Error(`Response status: ${response.status}`);
+                                        }
                                     }
                                     
                                     const data = await response.json();
@@ -900,28 +636,44 @@
                                     dataPropostaEl.textContent = dataAtualFormatada(data.emission_date);
                                     dataValidadeEl.textContent = dataAtualFormatada(data.due_date);
         
-                                    const installation = data.installation_discount[0];
-        
-                                    for (const [key, value] of Object.entries(installation.discounts)) {
-                                        document.querySelector(`.jsPlanoItem[data-plano-item="${key}"] .jsPlanoDiscount`).textContent = value * 100;
-                                    }
+                                    const installationDiscount = data.installation_discount.find(function(el) {
+                                        return el.is_default === true;
+                                    });
+
+                                    const discountValue = Object.values(installationDiscount.discounts);
+                                    const yearlyValue = Object.values(installationDiscount.yearly_economy);
+                                    const contract_proposes = data.contract_proposes;
                                     
-                                    for (const [key1, value2] of Object.entries(installation.yearly_economy)) {
-                                        document.querySelector(`.jsPlanoItem[data-plano-item="${key}"] .jsPlanoYearEconomy`).textContent = valueToBr(value);
-                                    }
-        
+                                    document.querySelectorAll(`.jsPlanoItem .jsPlanoDiscount`).forEach(function(item, i) {
+                                        item.textContent = Math.floor(discountValue[i] * 100);
+                                    });
+                                    
+                                    document.querySelectorAll(`.jsPlanoItem .jsPlanoYearEconomy`).forEach(function(item, i) {
+                                        item.textContent = valueToBr(yearlyValue[i]);
+                                    });
+                                    
+                                    document.querySelectorAll(`.jsPlanoItem`).forEach(function(item, i) {
+                                        item.setAttribute('data-id', contract_proposes[i].id);
+                                    });
+
                                     self.needNewPlano = false;
+
+                                    self.stepContainer.classList.remove('gra-loading');
                                         
                                 } catch (error) {
                                     // btn.disabled = false;
                                     // if (!customError) {
-                                    //     self.controlAlert(true, 'Não foi possível encontrar o CEP. Por favor, verifique se digitou corretamente.');
+                                    //     CustomAlert(true, 'Não foi possível encontrar o CEP. Por favor, verifique se digitou corretamente.');
                                     //     customError = false;
                                     // }
+                                    self.stepContainer.classList.remove('gra-loading');
                                 }
                             })();
                         })();
-                    }
+
+                    } else {
+                        self.stepContainer.classList.remove('gra-loading');
+                    };
 
                     (function() {
                         const planosItem = self.stepContainer.querySelectorAll('.jsPlanoItem');
@@ -955,28 +707,312 @@
                     });
 
                     const subtitleEl = self.stepContainer.querySelector('.jsApplyEmailOnText');
-                    const subtitleText = subtitleEl.textContent.replace('{{email}}', StepController.email);
+                    const subtitleText = subtitleEl.textContent.replace('{{email}}', self.email);
                     subtitleEl.textContent = subtitleText;
                 }
             },
-    
-            constrolStepVisibity: function(blockOrNone, step) {
+
+            stepEventsBeforeNextStep: function(step, callback) {
                 const self = this;
+                const Container = self.stepContainer;
+
+                if (step === 2) {
+                    if (ValidateWrongFields()) {
     
-                self.stepContainer = document.querySelector(`.jsStepContent [step="${step}"]`);
-                
-                const stepSide = self.stepContainer.getAttribute('step-side');
-                const stepElSide = document.querySelector(`.jsStepSide [step-side="${stepSide}"]`);
+                        Container.classList.add('gra-loading');
     
-                const stepSideInner = self.stepContainer.getAttribute('step-side-inner');
-                
-                if (stepSideInner !== null) {
-                    document.querySelector(`.jsStepSide [step-side="${stepSide}"]`).setAttribute('step-side-inner', stepSideInner);
+                        const field_firstName = Container.querySelector('.jsFieldFirstName').value;
+                        const field_lastName = Container.querySelector('.jsFieldLastName').value;
+                        const field_email = Container.querySelector('.jsFieldEmail').value;
+                        const field_cep = Container.querySelector('.jsFieldSearchCEP').value.replaceAll('.', '').replaceAll('-', '');
+                        const field_phone = Container.querySelector('.jsFieldPhone').value.replaceAll('(', '').replaceAll(')', '').replaceAll(' ', '').replaceAll('-', '');
+                        const field_codePartner = Container.querySelector('.jsFieldCodePartner').value;
+                        const field_averageConsumption = Container.querySelector('.jsFieldAverage').value.replaceAll('.', '').replaceAll(',', '.');
+    
+                        function checkFields() {
+                            return self.firstName !== field_firstName || self.lastName !== field_lastName || self.email !== field_email || self.cep !== field_cep || self.phone !== field_phone || self.codePartner !== field_codePartner || self.averageConsumption !== field_averageConsumption;
+                        }
+                        
+                        if (self.utility_id !== null) {
+    
+                            if(checkFields()) {
+    
+                                self.firstName = field_firstName;
+                                self.lastName = field_lastName;
+                                self.fullName = field_firstName + ' ' + field_lastName;
+                                self.email = field_email;
+                                self.cep = field_cep;
+                                self.phone = field_phone;
+                                self.codePartner = field_codePartner;
+                                self.averageConsumption = field_averageConsumption;
+                                
+                                (async function() {
+                                    try {
+                                        const response = await fetch('https://api.guaraenergia.com/client/register/', {
+                                            method: "POST",
+                                            headers: {
+                                                'Content-Type': 'application/json'
+                                            },
+                                            body: JSON.stringify({
+                                                type: 'cpf',
+                                                name: self.fullName,
+                                                email: self.email,
+                                                zip_code: self.cep,
+                                                average_consumption: parseFloat(self.averageConsumption),
+                                                partner_code: self.codePartner,
+                                                // installation_address_number: '',
+                                                // installation_address_complement: '',
+                                                phone: self.phone
+                                            })
+                                        });
+                                        
+                                        if (!response.ok) {
+                                            Container.classList.remove('gra-loading');
+                                            throw new Error(`Response status: ${response.status}`);
+                                        }
+                                        
+                                        const data = await response.json();
+                                        self.installation = data.installation;
+                                        self.client = data.client;
+    
+                                        self.distribuidora = data.installation.utility.name;
+    
+                                        Container.classList.remove('gra-loading');
+                                        
+                                        self.needNewPlano = true;
+    
+                                        callback();
+                                        
+                                    } catch (error) {
+                                        Container.classList.remove('gra-loading');
+                                    }
+                                })();
+                            } else {
+                                Container.classList.remove('gra-loading');
+                                callback();
+                            }
+    
+                        } else {
+                            setTimeout(() => {
+                                self.showStep(8);
+                            }, 1000);
+                        }
+                    }
+
+                } else if (step === 3) {                    
+                    Container.classList.add('gra-loading');
+    
+                    (async function() {
+                        try {
+                            const response = await fetch('https://api.guaraenergia.com/select-propose/', {
+                                method: "POST",
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({
+                                    installation_id: self.installation.id,
+                                    propose_id: parseInt(Container.querySelector('.jsPlanoItem.active').getAttribute('data-id')),
+                                })
+                            });
+                            
+                            if (!response.ok) {
+                                throw new Error(`Response status: ${response.status}`);
+                            }
+                            
+                            const data = await response.json();
+                            Container.classList.remove('gra-loading');
+                            callback();
+                            
+                        } catch (error) {
+                            console.log(error);
+                            Container.classList.remove('gra-loading');
+                        }
+                    })();
+
+                } else if (step === 4) {
+                    if (ValidateWrongFields()) {
+                        
+                        // const field_lastName = Container.querySelector('.jsFieldLastName').value;
+                        // const field_email = Container.querySelector('.jsFieldEmail').value;
+                        const field_cpf = Container.querySelector('.jsFieldCPF').value.replaceAll('.', '').replaceAll('-', '');
+                        const field_billfile = Container.querySelector('.jsBillFile').files[0];
+                        const field_idfile = Container.querySelector('.jsIdFile').files[0];
+                        const field_installationnumber = Container.querySelector('.jsInstallationNumber').value.trim();
+
+                        // self.stepContainer.querySelector('.jsClientCEP').value = `${self.cep}`;
+                        // jsFieldCPF
+                        
+                        if (isValidCPF(field_cpf)) {
+                            fetch('https://api.guaraenergia.com/cadastro/step-3/', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/x-www-form-urlencoded'
+                                },
+                                body: `installation_id=${self.installation.id}&legal_representant_name=${self.fullName}&legal_representant_cpf=${field_cpf}&installation_number=&bill_file=${field_billfile}&id_file=${field_idfile}&social_contract_file=`
+                            });
+
+                            // callback();
+                        } else {
+                            CustomAlert(true, 'CPF inválido.')
+                        }
+                    }
+
+                } else if (step === 6) {
+                    if (ValidateWrongFields()) {
+                        callback();
+                    }
+
+                } else {
+                    callback();
                 }
-    
-                self.stepContainer.style.display = blockOrNone;
-                stepElSide.style.display = blockOrNone;
             },
+        };
+
+        function isValidCPF(cpf) {
+            if (typeof cpf !== 'string') return false
+            cpf = cpf.replace(/[^\d]+/g, '')
+            if (cpf.length !== 11 || !!cpf.match(/(\d)\1{10}/)) return false
+            cpf = cpf.split('').map(el => +el)
+            const rest = (count) => (cpf.slice(0, count-12)
+                .reduce( (soma, el, index) => (soma + el * (count-index)), 0 )*10) % 11 % 10
+            return rest(10) === cpf[9] && rest(11) === cpf[10]
+        }
+
+        function ValidateWrongFields() {
+            const fields = StepController.stepContainer.querySelectorAll('.jsField');
+            let valid = true;
+
+            fields.forEach(el => {
+
+                if (!el.classList.contains('jsOptional')) {
+                    const parent = el.parentElement;
+
+                    el.classList.remove('gra-error');
+
+                    if (parent.querySelector('.gra-error-msg')) {
+                        parent.querySelector('.gra-error-msg').remove();
+                    }
+
+                    if (el.value === '') {
+                        addError(el, 'Campo obrigatório');
+                        
+                        
+                    } else if (el.hasAttribute('mask-cpf')) {
+                        if (el.value.length !== 14) {
+                            addError(el, 'Campo com valor incorreto');
+                        }
+                        
+                    } else if (el.hasAttribute('mask-cep')) {
+                        if (el.value.length !== 10) {
+                            addError(el, 'Campo com valor incorreto');
+                        }
+                    
+                    } else if (el.hasAttribute('mask-phone')) {
+                        if (el.value.length < 14) {
+                            addError(el, 'Campo com valor incorreto');
+                        }
+                        
+                    } else if (el.type === 'email') {
+                        if (!el.checkValidity()) {
+                            addError(el, 'Campo com valor incorreto');
+                        } else if (el.classList.contains('jsSameField')) {
+                            checkForSameField(el);
+                        }
+
+                    } else if (el.hasAttribute('minlength')) {
+                        const count = parseInt(el.getAttribute('minlength'));
+                        if (el.value.length < count) {
+                            addError(el, 'Campo precisa de no mínimo ' + count + ' caracteres');
+                            
+                        } else if (el.classList.contains('jsSameField')) {
+                            checkForSameField(el);
+                        }
+                        
+                    } else if (el.classList.contains('jsSameField')) {
+                        checkForSameField(el);
+                    }
+
+                } else {
+                    return valid;
+                }
+            });
+
+            function addError(el, msg) {
+                valid = false;
+                el.classList.add('gra-error');
+
+                let errorDiv = document.createElement("div");
+                errorDiv.append(msg);
+                errorDiv.classList.add('gra-error-msg');
+
+                el.parentElement.append(errorDiv);
+
+                return valid;
+            }
+
+            function checkForSameField(el) {
+                const itens = StepController.stepContainer.querySelectorAll('.jsSameField');
+                const baseValue = itens[0].value;
+                
+                for (let i = 1; i < itens.length; i++) {
+                    if (itens[i].value !== baseValue) {
+
+                        if (itens[i].parentElement.querySelector('.gra-error-msg')) {
+                            itens[i].parentElement.querySelector('.gra-error-msg').remove();
+                        }
+                        
+                        addError(itens[i], 'Confirme o valor do campo');
+                    }
+                }
+            }
+
+            return valid;
+        };
+
+        function CreateMaskForFields() {
+            const fields = StepController.stepContainer.querySelectorAll('.jsField');
+
+            function inputHandler(masks, max, event) {
+                var c = event.target;
+                var v = c.value.replace(/\D/g, '');
+                var m = c.value.length > max ? 1 : 0;
+                VMasker(c).unMask();
+                VMasker(c).maskPattern(masks[m]);
+                c.value = VMasker.toPattern(v, masks[m]);
+            }
+
+            fields.forEach(el => {
+                if (el.hasAttribute('mask-cpf')) {
+                    VMasker(el).maskPattern("999.999.999-99");
+
+                } else if (el.hasAttribute('mask-cep')) {
+                    var maskCep = ['99.999-999', '99.999-999'];
+                    VMasker(el).maskPattern(maskCep);
+                    el.addEventListener('input', inputHandler.bind(undefined, maskCep, 0), false);
+
+                } else if (el.hasAttribute('mask-phone')) {
+                    var telMask = ['(99) 9999-99999', '(99) 99999-9999'];
+                    VMasker(el).maskPattern(telMask[0]);
+                    el.addEventListener('input', inputHandler.bind(undefined, telMask, 14), false);
+
+                } else if (el.hasAttribute('mask-money')) {
+                    VMasker(el).maskMoney({
+                        precision: 2,
+                        separator: ',',
+                        delimiter: '.',
+                    });
+                }
+            });
+        };
+
+        function CustomAlert(show = false, text = '') {
+            if (show) {
+                document.querySelector('.jsPopUpAlert').style.display = '';
+                document.querySelector('.jsPopUpAlertTxt').textContent = text;
+            } else {
+                document.querySelector('.jsPopUpAlert').style.display = 'none';
+                document.querySelector('.jsPopUpAlertTxt').textContent = '';
+            }
         };
     
         StepController.init();

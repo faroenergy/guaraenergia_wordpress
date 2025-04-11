@@ -374,7 +374,15 @@ body, html {
                     transition: .3s padding-left;
                     font-weight: 500;
                     &[type="file"] {
-                        padding: 10px 43px;
+                        padding: 30px 43px 2px;
+                        & ~ label {
+                            .gra-tooltip-icon {
+                                position: static;
+                                display: inline-block;
+                                vertical-align: middle;
+                                margin-right: 4px;
+                            }
+                        }
                     }
                     &:hover, &:focus {
                         background-color: #F5F5F5;
