@@ -827,7 +827,6 @@
     
                             if(checkFields(self.stepType)) {
 
-                                
                                 self.firstName = field_firstName;
                                 self.email = field_email;
                                 self.cep = field_cep;
@@ -836,7 +835,6 @@
 
                                 let obj = {
                                     type: self.stepType,
-                                    name: self.fullName,
                                     email: self.email,
                                     zip_code: self.cep,
                                     average_consumption: parseFloat(self.averageConsumption),
@@ -860,6 +858,8 @@
                                     obj.cnpj = field_cnpj;
                                     obj.social_contract = field_social_contract;
                                 }
+
+                                obj.name = self.fullName;
     
                                 (async function() {
                                     try {
