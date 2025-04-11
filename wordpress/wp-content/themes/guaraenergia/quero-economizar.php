@@ -56,7 +56,7 @@
             </a>
         </div>
     </header>
-    <div class="gra-step-form__wrapper">
+    <form class="gra-step-form__wrapper jsFormStep" onsubmit="return false;">
         <div class="gra-step-form__side jsStepSide">
             <a href="/" class="gra-step-form__side-logo"><img src="<?php echo get_template_directory_uri(); ?>/assets/images/logo.svg" /></a>
             <div step-side="1" style="display:none;background-image:url(<?php echo $passo_1['imagem'] ?>)"></div>
@@ -86,16 +86,17 @@
                 <div class="gra-title"><?php echo $passo_1['titulo']; ?></div>
                 <div class="gra-subtitle"><?php echo $passo_1['subtitulo']; ?></div>
                 <div class="gra-content">
-                    <button class="gra-btn-option jsContratacaoOption">
+                    <button class="gra-btn-option jsContratacaoOption" data-type="cpf">
                         <?php echo $passo_1['opcao_1']; ?>
                     </button>
-                    <button class="gra-btn-option jsContratacaoOption">
+                    <button class="gra-btn-option jsContratacaoOption" data-type="cnpj">
                         <?php echo $passo_1['opcao_2']; ?>
                     </button>
                 </div>
                 <?php get_template_part('templates/quero-economizar/footer', null, array('botao' => $passo_1['botao'], 'texto_privacidade' => $texto_privacidade))?>
             </div>
-            <div class="gra-step-form__content-inner" step-side="2" step-side-inner="0" step="2" style="display:none">
+
+            <div class="gra-step-form__content-inner" step-side="2" step-side-inner="0" step="2" style="display:none" data-type="cpf">
                <div class="gra-title"><?php echo $passo_2['titulo']; ?></div>
                <hr class="gra-separator" />           
                <div class="gra-content">
@@ -126,7 +127,7 @@
                     </div>
                     <div class="gra-col">
                         <input class="jsField jsFieldCodePartner" type="text" />
-                        <label>Código do Parceiro/Cupom Promocional</label>
+                        <label>Código do Parceiro/Cupom Promocional*</label>
                         <div class="gra-tooltip-icon gra-tooltip-icon--info"></div>
                         <span class="gra-tooltip">Caso você tenha nos conhecido através de um parceiro comercial coloque neste campo o código do parceiro.</span>
                     </div>
@@ -137,6 +138,50 @@
                 </div>
                 <?php get_template_part('templates/quero-economizar/footer', null, array('botao' => $passo_2['botao'], 'go_back' => true, 'texto_privacidade' => $texto_privacidade))?>
             </div>
+
+            <div class="gra-step-form__content-inner" step-side="2" step-side-inner="0" step="2" style="display:none" data-type="cnpj">
+               <div class="gra-title"><?php echo $passo_2['titulo']; ?></div>
+               <hr class="gra-separator" />           
+               <div class="gra-content">
+                    <div class="gra-col">
+                        <input class="jsField jsFieldFirstName" type="text" minlength="3" />
+                        <label>Nome do representante legal da empresa*</label>
+                    </div>
+                    <div class="gra-col gra-col--half">
+                        <input class="jsField jsFieldCNPJ" mask-cnpj type="text" />
+                        <label>CNPJ da empresa*</label>
+                    </div>
+                    <div class="gra-col gra-col--half">
+                        <input class="jsField jsContractFile" type="file" placeholder="Contrato social/Cartão CNPJ" />
+                        <!-- social_contract_file -->
+                        <label>
+                            <div class="gra-tooltip-icon gra-tooltip-icon--clip"></div>
+                            Contrato social/Cartão CNPJ*
+                        </label>
+                    </div>
+                    <div class="gra-col gra-col--half">
+                        <input class="jsField jsFieldEmail" type="email" />
+                        <label>E-mail*</label>
+                    </div>
+                    <div class="gra-col gra-col--half">
+                        <input class="jsField jsFieldSearchCEP" type="text" mask-cep />
+                        <label>CEP*</label>
+                        <div class="lds-ring" style="display:none"><div></div><div></div><div></div><div></div></div>
+                    </div>
+                    <div class="gra-col">
+                        <input class="jsField jsFieldCodePartner" type="text" />
+                        <label>Código do Parceiro/Cupom Promocional*</label>
+                        <div class="gra-tooltip-icon gra-tooltip-icon--info"></div>
+                        <span class="gra-tooltip">Caso você tenha nos conhecido através de um parceiro comercial coloque neste campo o código do parceiro.</span>
+                    </div>
+                    <div class="gra-col">
+                        <input class="jsField jsFieldAverage" type="text" minlength="4" mask-money />
+                        <label class="gra-label-small">Média do Valor em R$ pago na fatura de energia*</label>
+                    </div>
+                </div>
+                <?php get_template_part('templates/quero-economizar/footer', null, array('botao' => $passo_2['botao'], 'go_back' => true, 'texto_privacidade' => $texto_privacidade))?>
+            </div>
+
             <div class="gra-step-form__content-inner" step-side="2" step-side-inner="1" step="3" style="display:none">
                 <div class="gra-title gra-hide-print"><?php echo $passo_3['titulo']; ?></div>
                 <div class="gra-title gra-show-print"><?php echo $passo_3['titulo_print']; ?></div>
@@ -183,6 +228,7 @@
                     <?php get_template_part('templates/quero-economizar/footer', null, array('botao' => $passo_3['botao'], 'go_back' => true, 'texto_privacidade' => $texto_privacidade, 'baixar_proposta' => true))?>
                 </div>
             </div>
+            
             <div class="gra-step-form__content-inner" step-side="2" step-side-inner="2" step="4" style="display:none">
                 <div class="gra-title"><?php echo $passo_4['titulo']; ?></div>
                 <hr class="gra-separator" />           
@@ -290,7 +336,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </form>
 </section>
 <div class="gra-popup jsPopUpAlert jsClosePopUpAlert" style="display:none">
     <div class="gra-popup__info">
@@ -308,19 +354,29 @@
         
         const StepController = {
             dev: false,
-            start: 2,
+
+            stepStart: 1,
             stepContainer: null,
-            firstName: "Guará",
-            lastName: "Energia",
-            email: "contato@guaraenergia.com.br",
-            popUpStart: false,
+            stepStarted: [],
+            stepType: null,
+            stepNewPlano: true,
+            stepStep1_popUp: false,
+            
             installation: null,
             client: null,
             utility_id: null,
-            needNewPlano: true,
             distribuidora: null,
+
+            firstName: null,
+            lastName: null,
+            fullName: null,
+            email: null,
             cep: null,
-            stepStarted: [],
+            cnpj: null,
+            phone: null,
+            codePartner: null,
+            averageConsumption: null,
+            social_contract: null,
 
             planosText: [
                 '<?php echo $passo_3['plano_1']; ?>',
@@ -331,9 +387,9 @@
             init: function() {
                 const self = this;
     
-                self.currentStep = self.start;
-                self.lastStep = self.start;
-                const initialStep = self.showStep(self.start);
+                self.currentStep = self.stepStart;
+                self.lastStep = self.stepStart;
+                const initialStep = self.showStep(self.stepStart);
                 self.startEvents();
             },
     
@@ -402,6 +458,10 @@
                 const self = this;
     
                 self.stepContainer = document.querySelector(`.jsStepContent [step="${step}"]`);
+
+                if (self.stepType !== null && self.stepContainer.getAttribute('data-type')) {
+                    self.stepContainer = document.querySelector(`.jsStepContent [step="${step}"][data-type="${self.stepType}"]`);
+                }
                 
                 const stepSide = self.stepContainer.getAttribute('step-side');
                 const stepElSide = document.querySelector(`.jsStepSide [step-side="${stepSide}"]`);
@@ -421,8 +481,8 @@
     
                 if (step === 1) {
                     (function() {
-                        if (!self.popUpStart) {
-                            self.popUpStart = true;
+                        if (!self.stepStep1_popUp) {
+                            self.stepStep1_popUp = true;
                             
                             CustomAlert(true, 'Durante o preenchimento do cadastro, pediremos os dados do titular da conta de energia. Por isso, solicitamos que o cadastro seja feito pelo próprio titular.')
                         }
@@ -457,86 +517,86 @@
                 } else if (step === 2 || step === 4) {
                     if (self.stepStarted.indexOf(step) === -1) {
                         CreateMaskForFields();
-                    }
-                    
-                    if (step === 2 && self.stepStarted.indexOf(step) === -1) {
 
-                        self.stepContainer.querySelector('.jsFieldFirstName').value = '233';
-                        self.stepContainer.querySelector('.jsFieldLastName').value = '233';
-                        self.stepContainer.querySelector('.jsFieldEmail').value = 'fbebber1@gmail.com';
-                        self.stepContainer.querySelector('.jsSameField:not(.jsFieldEmail)').value = 'fbebber1@gmail.com';
-                        self.stepContainer.querySelector('.jsFieldSearchCEP').value = '86.460-000';
-                        self.stepContainer.querySelector('.jsFieldPhone').value = '(11) 11111-1111';
-                        self.stepContainer.querySelector('.jsFieldCodePartner').value = '123';
-                        self.stepContainer.querySelector('.jsFieldAverage').value = '10,00';
+                        if (step === 2) {
+                            // self.stepContainer.querySelector('.jsFieldFirstName').value = '233';
+                            // self.stepContainer.querySelector('.jsFieldLastName').value = '233';
+                            self.stepContainer.querySelector('.jsFieldEmail').value = 'fbebber1@gmail.com';
+                            // self.stepContainer.querySelector('.jsSameField:not(.jsFieldEmail)').value = 'fbebber1@gmail.com';
+                            // self.stepContainer.querySelector('.jsFieldSearchCEP').value = '86.460-000';
+                            self.stepContainer.querySelector('.jsFieldPhone').value = '(11) 11111-1111';
+                            self.stepContainer.querySelector('.jsFieldCodePartner').value = '123';
+                            self.stepContainer.querySelector('.jsFieldAverage').value = '10,00';
 
-                        let value = null, valueLength = null, btn = null;
+                            let value = null, valueLength = null, btn = null;
 
-                        let customError = false;
-                        
-                        self.stepContainer.querySelector('.jsFieldSearchCEP').oninput = async function() {
-                            btn = this;
-                            value = this.value;
-                            valueLength = value.length;
+                            let customError = false;
                             
-                            if (valueLength === 10) {
-                                btn.disabled = true;
-                                value = value.replaceAll('.', '').replaceAll('-', '');
+                            self.stepContainer.querySelector('.jsFieldSearchCEP').oninput = async function() {
+                                btn = this;
+                                value = this.value;
+                                valueLength = value.length;
+                                
+                                if (valueLength === 10) {
+                                    btn.disabled = true;
+                                    value = value.replaceAll('.', '').replaceAll('-', '');
 
-                                const queryParams = new URLSearchParams({
-                                    zip_code: value
-                                }).toString();
+                                    const queryParams = new URLSearchParams({
+                                        zip_code: value
+                                    }).toString();
 
-                                const url = `https://api.guaraenergia.com/utility-address?${queryParams}`;
+                                    const url = `https://api.guaraenergia.com/utility-address?${queryParams}`;
 
-                                try {
-                                    const response = await fetch(url, {
-                                        method: "GET",
-                                        headers: {
-                                            'Content-Type': 'application/json'
+                                    try {
+                                        const response = await fetch(url, {
+                                            method: "GET",
+                                            headers: {
+                                                'Content-Type': 'application/json'
+                                            }
+                                        });
+                                        
+                                        if (!response.ok) {
+                                            btn.disabled = false;
+
+                                            if (response.status == 404 || response.status == 400) {
+                                                const data = await response.json();
+                                                
+                                                if (data) {
+                                                    if (typeof data.detail !== 'undefined') {
+                                                        customError = true;
+                                                        CustomAlert(true, data.detail);
+                                                    }
+                                                }
+                                            } else {
+                                                throw new Error(`Response status: ${response.status}`);
+                                            }
                                         }
-                                    });
-                                    
-                                    if (!response.ok) {
+                                        
+                                        const data = await response.json();
+                                        
+                                        self.utility_id = data.utility_id;
+                                        btn.disabled = false;
+                                        btn.focus();
+                                        
+                                    } catch (error) {
                                         btn.disabled = false;
 
-                                        if (response.status == 404 || response.status == 400) {
-                                            const data = await response.json();
-                                            
-                                            if (data) {
-                                                if (typeof data.detail !== 'undefined') {
-                                                    customError = true;
-                                                    CustomAlert(true, data.detail);
-                                                }
-                                            }
-                                        } else {
-                                            throw new Error(`Response status: ${response.status}`);
+                                        if (!customError) {
+                                            CustomAlert(true, 'Não foi possível encontrar o CEP. Por favor, verifique se digitou corretamente.');
+                                            customError = false;
                                         }
                                     }
-                                    
-                                    const data = await response.json();
-                                    
-                                    // self.distribuidora = data.utility_type + ' - ' + data.utility_name;
-                                    self.utility_id = data.utility_id;
-                                    btn.disabled = false;
-                                    btn.focus();
-                                    
-                                } catch (error) {
-                                    btn.disabled = false;
 
-                                    if (!customError) {
-                                        CustomAlert(true, 'Não foi possível encontrar o CEP. Por favor, verifique se digitou corretamente.');
-                                        customError = false;
-                                    }
                                 }
-
                             }
-                        }
 
-                    } else if (step === 4) {
+                        }
+                    }
+                       
+                    if (step === 4) {
                         self.stepContainer.querySelector('.jsFieldFullName').value = `${self.fullName}`;
                         self.stepContainer.querySelector('.jsInstallationName').value = `${self.installation.utility.name}`;
-                        self.stepContainer.querySelector('.jsClientCEP').value = `${self.cep}`;
+                        self.stepContainer.querySelector('.jsClientCEP').value = `${self.cep}`;  
                     }
 
                 } else if (step === 3) {
@@ -579,7 +639,7 @@
                         self.stepContainer.querySelector('.jsFieldDistribuidora').textContent = self.distribuidora;
                     })();
 
-                    if (self.needNewPlano) {
+                    if (self.stepNewPlano) {
                         self.stepContainer.querySelector('.jsNextStep').classList.add('disabled');
                         
                         if (planoItemActive) {
@@ -656,7 +716,7 @@
                                         item.setAttribute('data-id', contract_proposes[i].id);
                                     });
 
-                                    self.needNewPlano = false;
+                                    self.stepNewPlano = false;
 
                                     self.stepContainer.classList.remove('gra-loading');
                                         
@@ -716,36 +776,91 @@
                 const self = this;
                 const Container = self.stepContainer;
 
-                if (step === 2) {
+                if (step === 1) {
+                    const type = self.stepContainer.querySelector('.jsContratacaoOption.active').getAttribute('data-type');
+
+                    if (self.stepType !== null) {
+                        if (self.stepType !== type) {
+                            document.querySelector('.jsFormStep').reset();
+                        }
+                    }
+
+                    self.stepType = type;
+
+                    callback();
+                    
+                } else if (step === 2) {
                     if (ValidateWrongFields()) {
     
-                        Container.classList.add('gra-loading');
-    
-                        const field_firstName = Container.querySelector('.jsFieldFirstName').value;
-                        const field_lastName = Container.querySelector('.jsFieldLastName').value;
-                        const field_email = Container.querySelector('.jsFieldEmail').value;
-                        const field_cep = Container.querySelector('.jsFieldSearchCEP').value.replaceAll('.', '').replaceAll('-', '');
-                        const field_phone = Container.querySelector('.jsFieldPhone').value.replaceAll('(', '').replaceAll(')', '').replaceAll(' ', '').replaceAll('-', '');
-                        const field_codePartner = Container.querySelector('.jsFieldCodePartner').value;
-                        const field_averageConsumption = Container.querySelector('.jsFieldAverage').value.replaceAll('.', '').replaceAll(',', '.');
-    
-                        function checkFields() {
-                            return self.firstName !== field_firstName || self.lastName !== field_lastName || self.email !== field_email || self.cep !== field_cep || self.phone !== field_phone || self.codePartner !== field_codePartner || self.averageConsumption !== field_averageConsumption;
-                        }
-                        
                         if (self.utility_id !== null) {
+
+                            Container.classList.add('gra-loading');
+                            
+                            const field_firstName = Container.querySelector('.jsFieldFirstName').value;
+                            const field_email = Container.querySelector('.jsFieldEmail').value;
+                            const field_cep = Container.querySelector('.jsFieldSearchCEP').value.replaceAll('.', '').replaceAll('-', '');
+        
+                            const field_codePartner = Container.querySelector('.jsFieldCodePartner').value;
+                            const field_averageConsumption = Container.querySelector('.jsFieldAverage').value.replaceAll('.', '').replaceAll(',', '.');
     
-                            if(checkFields()) {
+                            let field_lastName = null;
+                            let field_phone = null;
+                            let field_cnpj = null;
+                            let field_social_contract = null;
+        
+                            function checkFields(type) {
+                                if (self.stepType === "cpf") {
     
+                                    field_lastName = Container.querySelector('.jsFieldLastName').value;
+                                    field_phone = Container.querySelector('.jsFieldPhone').value.replaceAll('(', '').replaceAll(')', '').replaceAll(' ', '').replaceAll('-', '');
+    
+                                    return self.firstName !== field_firstName || self.lastName !== field_lastName || self.email !== field_email || self.cep !== field_cep || self.phone !== field_phone || self.codePartner !== field_codePartner || self.averageConsumption !== field_averageConsumption;
+    
+                                } else if (self.stepType === "cnpj") {
+                                    
+                                    field_cnpj = Container.querySelector('.jsFieldCNPJ').value.replaceAll('.', '').replaceAll('-', '').replaceAll('/', '');
+                                    field_social_contract = Container.querySelector('.jsContractFile').files[0];
+                                    
+                                    return self.firstName !== field_firstName || self.cnpj !== field_cnpj || self.email !== field_email || self.cep !== field_cep || self.social_contract !== field_social_contract || self.codePartner !== field_codePartner || self.averageConsumption !== field_averageConsumption;
+                                }
+                            }
+    
+                            if(checkFields(self.stepType)) {
+
+                                
                                 self.firstName = field_firstName;
-                                self.lastName = field_lastName;
-                                self.fullName = field_firstName + ' ' + field_lastName;
                                 self.email = field_email;
                                 self.cep = field_cep;
-                                self.phone = field_phone;
                                 self.codePartner = field_codePartner;
                                 self.averageConsumption = field_averageConsumption;
-                                
+
+                                let obj = {
+                                    type: self.stepType,
+                                    name: self.fullName,
+                                    email: self.email,
+                                    zip_code: self.cep,
+                                    average_consumption: parseFloat(self.averageConsumption),
+                                    partner_code: self.codePartner,
+                                };
+
+                                if (self.stepType === "cpf") {
+                                    self.fullName = field_firstName + ' ' + field_lastName;
+
+                                    self.lastName = field_lastName;
+                                    self.phone = field_phone;
+                                    
+                                    obj.phone = field_phone;
+                                    
+                                } else if (self.stepType === "cnpj") {
+                                    self.fullName = field_firstName;
+
+                                    self.cnpj = field_cnpj;
+                                    self.social_contract = field_social_contract;
+                                    
+                                    obj.cnpj = field_cnpj;
+                                    obj.social_contract = field_social_contract;
+                                }
+    
                                 (async function() {
                                     try {
                                         const response = await fetch('https://api.guaraenergia.com/client/register/', {
@@ -753,17 +868,7 @@
                                             headers: {
                                                 'Content-Type': 'application/json'
                                             },
-                                            body: JSON.stringify({
-                                                type: 'cpf',
-                                                name: self.fullName,
-                                                email: self.email,
-                                                zip_code: self.cep,
-                                                average_consumption: parseFloat(self.averageConsumption),
-                                                partner_code: self.codePartner,
-                                                // installation_address_number: '',
-                                                // installation_address_complement: '',
-                                                phone: self.phone
-                                            })
+                                            body: JSON.stringify(obj)
                                         });
                                         
                                         if (!response.ok) {
@@ -779,7 +884,7 @@
     
                                         Container.classList.remove('gra-loading');
                                         
-                                        self.needNewPlano = true;
+                                        self.stepNewPlano = true;
     
                                         callback();
                                         
@@ -841,15 +946,44 @@
 
                         // self.stepContainer.querySelector('.jsClientCEP').value = `${self.cep}`;
                         // jsFieldCPF
+
+                        // `installation_id=${self.installation.id}&legal_representant_name=&legal_representant_cpf=${field_cpf}&installation_number=${field_installationnumber}&bill_file=${field_billfile}&id_file=${field_idfile}&social_contract_file=`
                         
                         if (isValidCPF(field_cpf)) {
-                            fetch('https://api.guaraenergia.com/cadastro/step-3/', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/x-www-form-urlencoded'
-                                },
-                                body: `installation_id=${self.installation.id}&legal_representant_name=${self.fullName}&legal_representant_cpf=${field_cpf}&installation_number=&bill_file=${field_billfile}&id_file=${field_idfile}&social_contract_file=`
-                            });
+
+                            Container.classList.add('gra-loading');
+
+                            const formData = new FormData();
+                            formData.append("installation_id", self.installation.id);
+                            formData.append("legal_representant_name", self.fullName);
+                            formData.append("legal_representant_cpf", field_cpf);
+                            formData.append("installation_number", field_installationnumber);
+                            formData.append("bill_file", field_billfile);
+                            formData.append("id_file", field_idfile);
+
+                            (async function() {
+                                try {
+                                    const response = await fetch('https://api.guaraenergia.com/cadastro/step-3/', {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/x-www-form-urlencoded'
+                                        },
+                                        body: formData
+                                    });
+                                    
+                                    if (!response.ok) {
+                                        throw new Error(`Response status: ${response.status}`);
+                                    }
+                                    
+                                    const data = await response.json();
+                                    Container.classList.remove('gra-loading');
+                                    callback();
+                                    
+                                } catch (error) {
+                                    console.log(error);
+                                    Container.classList.remove('gra-loading');
+                                }
+                            })();
 
                             // callback();
                         } else {
@@ -878,6 +1012,59 @@
             return rest(10) === cpf[9] && rest(11) === cpf[10]
         }
 
+        function isValidCNPJ(cnpj) {
+            let cnpjRef = cnpj.replace(/[^\d]+/g,'');
+
+            if(cnpjRef == '') return false;
+            
+            if (cnpjRef.length != 14)
+                return false;
+
+            // Elimina CNPJs invalidos conhecidos
+            if (cnpjRef == "00000000000000" || 
+                cnpjRef == "11111111111111" || 
+                cnpjRef == "22222222222222" || 
+                cnpjRef == "33333333333333" || 
+                cnpjRef == "44444444444444" || 
+                cnpjRef == "55555555555555" || 
+                cnpjRef == "66666666666666" || 
+                cnpjRef == "77777777777777" || 
+                cnpjRef == "88888888888888" || 
+                cnpjRef == "99999999999999")
+                return false;
+                
+            // Valida DVs
+            tamanho = cnpjRef.length - 2
+            numeros = cnpjRef.substring(0,tamanho);
+            digitos = cnpjRef.substring(tamanho);
+            soma = 0;
+            pos = tamanho - 7;
+            for (i = tamanho; i >= 1; i--) {
+            soma += numeros.charAt(tamanho - i) * pos--;
+            if (pos < 2)
+                    pos = 9;
+            }
+            resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
+            if (resultado != digitos.charAt(0))
+                return false;
+                
+            tamanho = tamanho + 1;
+            numeros = cnpjRef.substring(0,tamanho);
+            soma = 0;
+            pos = tamanho - 7;
+            for (i = tamanho; i >= 1; i--) {
+            soma += numeros.charAt(tamanho - i) * pos--;
+            if (pos < 2)
+                    pos = 9;
+            }
+            resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
+            if (resultado != digitos.charAt(1))
+                return false;
+                    
+            return true;
+            
+        }
+
         function ValidateWrongFields() {
             const fields = StepController.stepContainer.querySelectorAll('.jsField');
             let valid = true;
@@ -899,6 +1086,11 @@
                         
                     } else if (el.hasAttribute('mask-cpf')) {
                         if (el.value.length !== 14) {
+                            addError(el, 'Campo com valor incorreto');
+                        }
+                        
+                    } else if (el.hasAttribute('mask-cnpj')) {
+                        if (el.value.length !== 18) {
                             addError(el, 'Campo com valor incorreto');
                         }
                         
@@ -984,6 +1176,9 @@
             fields.forEach(el => {
                 if (el.hasAttribute('mask-cpf')) {
                     VMasker(el).maskPattern("999.999.999-99");
+
+                } else if (el.hasAttribute('mask-cnpj')) {
+                    VMasker(el).maskPattern("99.999.999/9999-99");
 
                 } else if (el.hasAttribute('mask-cep')) {
                     var maskCep = ['99.999-999', '99.999-999'];

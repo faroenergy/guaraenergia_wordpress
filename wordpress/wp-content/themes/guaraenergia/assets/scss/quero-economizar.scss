@@ -674,6 +674,7 @@ body, html {
         padding: 43px 22px 43px 43px;
         background-color: #fff;
         border-radius: 20px;
+        min-width: 300px;
         @media (max-width: 700px) {
             max-width: 90%;
         }
