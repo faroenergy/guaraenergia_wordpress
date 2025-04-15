@@ -1,0 +1,399 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guará Energia - Proposta</title>
+  <style>
+    * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+    }
+    @font-face { 
+        font-family: Graphik;
+        src: url('https://www.guaraenergia.com/wp-content/themes/guaraenergia/assets/fonts/Graphik-Regular.ttf'); 
+        font-weight: 400;
+        font-display: swap;
+    } 
+    @font-face { 
+        font-family: Graphik;
+        src: url('https://www.guaraenergia.com/wp-content/themes/guaraenergia/assets/fonts/Graphik-Medium.ttf'); 
+        font-weight: 500;
+        font-display: swap;
+    } 
+    @font-face { 
+        font-family: Graphik;
+        src: url('https://www.guaraenergia.com/wp-content/themes/guaraenergia/assets/fonts/Graphik-Semibold.ttf'); 
+        font-weight: 600;
+        font-display: swap;
+    } 
+    @font-face { 
+        font-family: Graphik;
+        src: url('https://www.guaraenergia.com/wp-content/themes/guaraenergia/assets/fonts/Graphik-Bold.ttf'); 
+        font-weight: 700;
+        font-display: swap;
+    } 
+
+    body {
+        font-family: "Graphik", sans-serif;
+        color: #064A3C;
+        letter-spacing: -.25px;
+    }
+    .wrapper {
+        max-width: 1440px;
+        width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+        padding-bottom: 100px;
+    }
+    .container {
+        max-width: 1234px;
+        width: 100%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .banner-topo {
+        height: 286px;
+        background-image: url("https://www.guaraenergia.com/wp-content/themes/guaraenergia/assets/proposta/bg.png");
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+    .c1 {
+        padding-bottom: 44px;
+        background-color: #F3F3F3;
+    }
+    .c1__title {
+        display: inline-block;
+        height: 100px;
+        margin-top: -50px;
+        padding: 30px 72px;
+        border-radius: 30px;
+        font-size: 30px;
+        line-height: 39px;
+        font-weight: 500;
+        background-color: #064A3C;
+        color: #fff;
+    }
+    .c1 .container {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 43px;
+    }
+    .c1__itens {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        width: 100%;
+        gap: 10px;
+        row-gap: 10px;
+        font-size: 24px;
+        line-height: 41px;
+        justify-content: space-between;
+    }
+    .c1__itens-first {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    .c2__itens-first {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 30px;
+        row-gap: 10px;
+    }
+
+    .c1__itens img {
+        display: inline-block;
+        margin-right: 6px;
+        vertical-align: middle;
+    }
+    .c1__itens span {
+        font-weight: 500;
+    }
+    .c2 {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 10px;
+        width: 100%;
+        margin-top: 20px;
+        font-size: 24px;
+        line-height: 41px;
+        justify-content: space-between;
+    }
+
+    .c2 span {
+        font-weight: 500;
+    }
+    .c3 {
+        margin-top: 75px;
+    }
+    .c3__title {
+        font-weight: 500;
+        font-size: 40px;
+        line-height: 39px;
+        margin-bottom: 44px;
+    }
+    .c3__content {
+        display: flex;
+        align-items: center;
+        gap: 46px;
+        text-align: center;
+    }
+    .c3__item {
+        padding: 50px 18px 35px;
+        flex: 1;
+        border-radius: 46px;
+    }
+    .c3__item--1 {
+        background-color: #F0F0F0;
+    }
+    .c3__item--2 {
+        background-color: #FECD45;
+    }
+    .c3__item--3 {
+        background-color: #002E25;
+        color: #fff;
+    }
+    .c3__item p:first-child {
+        font-size: 22px;
+        line-height: 29px;
+        font-weight: 500;
+    }
+    .c3__item p:nth-child(2) {
+        padding: 35px;
+        margin: 24px 0;
+        border-radius: 37px;
+        font-size: 37px;
+        line-height: 40px;
+        font-weight: 600;
+    }
+    .c3__item p:last-child {
+        line-height: 46px;
+        font-size: 30px;
+    }
+    .c3__item p:last-child span {
+        font-weight: 600;
+        font-size: 42px;
+    }
+    .c3__item--1 p:nth-child(2) {
+        background-color: #FFFFFF;
+    }
+    .c3__item--2 p:nth-child(2) {
+        background-color: #FFEEBF;
+    }
+    .c3__item--3 p:nth-child(2) {
+        background-color: #064A3C;
+    }
+    .c4 {
+        margin-top: 40px;
+        font-size: 24px;
+        line-height: 1;
+    }
+    .c5 {
+        margin-top: 75px;
+    }
+    .c5__title {
+        margin-bottom: 56px;
+        font-size: 30px;
+        line-height: 39px;
+        font-weight: 500;
+    }
+    .c5 table {
+        width: 100%;
+        text-align: center;
+        border-collapse: collapse;
+        line-height: 1;
+        table-layout: fixed;
+    }
+    .c5 .caption {
+        border-radius: 20px 20px 0 0;
+        background-color: #FECD45;
+        color: #064A3C;
+        box-shadow: 0 0 1px 1px #FECD45
+    }
+    td {
+        padding: 15px;
+        /* outline: 1px solid #9A9A9A;
+        outline-top: 0; */
+        background-color: #F0F0F0;
+        box-shadow: 0 -1px 0 #9A9A9A, -1px 0 0 #9A9A9A, 0 1px 0 #9A9A9A, 1px 0px 0 #9A9A9A;
+    }
+    th {
+        font-weight: 500;
+    }
+    th:not(:empty) {
+        padding: 20px;
+        background-color: #064A3C;
+        color: #fff;
+        box-shadow: 0 0 1px 1px #064A3C
+    }
+    .thead-radius tr:last-child th:first-child {
+        border-radius: 20px 0 0 0;
+    }
+
+    .tbody-radius tr:first-child td:first-child {
+        border-radius: 20px 0 0 0;
+    }
+
+    tbody tr:last-child td:first-child {
+        border-radius: 0 0 0 20px;
+    }
+    tbody tr:last-child td:last-child {
+        border-radius: 0 0 20px 0;
+    }
+    table {
+        margin-bottom: 40px;
+    }
+  </style>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="banner-topo"></div>
+        <div class="c1">
+            <diva class="container">
+                <div class="c1__title">Escolha o melhor plano de adesão para você</div>
+                <div class="c1__itens">
+                    <div class="c1__itens-first">
+                        <div><img src="https://www.guaraenergia.com/wp-content/themes/guaraenergia/assets/proposta/user.png" alt="Ícone de usuário">Cliente: <span> {{ client_name }}</span></div>
+                        <div><img src="https://www.guaraenergia.com/wp-content/themes/guaraenergia/assets/proposta/bulb.png" alt="Ícone de lâmpada">Distribuidora: <span>{{ utility_name }}</span></div>
+                    </div>
+                    <div>Cód. do parceiro/cupom promocional: <span>{{ code_partner }}</span></div>
+                </div>
+            </diva>
+        </div>
+        <div class="container c2">
+            <div class="c2__itens-first">
+                <div>
+                    Data da proposta: <span>{{ emission_date }}</span>
+                </div>
+                <div>
+                    Validade: <span>{{ due_date }}</span>
+                </div>
+            </div>
+            <div>
+                Média do valor em R$ pago na fatura: <span>{{ average_consumption }}</span>
+            </div>
+        </div>
+        <div class="c3 container">
+            <div class="c3__title">Planos de adesão</div>
+            <div class="c3__content">
+                <div class="c3__item c3__item--1">
+                    <p>
+                        Plano de adesão <br>sem fidelidade
+                    </p>
+                    <p>
+                        Tenha {{ discount_0 }}% <br>de economia*
+                    </p>
+                    <p>
+                        Economize até <br><span>R${{ yearly_0 }}/ano</span>
+                    </p>
+                </div>
+                <div class="c3__item c3__item--2">
+                    <p>
+                        Plano de adesão com<br> fidelidade 2 anos
+                    </p>
+                    <p>
+                        Tenha {{ discount_2 }}% <br>de economia*
+                    </p>
+                    <p>
+                        Economize até <br><span>R${{ yearly_2 }}/ano</span>
+                    </p>
+                </div>
+                <div class="c3__item c3__item--3">
+                    <p>
+                        Plano de adesão com <br>fidelidade de 5 anos
+                    </p>
+                    <p>
+                        Tenha {{ discount_5 }}% <br>de economia*
+                    </p>
+                    <p>
+                        Economize até <br><span>R${{ yearly_5 }}/ano</span>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <p class="c4 container">
+            *Economia referente aos créditos de energia compensados em sua fatura da Guará Energia na bandeira verde.
+        </p>
+        <div class="c5 container">
+            <p class="c5__title">
+                Simulação de economia média percebida por bandeira tarifária
+            </p>
+            <table>
+                <thead class="thead-radius">
+                    <tr>
+                        <th></th>
+                        <th class="caption" colspan="3">
+                            Desconto (%) aplicado por plano
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>Bandeira Tarifária</th>
+                        <th>Sem fidelidade</th>
+                        <th>2 anos</th>
+                        <th>5 anos</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Verde</td>
+                        <td>{{ tax_green_0 }}</td>
+                        <td>{{ tax_green_2 }}</td>
+                        <td>{{ tax_green_5 }}</td>
+                    </tr>
+                    <tr>
+                        <td>Amarela</td>
+                        <td>{{ tax_yellow_0 }}</td>
+                        <td>{{ tax_yellow_2 }}</td>
+                        <td>{{ tax_yellow_5 }}</td>
+                    </tr>
+                    <tr>
+                        <td>Vermelha 1</td>
+                        <td>{{ tax_red1_0 }}</td>
+                        <td>{{ tax_red1_2 }}</td>
+                        <td>{{ tax_red1_5 }}</td>
+                    </tr>
+                    <tr>
+                        <td>Vermelha 2</td>
+                        <td>{{ tax_red2_0 }}</td>
+                        <td>{{ tax_red2_2 }}</td>
+                        <td>{{ tax_red2_5 }}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <table>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th class="caption" colspan="3">Economia Média (R$) com a Guará</th>
+                    </tr>
+                    <tr>
+                        <th></th>
+                        <th>Sem fidelidade</th>
+                        <th>2 anos</th>
+                        <th>5 anos</th>
+                    </tr>
+                </thead>
+                <tbody class="tbody-radius">
+                    <tr>
+                        <td>Mensal</td>
+                        <td>{{ monthly_0 }} </td>
+                        <td>{{ monthly_2 }} </td>
+                        <td>{{ monthly_5 }} </td>
+                    </tr>
+                    <tr>
+                        <td>Anual</td>
+                        <td>{{ yearly_0 }} </td>
+                        <td>{{ yearly_2 }} </td>
+                        <td>{{ yearly_5 }} </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

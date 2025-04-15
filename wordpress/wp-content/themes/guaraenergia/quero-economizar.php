@@ -56,7 +56,7 @@
             </a>
         </div>
     </header>
-    <form class="gra-step-form__wrapper jsFormStep" onsubmit="return false;">
+    <form class="gra-step-form__wrapper jsFormStep" onsubmit="event.preventDefault();" novalidate>
         <div class="gra-step-form__side jsStepSide">
             <a href="/" class="gra-step-form__side-logo"><img src="<?php echo get_template_directory_uri(); ?>/assets/images/logo.svg" /></a>
             <div step-side="1" style="display:none;background-image:url(<?php echo $passo_1['imagem'] ?>)"></div>
@@ -96,62 +96,27 @@
                 <?php get_template_part('templates/quero-economizar/footer', null, array('botao' => $passo_1['botao'], 'texto_privacidade' => $texto_privacidade))?>
             </div>
 
-            <div class="gra-step-form__content-inner" step-side="2" step-side-inner="0" step="2" style="display:none" data-type="cpf">
+            <div class="gra-step-form__content-inner" step-side="2" step-side-inner="0" step="2" style="display:none">
                <div class="gra-title"><?php echo $passo_2['titulo']; ?></div>
                <hr class="gra-separator" />           
                <div class="gra-content">
-                    <div class="gra-col gra-col--half">
-                        <input class="jsField jsFieldFirstName" type="text" minlength="3" />
+                    <div class="gra-col gra-col--half jsIsCpf">
+                        <input required class="jsField jsFieldFirstName" type="text" minlength="3" />
                         <label>Nome*</label>
                     </div>
-                    <div class="gra-col gra-col--half">
-                        <input class="jsField jsFieldLastName" type="text" minlength="3" />
+                    <div class="gra-col gra-col--half jsIsCpf">
+                        <input required class="jsField jsFieldLastName" type="text" minlength="3" />
                         <label>Sobrenome*</label>
                     </div>
-                    <div class="gra-col gra-col--half">
-                        <input class="jsField jsSameField jsFieldEmail" type="email" />
-                        <label>E-mail*</label>
-                    </div>
-                    <div class="gra-col gra-col--half">
-                        <input class="jsField jsSameField" type="email" />
-                        <label>Confirme o e-mail*</label>
-                    </div>
-                    <div class="gra-col gra-col--half">
-                        <input class="jsField jsFieldSearchCEP" type="text" mask-cep />
-                        <label>CEP*</label>
-                        <div class="lds-ring" style="display:none"><div></div><div></div><div></div><div></div></div>
-                    </div>
-                    <div class="gra-col gra-col--half">
-                        <input class="jsField jsFieldPhone" type="text" mask-phone />
-                        <label>Telefone*</label>
-                    </div>
-                    <div class="gra-col">
-                        <input class="jsField jsFieldCodePartner" type="text" />
-                        <label>Código do Parceiro/Cupom Promocional*</label>
-                        <div class="gra-tooltip-icon gra-tooltip-icon--info"></div>
-                        <span class="gra-tooltip">Caso você tenha nos conhecido através de um parceiro comercial coloque neste campo o código do parceiro.</span>
-                    </div>
-                    <div class="gra-col">
-                        <input class="jsField jsFieldAverage" type="text" minlength="4" mask-money />
-                        <label class="gra-label-small">Média do Valor em R$ pago na fatura de energia*</label>
-                    </div>
-                </div>
-                <?php get_template_part('templates/quero-economizar/footer', null, array('botao' => $passo_2['botao'], 'go_back' => true, 'texto_privacidade' => $texto_privacidade))?>
-            </div>
-
-            <div class="gra-step-form__content-inner" step-side="2" step-side-inner="0" step="2" style="display:none" data-type="cnpj">
-               <div class="gra-title"><?php echo $passo_2['titulo']; ?></div>
-               <hr class="gra-separator" />           
-               <div class="gra-content">
-                    <div class="gra-col">
-                        <input class="jsField jsFieldFirstName" type="text" minlength="3" />
+                    <div class="gra-col jsIsCnpj">
+                        <input required class="jsField" type="text" minlength="3" />
                         <label>Nome do representante legal da empresa*</label>
                     </div>
-                    <div class="gra-col gra-col--half">
-                        <input class="jsField jsFieldCNPJ" mask-cnpj type="text" />
+                    <div class="gra-col gra-col--half jsIsCnpj">
+                        <input required class="jsField jsFieldCNPJ" mask-cnpj type="text" />
                         <label>CNPJ da empresa*</label>
                     </div>
-                    <div class="gra-col gra-col--half">
+                    <div class="gra-col gra-col--half jsIsCnpj">
                         <input class="jsField jsContractFile" type="file" placeholder="Contrato social/Cartão CNPJ" />
                         <!-- social_contract_file -->
                         <label>
@@ -160,22 +125,30 @@
                         </label>
                     </div>
                     <div class="gra-col gra-col--half">
-                        <input class="jsField jsFieldEmail" type="email" />
+                        <input required class="jsField jsSameField jsFieldEmail" type="email" />
                         <label>E-mail*</label>
                     </div>
                     <div class="gra-col gra-col--half">
-                        <input class="jsField jsFieldSearchCEP" type="text" mask-cep />
+                        <input required class="jsField jsSameField" type="email" />
+                        <label>Confirme o e-mail*</label>
+                    </div>
+                    <div class="gra-col gra-col--half">
+                        <input required class="jsField jsFieldSearchCEP" type="text" mask-cep />
                         <label>CEP*</label>
                         <div class="lds-ring" style="display:none"><div></div><div></div><div></div><div></div></div>
                     </div>
+                    <div class="gra-col gra-col--half">
+                        <input required class="jsField jsFieldPhone" type="text" mask-phone />
+                        <label>Telefone*</label>
+                    </div>
                     <div class="gra-col">
-                        <input class="jsField jsFieldCodePartner" type="text" />
+                        <input required class="jsField jsFieldCodePartner" type="text" />
                         <label>Código do Parceiro/Cupom Promocional*</label>
                         <div class="gra-tooltip-icon gra-tooltip-icon--info"></div>
                         <span class="gra-tooltip">Caso você tenha nos conhecido através de um parceiro comercial coloque neste campo o código do parceiro.</span>
                     </div>
                     <div class="gra-col">
-                        <input class="jsField jsFieldAverage" type="text" minlength="4" mask-money />
+                        <input required class="jsField jsFieldAverage" type="text" minlength="4" mask-money />
                         <label class="gra-label-small">Média do Valor em R$ pago na fatura de energia*</label>
                     </div>
                 </div>
@@ -233,26 +206,42 @@
                 <div class="gra-title"><?php echo $passo_4['titulo']; ?></div>
                 <hr class="gra-separator" />           
                 <div class="gra-content">
-                    <div class="gra-col">
-                        <input class="jsField jsFieldFullName" type="text" disabled />
+                    <div class="gra-col jsIsCpf">
+                        <input required class="jsField jsFieldFullName" type="text" disabled />
                         <label>Nome Completo*</label>
                         <div class="gra-tooltip-icon gra-tooltip-icon--lock"></div>
                     </div>
-                    <div class="gra-col gra-col--half">
-                        <input class="jsField jsFieldCPF" mask-cpf type="text" />
+                    <div class="gra-col gra-col--half  jsIsCnpj">
+                        <input required class="jsField" type="text" minlength="3" />
+                        <label>Nome fantasia da empresa*</label>
+                    </div>
+                    <div class="gra-col gra-col--half jsIsCnpj">
+                        <input required class="jsField jsFieldCNPJ" mask-cnpj type="text" />
+                        <label>CNPJ da empresa*</label>
+                    </div>
+                    <div class="gra-col gra-col--half jsIsCnpj">
+                        <input required class="jsField" type="text" minlength="3" />
+                        <label>Nome do representante legal da empresa*</label>
+                    </div>
+                    <div class="gra-col gra-col--half jsIsCpf">
+                        <input required class="jsField jsFieldCPF" mask-cpf type="text" />
                         <label>CPF*</label>
                     </div>
+                    <div class="gra-col gra-col--half jsIsCnpj">
+                        <input required class="jsField jsFieldCPF" mask-cpf type="text" />
+                        <label>CPF do representante legal da empresa*</label>
+                    </div>
                     <div class="gra-col gra-col--half">
-                        <input class="jsField jsClientCEP" type="text" disabled />
+                        <input required class="jsField jsClientCEP" type="text" disabled />
                         <label>CEP*</label>
                     </div>
                     <div class="gra-col gra-col--half">
-                        <input class="jsField jsInstallationName" type="text" disabled />
+                        <input required class="jsField jsInstallationName" type="text" disabled />
                         <label>Distribuidora*</label>
                         <div class="gra-tooltip-icon gra-tooltip-icon--lock"></div>
                     </div>
                     <div class="gra-col gra-col--half">
-                        <input class="jsField jsInstallationNumber" type="text" minlength="1" />
+                        <input required class="jsField jsInstallationNumber" type="text" minlength="1" />
                         <label>Nº de instalação*</label>
                         <div class="gra-tooltip-icon gra-tooltip-icon--info"></div>
                     </div>
@@ -260,14 +249,28 @@
                         <input class="jsField jsBillFile" type="file" placeholder="Anexe sua última fatura" />
                         <label>
                             <div class="gra-tooltip-icon gra-tooltip-icon--clip"></div>
-                            Anexe sua última fatura
+                            Anexe sua última fatura*
                         </label>
                     </div>
-                    <div class="gra-col gra-col--half">
+                    <div class="gra-col gra-col--half jsIsCpf">
                         <input class="jsField jsIdFile" type="file" placeholder="Anexe seu documento" />
                         <label>
                             <div class="gra-tooltip-icon gra-tooltip-icon--clip"></div>
-                            Anexe seu documento
+                            Anexe seu documento*
+                        </label>
+                    </div>
+                    <div class="gra-col gra-col--half jsIsCnpj">
+                        <input class="jsField jsIdFile2" type="file" placeholder="Anexe seu documento" />
+                        <label>
+                            <div class="gra-tooltip-icon gra-tooltip-icon--clip"></div>
+                            Anexe o documento de identificação do representante legal*
+                        </label>
+                    </div>
+                    <div class="gra-col gra-col--half jsIsCnpj">
+                        <input class="jsField jsContractFile" type="file" placeholder="Anexe seu documento" />
+                        <label>
+                            <div class="gra-tooltip-icon gra-tooltip-icon--clip"></div>
+                            Anexe o cartão CNPJ ou Contrato Social*
                         </label>
                     </div>
                 </div>
@@ -285,18 +288,18 @@
                 <hr class="gra-separator" />           
                 <div class="gra-content">
                     <div class="gra-col">
-                        <input class="jsField" minlength="4" type="text" mask-number />
+                        <input required class="jsField" minlength="4" type="text" mask-number />
                         <label>Digite o código enviado para seu email*</label>
                     </div>
                     <div class="gra-col">
                         <a href="#" class="gra-col-resend-code">Reenviar código</a>
                     </div>
                     <div class="gra-col">
-                        <input class="jsField jsSameField" minlength="4" type="password" />
+                        <input required class="jsField jsSameField" minlength="4" type="password" />
                         <label>Crie sua senha*</label>
                     </div>
                     <div class="gra-col">
-                        <input class="jsField jsSameField" minlength="4" type="password" />
+                        <input required class="jsField jsSameField" minlength="4" type="password" />
                         <label>Confirme sua senha*</label>
                     </div>
                 </div>
@@ -458,10 +461,6 @@
                 const self = this;
     
                 self.stepContainer = document.querySelector(`.jsStepContent [step="${step}"]`);
-
-                if (self.stepType !== null && self.stepContainer.getAttribute('data-type')) {
-                    self.stepContainer = document.querySelector(`.jsStepContent [step="${step}"][data-type="${self.stepType}"]`);
-                }
                 
                 const stepSide = self.stepContainer.getAttribute('step-side');
                 const stepElSide = document.querySelector(`.jsStepSide [step-side="${stepSide}"]`);
@@ -787,6 +786,16 @@
 
                     self.stepType = type;
 
+                    let display1 = type === 'cpf' ? '' : 'none';
+                    let display2 = type === 'cpf' ? 'none' : '';
+
+                    document.querySelectorAll('.jsIsCpf').forEach(function(item) {
+                        item.style.display = display1;
+                    });
+                    document.querySelectorAll('.jsIsCnpj').forEach(function(item) {
+                        item.style.display = display2;
+                    });
+
                     callback();
                     
                 } else if (step === 2) {
@@ -833,21 +842,28 @@
                                 self.codePartner = field_codePartner;
                                 self.averageConsumption = field_averageConsumption;
 
-                                let obj = {
-                                    type: self.stepType,
-                                    email: self.email,
-                                    zip_code: self.cep,
-                                    average_consumption: parseFloat(self.averageConsumption),
-                                    partner_code: self.codePartner,
-                                };
+                                // let obj = {
+                                //     type: self.stepType,
+                                //     email: self.email,
+                                //     zip_code: self.cep,
+                                //     average_consumption: parseFloat(self.averageConsumption),
+                                //     partner_code: self.codePartner,
+                                // };
 
+                                const formData = new FormData();
+                                formData.append('type', self.stepType);
+                                formData.append('email', self.email);
+                                formData.append('zip_code', self.cep);
+                                formData.append('average_consumption', parseFloat(self.averageConsumption));
+                                formData.append('partner_code', self.codePartner);
+         
                                 if (self.stepType === "cpf") {
                                     self.fullName = field_firstName + ' ' + field_lastName;
 
                                     self.lastName = field_lastName;
                                     self.phone = field_phone;
                                     
-                                    obj.phone = field_phone;
+                                    formData.append('phone', field_phone);
                                     
                                 } else if (self.stepType === "cnpj") {
                                     self.fullName = field_firstName;
@@ -855,20 +871,20 @@
                                     self.cnpj = field_cnpj;
                                     self.social_contract = field_social_contract;
                                     
-                                    obj.cnpj = field_cnpj;
-                                    obj.social_contract = field_social_contract;
+                                    formData.append('cnpj', field_cnpj);
+                                    formData.append('social_contract', field_social_contract);
                                 }
 
-                                obj.name = self.fullName;
+                                formData.append('name', self.fullName);
     
                                 (async function() {
                                     try {
                                         const response = await fetch('https://api.guaraenergia.com/client/register/', {
                                             method: "POST",
                                             headers: {
-                                                'Content-Type': 'application/json'
+                                                'Content-Type': 'application/x-www-form-urlencoded'
                                             },
-                                            body: JSON.stringify(obj)
+                                            body: new URLSearchParams(formData)
                                         });
                                         
                                         if (!response.ok) {
@@ -968,7 +984,7 @@
                                         headers: {
                                             'Content-Type': 'application/x-www-form-urlencoded'
                                         },
-                                        body: formData
+                                        body: new URLSearchParams(formData)
                                     });
                                     
                                     if (!response.ok) {
@@ -1066,7 +1082,7 @@
         }
 
         function ValidateWrongFields() {
-            const fields = StepController.stepContainer.querySelectorAll('.jsField');
+            const fields = StepController.stepContainer.querySelectorAll('.gra-col:not([style="display: none;"]) > .jsField');
             let valid = true;
 
             fields.forEach(el => {

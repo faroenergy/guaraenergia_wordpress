@@ -369,12 +369,15 @@ body, html {
                     font-weight: 400;
                     color: $primary;
                     border: 1px solid #C1C1C1;
-                    background-color: #fff;
+                    background: none;
                     text-align: left;
                     transition: .3s padding-left;
                     font-weight: 500;
+                    z-index: 1;
+                    position: relative;
                     &[type="file"] {
                         padding: 30px 43px 2px;
+                        font-size: 12px;
                         & ~ label {
                             .gra-tooltip-icon {
                                 position: static;
@@ -385,7 +388,7 @@ body, html {
                         }
                     }
                     &:hover, &:focus {
-                        background-color: #F5F5F5;
+                        background: none;
                     }
                     &::placeholder {
                         font-weight: 500;
@@ -393,6 +396,9 @@ body, html {
                     }
                     &[disabled] {
                         background-color: #F5F5F5;
+                        + label {
+                            z-index: 1;
+                        }
                     }
                     &.gra-error {
                         border-color: red;
@@ -1034,4 +1040,19 @@ body, html {
     input[disabled] ~ .lds-ring {
         display: block !important;
     }
+}
+
+
+.gra-step-form__content-inner input:not([type="file"]) + label {
+    top: 24px;
+    transition: .3s top ease-out;
+    z-index: 0;
+}
+
+.gra-step-form__content-inner input[type="file"] + label {
+    top: 12px;
+}
+
+.gra-step-form__content-inner input:focus + label, .gra-step-form__content-inner input:valid + label {
+    top: 12px;
 }
