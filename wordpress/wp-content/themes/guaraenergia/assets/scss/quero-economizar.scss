@@ -1042,6 +1042,9 @@ body, html {
     }
 }
 
+.gra-step-form__content-inner input[type="file"].push {
+    padding-top: 57px;
+}
 
 .gra-step-form__content-inner input:not([type="file"]) + label {
     top: 24px;
@@ -1049,10 +1052,25 @@ body, html {
     z-index: 0;
 }
 
+.gra-step-form__content-inner input:disabled + label {
+    top: 12px;
+}
+
 .gra-step-form__content-inner input[type="file"] + label {
     top: 12px;
 }
 
-.gra-step-form__content-inner input:focus + label, .gra-step-form__content-inner input:valid + label {
+.gra-step-form__content-inner input:focus + label,
+.gra-step-form__content-inner input.gra-active + label,
+.gra-step-form__content-inner input:valid + label {
     top: 12px;
+}
+
+.gra-text-smaller {
+    font-size: 13px;
+}
+
+.gra-col-resend-code:disabled {
+    opacity: .75;
+    cursor: not-allowed;
 }

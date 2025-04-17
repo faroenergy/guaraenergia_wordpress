@@ -100,6 +100,10 @@
                <div class="gra-title"><?php echo $passo_2['titulo']; ?></div>
                <hr class="gra-separator" />           
                <div class="gra-content">
+                   <div class="gra-col jsIsCnpj">
+                       <input required class="jsField jsFieldCompanyName" type="text" minlength="3" />
+                       <label>Nome fantasia ou razão social da empresa*</label>
+                   </div>
                     <div class="gra-col gra-col--half jsIsCpf">
                         <input required class="jsField jsFieldFirstName" type="text" minlength="3" />
                         <label>Nome*</label>
@@ -107,22 +111,6 @@
                     <div class="gra-col gra-col--half jsIsCpf">
                         <input required class="jsField jsFieldLastName" type="text" minlength="3" />
                         <label>Sobrenome*</label>
-                    </div>
-                    <div class="gra-col jsIsCnpj">
-                        <input required class="jsField" type="text" minlength="3" />
-                        <label>Nome do representante legal da empresa*</label>
-                    </div>
-                    <div class="gra-col gra-col--half jsIsCnpj">
-                        <input required class="jsField jsFieldCNPJ" mask-cnpj type="text" />
-                        <label>CNPJ da empresa*</label>
-                    </div>
-                    <div class="gra-col gra-col--half jsIsCnpj">
-                        <input class="jsField jsContractFile" type="file" placeholder="Contrato social/Cartão CNPJ" />
-                        <!-- social_contract_file -->
-                        <label>
-                            <div class="gra-tooltip-icon gra-tooltip-icon--clip"></div>
-                            Contrato social/Cartão CNPJ*
-                        </label>
                     </div>
                     <div class="gra-col gra-col--half">
                         <input required class="jsField jsSameField jsFieldEmail" type="email" />
@@ -136,6 +124,14 @@
                         <input required class="jsField jsFieldSearchCEP" type="text" mask-cep />
                         <label>CEP*</label>
                         <div class="lds-ring" style="display:none"><div></div><div></div><div></div><div></div></div>
+                    </div>
+                    <div class="gra-col gra-col--half">
+                        <input required class="jsField jsFieldNumeroEnd" type="text" mask-number />
+                        <label>Número*</label>
+                    </div>
+                    <div class="gra-col gra-col--half">
+                        <input required class="jsField jsFieldComplementoEnd" type="text" />
+                        <label>Complemento*</label>
                     </div>
                     <div class="gra-col gra-col--half">
                         <input required class="jsField jsFieldPhone" type="text" mask-phone />
@@ -212,24 +208,24 @@
                         <div class="gra-tooltip-icon gra-tooltip-icon--lock"></div>
                     </div>
                     <div class="gra-col gra-col--half  jsIsCnpj">
-                        <input required class="jsField" type="text" minlength="3" />
-                        <label>Nome fantasia da empresa*</label>
+                        <input required class="jsField jsFieldCompanyName" type="text" minlength="3" disabled />
+                        <label class="gra-text-smaller">Nome fantasia ou razão social da empresa*</label>
                     </div>
                     <div class="gra-col gra-col--half jsIsCnpj">
                         <input required class="jsField jsFieldCNPJ" mask-cnpj type="text" />
                         <label>CNPJ da empresa*</label>
                     </div>
                     <div class="gra-col gra-col--half jsIsCnpj">
-                        <input required class="jsField" type="text" minlength="3" />
-                        <label>Nome do representante legal da empresa*</label>
+                        <input required class="jsField jsFieldNameRepresentant" type="text" minlength="3" />
+                        <label>Nome do representante legal*</label>
                     </div>
                     <div class="gra-col gra-col--half jsIsCpf">
                         <input required class="jsField jsFieldCPF" mask-cpf type="text" />
                         <label>CPF*</label>
                     </div>
                     <div class="gra-col gra-col--half jsIsCnpj">
-                        <input required class="jsField jsFieldCPF" mask-cpf type="text" />
-                        <label>CPF do representante legal da empresa*</label>
+                        <input required class="jsField jsFieldCPFRepresentant" mask-cpf type="text" />
+                        <label>CPF do representante legal*</label>
                     </div>
                     <div class="gra-col gra-col--half">
                         <input required class="jsField jsClientCEP" type="text" disabled />
@@ -260,14 +256,14 @@
                         </label>
                     </div>
                     <div class="gra-col gra-col--half jsIsCnpj">
-                        <input class="jsField jsIdFile2" type="file" placeholder="Anexe seu documento" />
+                        <input class="jsField jsIdFile2 push" type="file" placeholder="Anexe seu documento" />
                         <label>
                             <div class="gra-tooltip-icon gra-tooltip-icon--clip"></div>
                             Anexe o documento de identificação do representante legal*
                         </label>
                     </div>
                     <div class="gra-col gra-col--half jsIsCnpj">
-                        <input class="jsField jsContractFile" type="file" placeholder="Anexe seu documento" />
+                        <input class="jsField jsContractFile push" type="file" placeholder="Anexe seu documento" />
                         <label>
                             <div class="gra-tooltip-icon gra-tooltip-icon--clip"></div>
                             Anexe o cartão CNPJ ou Contrato Social*
@@ -288,18 +284,18 @@
                 <hr class="gra-separator" />           
                 <div class="gra-content">
                     <div class="gra-col">
-                        <input required class="jsField" minlength="4" type="text" mask-number />
+                        <input required class="jsField jsVerificationCode" minlength="4" type="text" mask-number />
                         <label>Digite o código enviado para seu email*</label>
                     </div>
                     <div class="gra-col">
-                        <a href="#" class="gra-col-resend-code">Reenviar código</a>
+                        <button type="button" class="gra-col-resend-code">Reenviar código</button>
                     </div>
                     <div class="gra-col">
-                        <input required class="jsField jsSameField" minlength="4" type="password" />
+                        <input required class="jsField jsSameField jsPassword1" minlength="4" type="password" />
                         <label>Crie sua senha*</label>
                     </div>
                     <div class="gra-col">
-                        <input required class="jsField jsSameField" minlength="4" type="password" />
+                        <input required class="jsField jsSameField jsPassword2" minlength="4" type="password" />
                         <label>Confirme sua senha*</label>
                     </div>
                 </div>
@@ -367,9 +363,10 @@
             
             installation: null,
             client: null,
-            utility_id: null,
+            utility_id: false,
             distribuidora: null,
 
+            companyName: null,
             firstName: null,
             lastName: null,
             fullName: null,
@@ -430,6 +427,16 @@
 
                         if (item.parentElement.querySelector('.gra-error-msg')) {
                             item.parentElement.querySelector('.gra-error-msg').remove();
+                        }
+                    });
+
+                    item.addEventListener('input', function() {
+                        if (item.type !== 'file') {
+                            if (item.value !== '') {
+                                item.classList.add('gra-active');
+                            } else {
+                                item.classList.remove('gra-active');
+                            }
                         }
                     });
                 });
@@ -518,14 +525,17 @@
                         CreateMaskForFields();
 
                         if (step === 2) {
-                            // self.stepContainer.querySelector('.jsFieldFirstName').value = '233';
-                            // self.stepContainer.querySelector('.jsFieldLastName').value = '233';
+                            self.stepContainer.querySelector('.jsFieldFirstName').value = '233';
+                            self.stepContainer.querySelector('.jsFieldCompanyName').value = '233';
+                            self.stepContainer.querySelector('.jsFieldLastName').value = '233';
                             self.stepContainer.querySelector('.jsFieldEmail').value = 'fbebber1@gmail.com';
-                            // self.stepContainer.querySelector('.jsSameField:not(.jsFieldEmail)').value = 'fbebber1@gmail.com';
-                            // self.stepContainer.querySelector('.jsFieldSearchCEP').value = '86.460-000';
+                            self.stepContainer.querySelector('.jsSameField:not(.jsFieldEmail)').value = 'fbebber1@gmail.com';
+                            self.stepContainer.querySelector('.jsFieldSearchCEP').value = '86.460-000';
                             self.stepContainer.querySelector('.jsFieldPhone').value = '(11) 11111-1111';
                             self.stepContainer.querySelector('.jsFieldCodePartner').value = '123';
                             self.stepContainer.querySelector('.jsFieldAverage').value = '10,00';
+                            self.stepContainer.querySelector('.jsFieldNumeroEnd').value = "10";
+                            self.stepContainer.querySelector('.jsFieldComplementoEnd').value = "casa 10";
 
                             let value = null, valueLength = null, btn = null;
 
@@ -574,12 +584,14 @@
                                         const data = await response.json();
                                         
                                         self.utility_id = data.utility_id;
+
                                         btn.disabled = false;
                                         btn.focus();
                                         
                                     } catch (error) {
                                         btn.disabled = false;
-
+                                        self.utility_id = false;
+                                        
                                         if (!customError) {
                                             CustomAlert(true, 'Não foi possível encontrar o CEP. Por favor, verifique se digitou corretamente.');
                                             customError = false;
@@ -593,9 +605,14 @@
                     }
                        
                     if (step === 4) {
-                        self.stepContainer.querySelector('.jsFieldFullName').value = `${self.fullName}`;
-                        self.stepContainer.querySelector('.jsInstallationName').value = `${self.installation.utility.name}`;
+                        if (self.stepType === 'cpf') {
+                            self.stepContainer.querySelector('.jsFieldFullName').value = `${self.fullName}`;
+                        } else {
+                            self.stepContainer.querySelector('.jsFieldCompanyName').value = `${self.fullName}`;
+                        }
+                        
                         self.stepContainer.querySelector('.jsClientCEP').value = `${self.cep}`;  
+                        self.stepContainer.querySelector('.jsInstallationName').value = `${self.installation.utility.name}`;
                     }
 
                 } else if (step === 3) {
@@ -757,16 +774,53 @@
                     })();
                     
                 } else if (step === 6) {
-                    const fields = self.stepContainer.querySelectorAll('.jsField');
+                    const Container = self.stepContainer;
+                    
+                    if (self.stepStarted.indexOf(step) === -1) {
+                        const fields = Container.querySelectorAll('.jsField');
+    
+                        fields.forEach(el => {
+                            if (el.hasAttribute('mask-number')) {
+                                VMasker(el).maskNumber();
+                            }
+                        });
 
-                    fields.forEach(el => {
-                        if (el.hasAttribute('mask-number')) {
-                            VMasker(el).maskNumber();
-                        }
-                    });
+                        const codeEl = Container.querySelector('.gra-col-resend-code');
+                        const codeElTextBase = codeEl.textContent;
+                        let intervaloCode = null;
 
-                    const subtitleEl = self.stepContainer.querySelector('.jsApplyEmailOnText');
-                    const subtitleText = subtitleEl.textContent.replace('{{email}}', self.email);
+                        codeEl.onclick = function() {
+                            this.disabled = true;
+                            let count = 59;
+
+                            codeEl.textContent = `${codeElTextBase} (${count})`;
+
+
+                            fetch('https://api.guaraenergia.com/send-confirmation-code/', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify({
+                                    installation_id: self.installation.id
+                                })
+                            });
+
+                            intervaloCode = setInterval(() => {
+                                if (count > -1) {
+                                    count--;
+                                    codeEl.textContent = `${codeElTextBase} (${count})`
+                                } else {
+                                    this.disabled = false;
+                                    codeEl.textContent = codeElTextBase;
+                                    clearInterval(intervaloCode);
+                                }
+                            }, 1000);
+                        };
+                    }
+
+                    const subtitleEl = Container.querySelector('.jsApplyEmailOnText');
+                    const subtitleText = subtitleEl.textContent.replaceAll('{{email}}', self.email);
                     subtitleEl.textContent = subtitleText;
                 }
             },
@@ -801,90 +855,78 @@
                 } else if (step === 2) {
                     if (ValidateWrongFields()) {
     
-                        if (self.utility_id !== null) {
+                        if (self.utility_id !== false) {
 
                             Container.classList.add('gra-loading');
                             
-                            const field_firstName = Container.querySelector('.jsFieldFirstName').value;
-                            const field_email = Container.querySelector('.jsFieldEmail').value;
-                            const field_cep = Container.querySelector('.jsFieldSearchCEP').value.replaceAll('.', '').replaceAll('-', '');
+                            const field_firstName = Container.querySelector('.jsFieldFirstName').value.trim();
+                            const field_companyName = Container.querySelector('.jsFieldCompanyName').value.trim();
+                            const field_email = Container.querySelector('.jsFieldEmail').value.trim();
+                            const field_cep = Container.querySelector('.jsFieldSearchCEP').value.trim().replaceAll('.', '').replaceAll('-', '');
         
-                            const field_codePartner = Container.querySelector('.jsFieldCodePartner').value;
-                            const field_averageConsumption = Container.querySelector('.jsFieldAverage').value.replaceAll('.', '').replaceAll(',', '.');
+                            const field_codePartner = Container.querySelector('.jsFieldCodePartner').value.trim();
+                            const field_averageConsumption = Container.querySelector('.jsFieldAverage').value.trim().replaceAll('.', '').replaceAll(',', '.');
+
+                            const field_phone = Container.querySelector('.jsFieldPhone').value.trim().replaceAll('(', '').replaceAll(')', '').replaceAll(' ', '').replaceAll('-', '');
+
+                            const field_numEnd = Container.querySelector('.jsFieldNumeroEnd').value.trim();
+                            const field_complementoEnd = Container.querySelector('.jsFieldComplementoEnd').value.trim();
     
                             let field_lastName = null;
-                            let field_phone = null;
-                            let field_cnpj = null;
-                            let field_social_contract = null;
-        
+                                    
                             function checkFields(type) {
                                 if (self.stepType === "cpf") {
     
-                                    field_lastName = Container.querySelector('.jsFieldLastName').value;
-                                    field_phone = Container.querySelector('.jsFieldPhone').value.replaceAll('(', '').replaceAll(')', '').replaceAll(' ', '').replaceAll('-', '');
+                                    field_lastName = Container.querySelector('.jsFieldLastName').value.trim();
     
                                     return self.firstName !== field_firstName || self.lastName !== field_lastName || self.email !== field_email || self.cep !== field_cep || self.phone !== field_phone || self.codePartner !== field_codePartner || self.averageConsumption !== field_averageConsumption;
     
                                 } else if (self.stepType === "cnpj") {
                                     
-                                    field_cnpj = Container.querySelector('.jsFieldCNPJ').value.replaceAll('.', '').replaceAll('-', '').replaceAll('/', '');
-                                    field_social_contract = Container.querySelector('.jsContractFile').files[0];
-                                    
-                                    return self.firstName !== field_firstName || self.cnpj !== field_cnpj || self.email !== field_email || self.cep !== field_cep || self.social_contract !== field_social_contract || self.codePartner !== field_codePartner || self.averageConsumption !== field_averageConsumption;
+                                    return self.companyName !== field_companyName || self.email !== field_email || self.cep !== field_cep || self.phone !== field_phone || self.codePartner !== field_codePartner || self.averageConsumption !== field_averageConsumption;
                                 }
                             }
     
                             if(checkFields(self.stepType)) {
 
                                 self.firstName = field_firstName;
+                                self.companyName = field_companyName;
                                 self.email = field_email;
                                 self.cep = field_cep;
                                 self.codePartner = field_codePartner;
                                 self.averageConsumption = field_averageConsumption;
+                                self.phone = field_phone;
+                                self.installation_address_number = field_numEnd;
+                                self.installation_address_complement = field_complementoEnd;
 
-                                // let obj = {
-                                //     type: self.stepType,
-                                //     email: self.email,
-                                //     zip_code: self.cep,
-                                //     average_consumption: parseFloat(self.averageConsumption),
-                                //     partner_code: self.codePartner,
-                                // };
+                                let obj = {
+                                    type: self.stepType,
+                                    email: self.email,
+                                    zip_code: self.cep,
+                                    average_consumption: parseFloat(self.averageConsumption),
+                                    partner_code: self.codePartner,
+                                    phone: self.phone,
+                                    installation_address_number: self.installation_address_number,
+                                    installation_address_complement: self.installation_address_complement,
+                                };
 
-                                const formData = new FormData();
-                                formData.append('type', self.stepType);
-                                formData.append('email', self.email);
-                                formData.append('zip_code', self.cep);
-                                formData.append('average_consumption', parseFloat(self.averageConsumption));
-                                formData.append('partner_code', self.codePartner);
-         
                                 if (self.stepType === "cpf") {
-                                    self.fullName = field_firstName + ' ' + field_lastName;
-
                                     self.lastName = field_lastName;
-                                    self.phone = field_phone;
-                                    
-                                    formData.append('phone', field_phone);
-                                    
-                                } else if (self.stepType === "cnpj") {
-                                    self.fullName = field_firstName;
-
-                                    self.cnpj = field_cnpj;
-                                    self.social_contract = field_social_contract;
-                                    
-                                    formData.append('cnpj', field_cnpj);
-                                    formData.append('social_contract', field_social_contract);
+                                    self.fullName = field_firstName + ' ' + field_lastName;
+                                } else {
+                                    self.fullName = field_companyName;
                                 }
 
-                                formData.append('name', self.fullName);
+                                obj.name = self.fullName;
     
                                 (async function() {
                                     try {
                                         const response = await fetch('https://api.guaraenergia.com/client/register/', {
                                             method: "POST",
                                             headers: {
-                                                'Content-Type': 'application/x-www-form-urlencoded'
+                                                'Content-Type': 'application/json'
                                             },
-                                            body: new URLSearchParams(formData)
+                                            body: JSON.stringify(obj)
                                         });
                                         
                                         if (!response.ok) {
@@ -901,8 +943,12 @@
                                         Container.classList.remove('gra-loading');
                                         
                                         self.stepNewPlano = true;
-    
-                                        callback();
+
+                                        if (self.utility_id === null) {
+                                            self.showStep(8);
+                                        } else {
+                                            callback();
+                                        }
                                         
                                     } catch (error) {
                                         Container.classList.remove('gra-loading');
@@ -956,35 +1002,66 @@
                         // const field_lastName = Container.querySelector('.jsFieldLastName').value;
                         // const field_email = Container.querySelector('.jsFieldEmail').value;
                         const field_cpf = Container.querySelector('.jsFieldCPF').value.replaceAll('.', '').replaceAll('-', '');
+                        const field_cpfrepresentant = Container.querySelector('.jsFieldCPFRepresentant').value.replaceAll('.', '').replaceAll('-', '');
+                        const field_namerepresentant = Container.querySelector('.jsFieldNameRepresentant').value.trim();
                         const field_billfile = Container.querySelector('.jsBillFile').files[0];
                         const field_idfile = Container.querySelector('.jsIdFile').files[0];
+                        const field_idfile2 = Container.querySelector('.jsIdFile2').files[0];
+                        const field_cnpj = Container.querySelector('.jsFieldCNPJ').value.trim().replaceAll('.', '').replaceAll('-', '').replaceAll('/', '');
+                        const field_contractfile = Container.querySelector('.jsContractFile').files[0];
                         const field_installationnumber = Container.querySelector('.jsInstallationNumber').value.trim();
 
                         // self.stepContainer.querySelector('.jsClientCEP').value = `${self.cep}`;
                         // jsFieldCPF
 
                         // `installation_id=${self.installation.id}&legal_representant_name=&legal_representant_cpf=${field_cpf}&installation_number=${field_installationnumber}&bill_file=${field_billfile}&id_file=${field_idfile}&social_contract_file=`
-                        
-                        if (isValidCPF(field_cpf)) {
 
+                        const validationType = self.stepType === 'cpf' ? isValidCPF(field_cpf) : (isValidCPF(field_cpfrepresentant) && isValidCNPJ(field_cnpj));
+
+                        if (validationType) {
+                            
                             Container.classList.add('gra-loading');
 
                             const formData = new FormData();
+
+                            const obj = {
+                               installation_id: self.installation.id,
+                               installation_number: field_installationnumber,
+                               bill_file: field_billfile,
+                            };
+                            
+                            if (self.stepType === "cnpj") {
+                                obj.cnpj = field_cnpj;
+                                obj.id_file = field_idfile2;
+                                obj.social_contract_file = field_contractfile;
+                                obj.legal_representant_name = field_namerepresentant;
+                                obj.legal_representant_cpf = field_cpfrepresentant;
+
+                                formData.append("cnpj", field_cnpj);
+                                formData.append("id_file", field_idfile2);
+                                formData.append("social_contract_file", field_contractfile);
+                                formData.append("legal_representant_name", field_namerepresentant);
+                                formData.append("legal_representant_cpf", field_cpfrepresentant);
+                                
+                            } else {
+                                obj.id_file = field_idfile;
+                                obj.legal_representant_cpf = field_cpf;
+
+                                formData.append("id_file", field_idfile);
+                                formData.append("legal_representant_cpf", field_cpf);
+                            }
+
                             formData.append("installation_id", self.installation.id);
-                            formData.append("legal_representant_name", self.fullName);
-                            formData.append("legal_representant_cpf", field_cpf);
                             formData.append("installation_number", field_installationnumber);
                             formData.append("bill_file", field_billfile);
-                            formData.append("id_file", field_idfile);
+                            
 
                             (async function() {
                                 try {
                                     const response = await fetch('https://api.guaraenergia.com/cadastro/step-3/', {
                                         method: 'POST',
-                                        headers: {
-                                            'Content-Type': 'application/x-www-form-urlencoded'
-                                        },
-                                        body: new URLSearchParams(formData)
+                                        // 'Content-Type': 'multipart/form',
+                                        body: formData
                                     });
                                     
                                     if (!response.ok) {
@@ -1003,13 +1080,52 @@
 
                             // callback();
                         } else {
-                            CustomAlert(true, 'CPF inválido.')
+                            if (self.stepType === 'cpf') {
+                                CustomAlert(true, 'CPF inválido.')
+                            } else {
+                                CustomAlert(true, 'CPF ou CNPJ inválido.')
+                            }
                         }
                     }
 
                 } else if (step === 6) {
                     if (ValidateWrongFields()) {
-                        callback();
+                        
+                        const password = Container.querySelector('.jsPassword1').value.trim();
+                        const passwordConfirm = Container.querySelector('.jsPassword2').value.trim();
+                        const verification_code = Container.querySelector('.jsVerificationCode').value.trim();
+
+                        const obj = {
+                            installation_id: self.installation.id,
+                            email: self.email,
+                            password: passwordConfirm,
+                            confirm_password: passwordConfirm,
+                            verification_code: verification_code
+                        };
+
+                        (async function() {
+                            try {
+                                const response = await fetch('https://api.guaraenergia.com/confirm-email/', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify(obj)
+                                });
+                                
+                                if (!response.ok) {
+                                    throw new Error(`Response status: ${response.status}`);
+                                }
+                                
+                                const data = await response.json();
+                                Container.classList.remove('gra-loading');
+                                callback();
+                                
+                            } catch (error) {
+                                console.log(error);
+                                Container.classList.remove('gra-loading');
+                            }
+                        })();
                     }
 
                 } else {
@@ -1110,6 +1226,11 @@
                             addError(el, 'Campo com valor incorreto');
                         }
                         
+                    } else if (el.hasAttribute('mask-number')) {
+                        if (isNaN(parseInt(el.value)) || el.value.indexOf('-') !== -1) {
+                            addError(el, 'Campo com valor incorreto');
+                        }
+                        
                     } else if (el.hasAttribute('mask-cep')) {
                         if (el.value.length !== 10) {
                             addError(el, 'Campo com valor incorreto');
@@ -1195,6 +1316,9 @@
 
                 } else if (el.hasAttribute('mask-cnpj')) {
                     VMasker(el).maskPattern("99.999.999/9999-99");
+
+                } else if (el.hasAttribute('mask-number')) {
+                    VMasker(el).maskNumber();
 
                 } else if (el.hasAttribute('mask-cep')) {
                     var maskCep = ['99.999-999', '99.999-999'];
