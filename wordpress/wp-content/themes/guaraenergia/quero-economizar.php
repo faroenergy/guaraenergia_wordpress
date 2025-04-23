@@ -527,17 +527,17 @@
                         CreateMaskForFields();
 
                         if (step === 2) {
-                            // self.stepContainer.querySelector('.jsFieldFirstName').value = '233';
-                            // self.stepContainer.querySelector('.jsFieldCompanyName').value = '233';
-                            // self.stepContainer.querySelector('.jsFieldLastName').value = '233';
-                            // self.stepContainer.querySelector('.jsFieldEmail').value = 'fbebber1@gmail.com';
-                            // self.stepContainer.querySelector('.jsSameField:not(.jsFieldEmail)').value = 'fbebber1@gmail.com';
-                            // self.stepContainer.querySelector('.jsFieldSearchCEP').value = '86.460-000';
-                            // self.stepContainer.querySelector('.jsFieldPhone').value = '(11) 11111-1111';
-                            // self.stepContainer.querySelector('.jsFieldCodePartner').value = '123';
-                            // self.stepContainer.querySelector('.jsFieldAverage').value = '10,00';
-                            // self.stepContainer.querySelector('.jsFieldNumeroEnd').value = "10";
-                            // self.stepContainer.querySelector('.jsFieldComplementoEnd').value = "casa 10";
+                            self.stepContainer.querySelector('.jsFieldFirstName').value = '233';
+                            self.stepContainer.querySelector('.jsFieldCompanyName').value = '233';
+                            self.stepContainer.querySelector('.jsFieldLastName').value = '233';
+                            self.stepContainer.querySelector('.jsFieldEmail').value = 'fbebber1@gmail.com';
+                            self.stepContainer.querySelector('.jsSameField:not(.jsFieldEmail)').value = 'fbebber1@gmail.com';
+                            self.stepContainer.querySelector('.jsFieldSearchCEP').value = '86.460-000';
+                            self.stepContainer.querySelector('.jsFieldPhone').value = '(11) 11111-1111';
+                            self.stepContainer.querySelector('.jsFieldCodePartner').value = '123';
+                            self.stepContainer.querySelector('.jsFieldAverage').value = '10,00';
+                            self.stepContainer.querySelector('.jsFieldNumeroEnd').value = "10";
+                            self.stepContainer.querySelector('.jsFieldComplementoEnd').value = "casa 10";
 
                             let value = null, valueLength = null, btn = null;
 
@@ -635,26 +635,42 @@
                     const planoItemActive = self.stepContainer.querySelector('.jsPlanoItem.active');
                     
                     if (self.stepStarted.indexOf(step) === -1) {
-                        document.querySelector('.gra-btn-download-proposta').addEventListener('click', async function() {
-                            try {
-                                const response = await fetch('https://api.guaraenergia.com/qualify-lead/', {
-                                    method: "POST",
-                                    headers: {
-                                        'Content-Type': 'application/json'
-                                    },
-                                    body: JSON.stringify({
-                                        installation_id: self.installation.id
-                                    })
-                                });
+                        let downloadProposta = false;
+
+                        let btnDownloadEl = self.stepContainer.querySelector('.gra-btn-download-proposta');
+                        let btnDownloadElText = btnDownloadEl.querySelector('span');
+
+                        let textoDownload = "Baixando...";
+                        let textoAntesDownload = btnDownloadElText.textContent;
+
+                        btnDownloadEl.addEventListener('click', async function() {
+                            
+                            if (!downloadProposta) {
+                                downloadProposta = true;
+
+                                btnDownloadElText.textContent = textoDownload;
                                 
-                                if (!response.ok) {
-                                    throw new Error(`Response status: ${response.status}`);
+                                try {
+                                    const response = await fetch(`https://api.guaraenergia.com/download-propose/?installation_id=${self.installation.id}`, {
+                                        method: "GET",
+                                        headers: {
+                                            'Content-Type': 'application/json'
+                                        },
+                                    });
+                                    
+                                    if (!response.ok) {
+                                        throw new Error(`Response status: ${response.status}`);
+                                    }
+                                    
+                                    const data = await response.json();
+                                    downloadProposta = false;
+                                    btnDownloadElText.textContent = textoAntesDownload;
+                                    
+                                } catch (error) {
+                                    console.log(error);
+                                    downloadProposta = false;
+                                    btnDownloadElText.textContent = textoAntesDownload;
                                 }
-                                
-                                const data = await response.json();
-                                
-                            } catch (error) {
-                                console.log(error);
                             }
                         });
                     };
