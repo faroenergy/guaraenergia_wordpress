@@ -216,7 +216,7 @@
                         <label>CNPJ da empresa*</label>
                     </div>
                     <div class="gra-col gra-col--half jsIsCnpj">
-                        <input required class="jsField jsFieldNameRepresentant" type="text" minlength="3" />
+                        <input required class="jsField jsFieldNameRepresentant" mask-name type="text" minlength="3" />
                         <label>Nome do representante legal*</label>
                     </div>
                     <div class="gra-col gra-col--half jsIsCpf">
@@ -486,39 +486,41 @@
                 const self = this;
     
                 if (step === 1) {
-                    (function() {
-                        if (!self.stepStep1_popUp) {
-                            self.stepStep1_popUp = true;
-                            
-                            CustomAlert(true, 'Durante o preenchimento do cadastro, pediremos os dados do titular da conta de energia. Por isso, solicitamos que o cadastro seja feito pelo próprio titular.')
-                        }
-                    })();
-                    
-                    (function() {
-                        if (!self.stepContainer.querySelector('.jsContratacaoOption.active')) {
-                            self.stepContainer.querySelector('.jsNextStep').classList.add('disabled');
-                        }
-                    })();
-
-                    (function() {
-                        const contratacaoItem = self.stepContainer.querySelectorAll('.jsContratacaoOption');
-                        let contratacaoActive = null;
-    
-                        contratacaoItem.forEach(item => {
-                            item.onclick = function() {
-                                if (!this.classList.contains('active')) {
-                                    contratacaoActive = self.stepContainer.querySelector('.jsContratacaoOption.active');
-        
-                                    if (contratacaoActive) {
-                                        contratacaoActive.classList.remove('active');
-                                    }
-        
-                                    this.classList.add('active');
-                                    self.stepContainer.querySelector('.jsNextStep').classList.remove('disabled');
-                                }
+                    if (self.stepStarted.indexOf(step) === -1) {
+                        (function() {
+                            if (!self.stepStep1_popUp) {
+                                self.stepStep1_popUp = true;
+                                
+                                CustomAlert(true, 'Durante o preenchimento do cadastro, pediremos os dados do titular da conta de energia. Por isso, solicitamos que o cadastro seja feito pelo próprio titular.')
                             }
-                        });
-                    })();
+                        })();
+                        
+                        (function() {
+                            if (!self.stepContainer.querySelector('.jsContratacaoOption.active')) {
+                                self.stepContainer.querySelector('.jsNextStep').classList.add('disabled');
+                            }
+                        })();
+    
+                        (function() {
+                            const contratacaoItem = self.stepContainer.querySelectorAll('.jsContratacaoOption');
+                            let contratacaoActive = null;
+        
+                            contratacaoItem.forEach(item => {
+                                item.onclick = function() {
+                                    if (!this.classList.contains('active')) {
+                                        contratacaoActive = self.stepContainer.querySelector('.jsContratacaoOption.active');
+            
+                                        if (contratacaoActive) {
+                                            contratacaoActive.classList.remove('active');
+                                        }
+            
+                                        this.classList.add('active');
+                                        self.stepContainer.querySelector('.jsNextStep').classList.remove('disabled');
+                                    }
+                                }
+                            });
+                        })();
+                    }
 
                 } else if (step === 2 || step === 4) {
                     if (self.stepStarted.indexOf(step) === -1) {
@@ -601,6 +603,13 @@
                                 }
                             }
 
+                            self.stepContainer.querySelector('.jsFieldFirstName').addEventListener('input', function() {
+                                this.value = this.value.replace(/[^a-zA-Z\'\u00C0-\u017F\s]/g, '');
+                            });
+                            
+                            self.stepContainer.querySelector('.jsFieldLastName').addEventListener('input', function() {
+                                this.value = this.value.replace(/[^a-zA-Z\'\u00C0-\u017F\s]/g, '');
+                            });
                         }
                     }
                        
@@ -609,6 +618,10 @@
                             self.stepContainer.querySelector('.jsFieldFullName').value = `${self.fullName}`;
                         } else {
                             self.stepContainer.querySelector('.jsFieldCompanyName').value = `${self.fullName}`;
+
+                            self.stepContainer.querySelector('.jsFieldNameRepresentant').addEventListener('input', function() {
+                                this.value = this.value.replace(/[^a-zA-Z\'\u00C0-\u017F\s]/g, '');
+                            });
                         }
                         
                         self.stepContainer.querySelector('.jsClientCEP').value = `${self.cep}`;  
@@ -855,10 +868,10 @@
                 } else if (step === 2) {
                     if (ValidateWrongFields()) {
     
+                        Container.classList.add('gra-loading');
+                        
                         if (self.utility_id !== false) {
 
-                            Container.classList.add('gra-loading');
-                            
                             const field_firstName = Container.querySelector('.jsFieldFirstName').value.trim();
                             const field_companyName = Container.querySelector('.jsFieldCompanyName').value.trim();
                             const field_email = Container.querySelector('.jsFieldEmail').value.trim();
@@ -1090,6 +1103,8 @@
 
                 } else if (step === 6) {
                     if (ValidateWrongFields()) {
+
+                        Container.classList.add('gra-loading');
                         
                         const password = Container.querySelector('.jsPassword1').value.trim();
                         const passwordConfirm = Container.querySelector('.jsPassword2').value.trim();
@@ -1212,7 +1227,7 @@
                         parent.querySelector('.gra-error-msg').remove();
                     }
 
-                    if (el.value === '') {
+                    if (el.value.trim() === '') {
                         addError(el, 'Campo obrigatório');
                         
                         
@@ -1248,9 +1263,18 @@
                             checkForSameField(el);
                         }
 
+                    } else if (el.hasAttribute('mask-name')) {
+                        var str = el.value.trim();
+                        var values = str.replace(/\s\s+/g, ' ').split(' ').filter(function(v){return v!==''});
+                        if (values.length < 2) {
+                            addError(el, 'Insira o nome completo.');
+                            return true;
+                        }
+                        
                     } else if (el.hasAttribute('minlength')) {
                         const count = parseInt(el.getAttribute('minlength'));
-                        if (el.value.length < count) {
+                        
+                        if (el.value.trim().length < count) {
                             addError(el, 'Campo precisa de no mínimo ' + count + ' caracteres');
                             
                         } else if (el.classList.contains('jsSameField')) {
