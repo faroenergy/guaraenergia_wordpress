@@ -527,18 +527,6 @@
                         CreateMaskForFields();
 
                         if (step === 2) {
-                            self.stepContainer.querySelector('.jsFieldFirstName').value = '233';
-                            self.stepContainer.querySelector('.jsFieldCompanyName').value = '233';
-                            self.stepContainer.querySelector('.jsFieldLastName').value = '233';
-                            self.stepContainer.querySelector('.jsFieldEmail').value = 'fbebber1@gmail.com';
-                            self.stepContainer.querySelector('.jsSameField:not(.jsFieldEmail)').value = 'fbebber1@gmail.com';
-                            self.stepContainer.querySelector('.jsFieldSearchCEP').value = '86.460-000';
-                            self.stepContainer.querySelector('.jsFieldPhone').value = '(11) 11111-1111';
-                            self.stepContainer.querySelector('.jsFieldCodePartner').value = '123';
-                            self.stepContainer.querySelector('.jsFieldAverage').value = '10,00';
-                            self.stepContainer.querySelector('.jsFieldNumeroEnd').value = "10";
-                            self.stepContainer.querySelector('.jsFieldComplementoEnd').value = "casa 10";
-
                             let value = null, valueLength = null, btn = null;
 
                             let customError = false;
