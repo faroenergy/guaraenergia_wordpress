@@ -651,18 +651,12 @@
                                 btnDownloadElText.textContent = textoDownload;
                                 
                                 try {
-                                    const response = await fetch(`https://api.guaraenergia.com/download-propose/?installation_id=${self.installation.id}`, {
-                                        method: "GET",
-                                        headers: {
-                                            'Content-Type': 'application/json'
-                                        },
-                                    });
+                                    const response = await fetch(`https://api.guaraenergia.com/download-propose/?installation_id=${self.installation.id}`);
                                     
                                     if (!response.ok) {
                                         throw new Error(`Response status: ${response.status}`);
                                     }
                                     
-                                    const data = await response.json();
                                     downloadProposta = false;
                                     btnDownloadElText.textContent = textoAntesDownload;
                                     
