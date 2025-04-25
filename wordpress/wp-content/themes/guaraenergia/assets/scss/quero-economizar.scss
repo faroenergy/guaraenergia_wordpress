@@ -291,6 +291,20 @@ body, html {
                     }
                 }
             }
+            &[step="2"], &[step="4"], &[step="5"] {
+                .gra-content {
+                    margin-bottom: 45px;
+                    iframe {
+                        display: block;
+                        border: 0 !important;
+                        height: 500px !important;
+                        @media (max-width: $container-md - 1) {
+                            height: 400px !important;
+                        }
+                    }
+                }
+            }
+            
             &[step="2"], &[step="4"], &[step="6"] {
                 .gra-content {
                     display: flex;

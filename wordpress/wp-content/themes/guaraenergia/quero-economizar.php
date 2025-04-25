@@ -275,7 +275,7 @@
             <div class="gra-step-form__content-inner" step-side="2" step-side-inner="2" step="5" style="display:none">
                 <div class="gra-title"><?php echo $passo_5['titulo']; ?></div>
                 <hr class="gra-separator" />           
-                <div class="gra-content"></div>
+                <div class="gra-content" id="sign_container"></div>
                 <?php get_template_part('templates/quero-economizar/footer', null, array('botao' => $passo_5['botao'], 'go_back' => true, 'texto_privacidade' => $texto_privacidade))?>
             </div>
             <div class="gra-step-form__content-inner" step-side="2" step-side-inner="3" step="6" style="display:none">
@@ -348,8 +348,10 @@
 </div>
 
 <script src="<?php echo get_template_directory_uri(); ?>/assets/js/vanilla-masker.min.js"></script>
- <script>
+<script>
     (function() {
+
+        var widgetSignature;
         
         const StepController = {
             dev: false,
@@ -377,6 +379,10 @@
             codePartner: null,
             averageConsumption: null,
             social_contract: null,
+
+            installationIdInitial: null,
+            lastFormDataStep4: null,
+            propose_id: null,
 
             planosText: [
                 '<?php echo $passo_3['plano_1']; ?>',
@@ -527,18 +533,6 @@
                         CreateMaskForFields();
 
                         if (step === 2) {
-                            self.stepContainer.querySelector('.jsFieldFirstName').value = '233';
-                            self.stepContainer.querySelector('.jsFieldCompanyName').value = '233';
-                            self.stepContainer.querySelector('.jsFieldLastName').value = '233';
-                            self.stepContainer.querySelector('.jsFieldEmail').value = 'fbebber1@gmail.com';
-                            self.stepContainer.querySelector('.jsSameField:not(.jsFieldEmail)').value = 'fbebber1@gmail.com';
-                            self.stepContainer.querySelector('.jsFieldSearchCEP').value = '86.460-000';
-                            self.stepContainer.querySelector('.jsFieldPhone').value = '(11) 11111-1111';
-                            self.stepContainer.querySelector('.jsFieldCodePartner').value = '123';
-                            self.stepContainer.querySelector('.jsFieldAverage').value = '10,00';
-                            self.stepContainer.querySelector('.jsFieldNumeroEnd').value = "10";
-                            self.stepContainer.querySelector('.jsFieldComplementoEnd').value = "casa 10";
-
                             let value = null, valueLength = null, btn = null;
 
                             let customError = false;
@@ -796,6 +790,24 @@
                         });
                     })();
                     
+                } else if (step === 5) {
+                    const Container = self.stepContainer;
+
+                    Container.querySelector('.jsNextStep').style.display = 'none';
+
+                    if (widgetSignature) { widgetSignature.unmount(); }
+
+                    widgetSignature = new Clicksign(self.request_signature_key);
+
+                    widgetSignature.endpoint = 'https://app.clicksign.com';
+                    widgetSignature.origin = 'https://guaraenergia.com';
+                    widgetSignature.mount('sign_container');
+
+                    widgetSignature.on('loaded', function (ev) { console.log('loaded!'); });
+                    widgetSignature.on('signed', function (ev) { 
+                        Container.querySelector('.jsNextStep').style.display = '';
+                     });
+
                 } else if (step === 6) {
                     const Container = self.stepContainer;
                     
@@ -966,6 +978,9 @@
                                         Container.classList.remove('gra-loading');
                                         
                                         self.stepNewPlano = true;
+                                        self.lastFormDataStep4 = null;
+                                        self.installationIdInitial = null;
+                                        self.propose_id = null;
 
                                         if (self.utility_id === null) {
                                             self.showStep(8);
@@ -991,33 +1006,45 @@
 
                 } else if (step === 3) {                    
                     Container.classList.add('gra-loading');
-    
-                    (async function() {
-                        try {
-                            const response = await fetch('https://api.guaraenergia.com/select-propose/', {
-                                method: "POST",
-                                headers: {
-                                    'Content-Type': 'application/json'
-                                },
-                                body: JSON.stringify({
-                                    installation_id: self.installation.id,
-                                    propose_id: parseInt(Container.querySelector('.jsPlanoItem.active').getAttribute('data-id')),
-                                })
-                            });
-                            
-                            if (!response.ok) {
-                                throw new Error(`Response status: ${response.status}`);
+
+                    var planoItemActive = parseInt(Container.querySelector('.jsPlanoItem.active').getAttribute('data-id'));
+
+                    if (self.installationIdInitial !== self.installation.id || self.propose_id !== planoItemActive) {
+
+                        (async function() {
+                            try {
+                                const response = await fetch('https://api.guaraenergia.com/select-propose/', {
+                                    method: "POST",
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify({
+                                        installation_id: self.installation.id,
+                                        propose_id: planoItemActive,
+                                    })
+                                });
+                                
+                                if (!response.ok) {
+                                    throw new Error(`Response status: ${response.status}`);
+                                }
+                                
+                                const data = await response.json();
+                                Container.classList.remove('gra-loading');
+                                self.installationIdInitial = self.installation.id;
+                                self.propose_id = planoItemActive;
+
+                                callback();
+                                
+                            } catch (error) {
+                                console.log(error);
+                                Container.classList.remove('gra-loading');
                             }
-                            
-                            const data = await response.json();
-                            Container.classList.remove('gra-loading');
-                            callback();
-                            
-                        } catch (error) {
-                            console.log(error);
-                            Container.classList.remove('gra-loading');
-                        }
-                    })();
+                        })();
+                    } else {
+                        Container.classList.remove('gra-loading');
+                        callback();
+                    }
+    
 
                 } else if (step === 4) {
                     if (ValidateWrongFields()) {
@@ -1033,11 +1060,6 @@
                         const field_cnpj = Container.querySelector('.jsFieldCNPJ').value.trim().replaceAll('.', '').replaceAll('-', '').replaceAll('/', '');
                         const field_contractfile = Container.querySelector('.jsContractFile').files[0];
                         const field_installationnumber = Container.querySelector('.jsInstallationNumber').value.trim();
-
-                        // self.stepContainer.querySelector('.jsClientCEP').value = `${self.cep}`;
-                        // jsFieldCPF
-
-                        // `installation_id=${self.installation.id}&legal_representant_name=&legal_representant_cpf=${field_cpf}&installation_number=${field_installationnumber}&bill_file=${field_billfile}&id_file=${field_idfile}&social_contract_file=`
 
                         const validationType = self.stepType === 'cpf' ? isValidCPF(field_cpf) : (isValidCPF(field_cpfrepresentant) && isValidCNPJ(field_cnpj));
 
@@ -1077,29 +1099,43 @@
                             formData.append("installation_id", self.installation.id);
                             formData.append("installation_number", field_installationnumber);
                             formData.append("bill_file", field_billfile);
-                            
 
-                            (async function() {
-                                try {
-                                    const response = await fetch('https://api.guaraenergia.com/cadastro/step-3/', {
-                                        method: 'POST',
-                                        // 'Content-Type': 'multipart/form',
-                                        body: formData
-                                    });
-                                    
-                                    if (!response.ok) {
-                                        throw new Error(`Response status: ${response.status}`);
+                            let different = true
+                            
+                            if (new URLSearchParams(formData).toString() === new URLSearchParams(self.lastFormDataStep4).toString()) {
+                                different = false;
+                            }
+                            
+                            if (different) {
+                                (async function() {
+                                    try {
+                                        const response = await fetch('https://api.guaraenergia.com/cadastro/step-3/', {
+                                            method: 'POST',
+                                            // 'Content-Type': 'multipart/form',
+                                            body: formData
+                                        });
+                                        
+                                        if (!response.ok) {
+                                            throw new Error(`Response status: ${response.status}`);
+                                        }
+                                        
+                                        const data = await response.json();
+                                        self.request_signature_key = data.request_signature_key;
+                                        Container.classList.remove('gra-loading');
+                                        
+                                        self.lastFormDataStep4 = formData;
+    
+                                        callback();
+                                        
+                                    } catch (error) {
+                                        console.log(error);
+                                        Container.classList.remove('gra-loading');
                                     }
-                                    
-                                    const data = await response.json();
-                                    Container.classList.remove('gra-loading');
-                                    callback();
-                                    
-                                } catch (error) {
-                                    console.log(error);
-                                    Container.classList.remove('gra-loading');
-                                }
-                            })();
+                                })();
+                            } else {
+                                Container.classList.remove('gra-loading');
+                                callback();
+                            }
 
                             // callback();
                         } else {
@@ -1387,4 +1423,5 @@
         StepController.init();
     })();
  </script>
+ <script src="https://cdn-public-library.clicksign.com/embedded/embedded.min-1.0.0.js" type="text/javascript"></script>
  </body>
