@@ -239,7 +239,6 @@
                     <div class="gra-col gra-col--half">
                         <input required class="jsField jsInstallationNumber" type="text" minlength="1" />
                         <label>Nº de instalação*</label>
-                        <div class="gra-tooltip-icon gra-tooltip-icon--info"></div>
                     </div>
                     <div class="gra-col gra-col--half">
                         <input class="jsField jsBillFile" type="file" placeholder="Anexe sua última fatura" />
@@ -842,7 +841,7 @@
                     widgetSignature.on('loaded', function (ev) { console.log('loaded!'); });
                     widgetSignature.on('signed', function (ev) { 
                         Container.querySelector('.jsNextStep').style.display = '';
-                     });
+                    });
 
                 } else if (step === 6) {
                     const Container = self.stepContainer;
