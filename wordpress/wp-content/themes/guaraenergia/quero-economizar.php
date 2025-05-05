@@ -126,20 +126,20 @@
                         <div class="lds-ring" style="display:none"><div></div><div></div><div></div><div></div></div>
                     </div>
                     <div class="gra-col gra-col--half">
-                        <input required class="jsField jsFieldNumeroEnd" type="text" mask-number />
-                        <label>Número*</label>
+                        <input required class="jsOptional jsField jsFieldNumeroEnd" type="text" mask-number />
+                        <label>Número</label>
                     </div>
                     <div class="gra-col gra-col--half">
-                        <input required class="jsField jsFieldComplementoEnd" type="text" />
-                        <label>Complemento*</label>
+                        <input required class="jsOptional jsField jsFieldComplementoEnd" type="text" />
+                        <label>Complemento</label>
                     </div>
                     <div class="gra-col gra-col--half">
                         <input required class="jsField jsFieldPhone" type="text" mask-phone />
                         <label>Telefone*</label>
                     </div>
                     <div class="gra-col">
-                        <input required class="jsField jsFieldCodePartner" type="text" />
-                        <label>Código do Parceiro/Cupom Promocional*</label>
+                        <input required class="jsField jsFieldCodePartner jsOptional" type="text" />
+                        <label>Código do Parceiro/Cupom Promocional</label>
                         <div class="gra-tooltip-icon gra-tooltip-icon--info"></div>
                         <span class="gra-tooltip">Caso você tenha nos conhecido através de um parceiro comercial coloque neste campo o código do parceiro.</span>
                     </div>
@@ -374,6 +374,8 @@
             fullName: null,
             email: null,
             cep: null,
+            installation_address_number: null,
+            installation_address_complement: null,
             cnpj: null,
             phone: null,
             codePartner: null,
@@ -645,15 +647,49 @@
                                 btnDownloadElText.textContent = textoDownload;
                                 
                                 try {
-                                    const response = await fetch(`https://api.guaraenergia.com/download-propose/?installation_id=${self.installation.id}`);
-                                    
-                                    if (!response.ok) {
-                                        throw new Error(`Response status: ${response.status}`);
-                                    }
-                                    
+                                    const response = await fetch(`https://api.guaraenergia.com/download-propose/?installation_id=${self.installation.id}`)
+                                    .then(response => {
+                                        if (!response.ok) {
+                                            throw new Error("Erro no download");
+                                        }
+
+                                        const contentDisposition = response.headers.get('Content-Disposition');
+
+                                        let fileName = "proposta.pdf";
+
+                                        if (contentDisposition && contentDisposition.includes('filename=')) {
+                                            const match = contentDisposition.match(/filename\*?=['"]?(?:UTF-8'')?([^'";]+)['"]?/i);
+                                            if (match && match[1]) {
+                                                fileName = decodeURIComponent(match[1]);
+                                            }
+                                        }
+
+                                        return response.blob().then(blob => ({
+                                            blob,
+                                            fileName
+                                        }));
+                                    })
+                                    .then(({
+                                        blob,
+                                        fileName
+                                    }) => {
+                                        const url = window.URL.createObjectURL(blob);
+                                        const a = document.createElement("a");
+                                        a.href = url;
+                                        a.download = fileName;
+                                        document.body.appendChild(a);
+                                        a.click();
+                                        a.remove();
+                                        window.URL.revokeObjectURL(url);
+                                    })
+                                    .catch(error => {
+                                        console.error("Erro ao baixar proposta:", error);
+                                        alert("Não foi possível baixar o arquivo.");
+                                    });
+
                                     downloadProposta = false;
                                     btnDownloadElText.textContent = textoAntesDownload;
-                                    
+
                                 } catch (error) {
                                     console.log(error);
                                     downloadProposta = false;
@@ -914,11 +950,11 @@
     
                                     field_lastName = Container.querySelector('.jsFieldLastName').value.trim();
     
-                                    return self.firstName !== field_firstName || self.lastName !== field_lastName || self.email !== field_email || self.cep !== field_cep || self.phone !== field_phone || self.codePartner !== field_codePartner || self.averageConsumption !== field_averageConsumption;
+                                    return self.firstName !== field_firstName || self.lastName !== field_lastName || self.email !== field_email || self.cep !== field_cep || self.phone !== field_phone || self.codePartner !== field_codePartner || self.averageConsumption !== field_averageConsumption || self.installation_address_number !== field_numEnd || self.installation_address_complement !== field_complementoEnd;
     
                                 } else if (self.stepType === "cnpj") {
                                     
-                                    return self.companyName !== field_companyName || self.email !== field_email || self.cep !== field_cep || self.phone !== field_phone || self.codePartner !== field_codePartner || self.averageConsumption !== field_averageConsumption;
+                                    return self.companyName !== field_companyName || self.email !== field_email || self.cep !== field_cep || self.phone !== field_phone || self.codePartner !== field_codePartner || self.averageConsumption !== field_averageConsumption || self.installation_address_number !== field_numEnd || self.installation_address_complement !== field_complementoEnd;
                                 }
                             }
     
@@ -963,12 +999,17 @@
                                             },
                                             body: JSON.stringify(obj)
                                         });
-                                        
+
+
+                                        if (response.status === 400) {
+                                            self.showStep(8);
+                                        }
+
                                         if (!response.ok) {
                                             Container.classList.remove('gra-loading');
                                             throw new Error(`Response status: ${response.status}`);
                                         }
-                                        
+
                                         const data = await response.json();
                                         self.installation = data.installation;
                                         self.client = data.client;

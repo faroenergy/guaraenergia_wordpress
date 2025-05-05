@@ -385,7 +385,7 @@ body, html {
                     border: 1px solid #C1C1C1;
                     background: none;
                     text-align: left;
-                    transition: .3s padding-left;
+                    transition: .3s padding-left, 50000000s background-color;
                     font-weight: 500;
                     z-index: 1;
                     position: relative;
