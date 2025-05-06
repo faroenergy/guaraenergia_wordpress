@@ -85,15 +85,25 @@
             <div class="gra-step-form__content-inner" step-side="1" step="1" style="display:none">
                 <div class="gra-title"><?php echo $passo_1['titulo']; ?></div>
                 <div class="gra-subtitle"><?php echo $passo_1['subtitulo']; ?></div>
-                <div class="gra-content">
-                    <button class="gra-btn-option jsContratacaoOption" data-type="cpf">
-                        <?php echo $passo_1['opcao_1']; ?>
-                    </button>
-                    <button class="gra-btn-option jsContratacaoOption" data-type="cnpj">
-                        <?php echo $passo_1['opcao_2']; ?>
-                    </button>
+                <div class="gra-content" data-opcoes="1">
+                    <div class="gra-opcoes-1">
+                        <button class="gra-btn-option jsContratacaoOptionInit" data-type="cpf">
+                            <?php echo $passo_1['opcao_1']; ?>
+                        </button>
+                        <button class="gra-btn-option jsContratacaoOptionInit" data-type="cnpj">
+                            <?php echo $passo_1['opcao_2']; ?>
+                        </button>
+                    </div>
+                    <div class="gra-opcoes-2">
+                        <button class="gra-btn-option jsContratacaoOptionUser">
+                            <?php echo $passo_1['opcao_3']; ?>
+                        </button>
+                        <button class="gra-btn-option jsContratacaoOptionUser" data-alert="true">
+                            <?php echo $passo_1['opcao_4']; ?>
+                        </button>
+                    </div>
                 </div>
-                <?php get_template_part('templates/quero-economizar/footer', null, array('botao' => $passo_1['botao'], 'texto_privacidade' => $texto_privacidade))?>
+                <?php get_template_part('templates/quero-economizar/footer', null, array('botao' => $passo_1['botao'], 'go_back' => true, 'texto_privacidade' => $texto_privacidade))?>
             </div>
 
             <div class="gra-step-form__content-inner" step-side="2" step-side-inner="0" step="2" style="display:none">
@@ -126,19 +136,23 @@
                         <div class="lds-ring" style="display:none"><div></div><div></div><div></div><div></div></div>
                     </div>
                     <div class="gra-col gra-col--half">
-                        <input required class="jsOptional jsField jsFieldNumeroEnd" type="text" mask-number />
+                        <input disabled class="jsField jsOptional gra-label-normal" type="text" />
+                        <label>Endereço</label>
+                    </div>
+                    <div class="gra-col gra-col--half">
+                        <input class="jsOptional jsField jsFieldNumeroEnd" type="text" mask-number />
                         <label>Número</label>
                     </div>
                     <div class="gra-col gra-col--half">
-                        <input required class="jsOptional jsField jsFieldComplementoEnd" type="text" />
+                        <input class="jsOptional jsField jsFieldComplementoEnd" type="text" />
                         <label>Complemento</label>
                     </div>
                     <div class="gra-col gra-col--half">
                         <input required class="jsField jsFieldPhone" type="text" mask-phone />
                         <label>Telefone*</label>
                     </div>
-                    <div class="gra-col">
-                        <input required class="jsField jsFieldCodePartner jsOptional" type="text" />
+                    <div class="gra-col gra-col--half">
+                        <input class="jsField jsFieldCodePartner gra-codigo-parceiro-input jsOptional" type="text" />
                         <label>Código do Parceiro/Cupom Promocional</label>
                         <div class="gra-tooltip-icon gra-tooltip-icon--info"></div>
                         <span class="gra-tooltip">Caso você tenha nos conhecido através de um parceiro comercial coloque neste campo o código do parceiro.</span>
@@ -423,8 +437,13 @@
     
                 PrevStep.forEach(function(item) {
                     item.onclick = function() {
-                        item.blur();
-                        self.showStep(self.currentStep - 1);             
+                        if (self.currentStep === 1 && document.querySelector('[data-opcoes="2"]')) {
+                            document.querySelector('[data-opcoes="2"]').setAttribute('data-opcoes', '1');
+
+                        } else {
+                            item.blur();
+                            self.showStep(self.currentStep - 1);             
+                        }
                     };
                 });
 
@@ -494,44 +513,49 @@
     
                 if (step === 1) {
                     if (self.stepStarted.indexOf(step) === -1) {
-                        (function() {
-                            if (!self.stepStep1_popUp) {
-                                self.stepStep1_popUp = true;
-                                
-                                CustomAlert(true, 'Durante o preenchimento do cadastro, pediremos os dados do titular da conta de energia. Por isso, solicitamos que o cadastro seja feito pelo próprio titular.')
-                            }
-                        })();
-                        
-                        (function() {
-                            if (!self.stepContainer.querySelector('.jsContratacaoOption.active')) {
-                                self.stepContainer.querySelector('.jsNextStep').classList.add('disabled');
-                            }
-                        })();
     
                         (function() {
-                            const contratacaoItem = self.stepContainer.querySelectorAll('.jsContratacaoOption');
+                            const contratacaoItemInit = self.stepContainer.querySelectorAll('.jsContratacaoOptionInit');
+                            const contratacaoItemUser = self.stepContainer.querySelectorAll('.jsContratacaoOptionUser');
                             let contratacaoActive = null;
+
+                            function activeContratacao(el, refEl) {
+                                if (!el.classList.contains('active')) {
+                                    contratacaoActive = self.stepContainer.querySelector(`${refEl}.active`);
         
-                            contratacaoItem.forEach(item => {
-                                item.onclick = function() {
-                                    if (!this.classList.contains('active')) {
-                                        contratacaoActive = self.stepContainer.querySelector('.jsContratacaoOption.active');
-            
-                                        if (contratacaoActive) {
-                                            contratacaoActive.classList.remove('active');
-                                        }
-            
-                                        this.classList.add('active');
-                                        self.stepContainer.querySelector('.jsNextStep').classList.remove('disabled');
+                                    if (contratacaoActive) {
+                                        contratacaoActive.classList.remove('active');
                                     }
+        
+                                    el.classList.add('active');
+                                    self.stepContainer.querySelector('.jsNextStep').classList.remove('disabled');
+                                }
+                            }
+        
+                            contratacaoItemInit.forEach(item => {
+                                item.onclick = function() {
+                                    activeContratacao(this, '.jsContratacaoOptionInit');
+                                }
+                            });
+                            
+                            contratacaoItemUser.forEach(item => {
+                                item.onclick = function() {
+                                    activeContratacao(this, '.jsContratacaoOptionUser');
                                 }
                             });
                         })();
                     }
 
                 } else if (step === 2 || step === 4) {
+                    if (step === 2) {
+                        if (self.stepAlert !== null) {
+                            CustomAlert(true, 'Durante o preenchimento do cadastro, pediremos os dados do titular da conta de energia. Por isso, solicitamos que o cadastro seja feito pelo próprio titular.');
+                        }
+                    }
+
                     if (self.stepStarted.indexOf(step) === -1) {
                         CreateMaskForFields();
+
 
                         if (step === 2) {
                             let value = null, valueLength = null, btn = null;
@@ -900,27 +924,34 @@
                 const Container = self.stepContainer;
 
                 if (step === 1) {
-                    const type = self.stepContainer.querySelector('.jsContratacaoOption.active').getAttribute('data-type');
-
-                    if (self.stepType !== null) {
-                        if (self.stepType !== type) {
-                            document.querySelector('.jsFormStep').reset();
+                    if (document.querySelector('[data-opcoes="1"]') && self.stepContainer.querySelector('.jsContratacaoOptionInit.active')) {
+                        document.querySelector('[data-opcoes="1"]').setAttribute('data-opcoes', '2');
+                        
+                    } else if (self.stepContainer.querySelector('.jsContratacaoOptionUser.active')) {
+                        const type = self.stepContainer.querySelector('.jsContratacaoOptionInit.active').getAttribute('data-type');
+                        const alert = self.stepContainer.querySelector('.jsContratacaoOptionUser.active').getAttribute('data-alert');
+    
+                        if (self.stepType !== null) {
+                            if (self.stepType !== type) {
+                                document.querySelector('.jsFormStep').reset();
+                            }
                         }
+    
+                        self.stepType = type;
+                        self.stepAlert = alert;
+    
+                        let display1 = type === 'cpf' ? '' : 'none';
+                        let display2 = type === 'cpf' ? 'none' : '';
+    
+                        document.querySelectorAll('.jsIsCpf').forEach(function(item) {
+                            item.style.display = display1;
+                        });
+                        document.querySelectorAll('.jsIsCnpj').forEach(function(item) {
+                            item.style.display = display2;
+                        });
+    
+                        callback();
                     }
-
-                    self.stepType = type;
-
-                    let display1 = type === 'cpf' ? '' : 'none';
-                    let display2 = type === 'cpf' ? 'none' : '';
-
-                    document.querySelectorAll('.jsIsCpf').forEach(function(item) {
-                        item.style.display = display1;
-                    });
-                    document.querySelectorAll('.jsIsCnpj').forEach(function(item) {
-                        item.style.display = display2;
-                    });
-
-                    callback();
                     
                 } else if (step === 2) {
                     if (ValidateWrongFields()) {

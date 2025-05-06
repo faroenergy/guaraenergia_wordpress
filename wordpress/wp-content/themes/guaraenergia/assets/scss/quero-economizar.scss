@@ -208,14 +208,29 @@ body, html {
                     }
                 }
                 .gra-content {
-                    display: flex;
-                    flex-direction: column;
                     width: 100%;
-                    gap: 20px;
                     padding-top: 44px;
                     margin-top: 44px;
                     border-top: 1px solid #AFAFAF;
                     margin-bottom: 44px;
+                    .gra-opcoes-1, .gra-opcoes-2 {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 20px;
+                    }
+                    &[data-opcoes="1"]{
+                        .gra-opcoes-2 {
+                            display: none;
+                        }
+                        & ~ .gra-btns-footer .gra-btn-back {
+                            display: none;
+                        }
+                    }
+                    &[data-opcoes="2"]{
+                        .gra-opcoes-1 {
+                            display: none;
+                        }
+                    }
                 }
                 .gra-btn-option {
                     display: block;
@@ -411,7 +426,7 @@ body, html {
                     }
                     &[disabled] {
                         background-color: #F5F5F5;
-                        + label {
+                        &:not(.gra-label-normal) + label {
                             z-index: 1;
                         }
                     }
@@ -946,6 +961,10 @@ body, html {
     display: none;
 }
 
+.gra-hide {
+    display: none !important;
+}
+
 @media print
 {    
     .gra-step-form__wrapper, div, section, header {
@@ -1066,8 +1085,17 @@ body, html {
     z-index: 0;
 }
 
-.gra-step-form__content-inner input:disabled + label {
+.gra-step-form__content-inner input.gra-codigo-parceiro-input + label {
+    top: 27px;
+    font-size: 12px;
+}
+
+.gra-step-form__content-inner input:disabled:not(.gra-label-normal) + label {
     top: 12px;
+}
+
+.gra-step-form__content-inner input:disabled.gra-label-normal + label {
+    z-index: 1;
 }
 
 .gra-step-form__content-inner input[type="file"] + label {
@@ -1075,8 +1103,9 @@ body, html {
 }
 
 .gra-step-form__content-inner input:focus + label,
-.gra-step-form__content-inner input.gra-active + label,
-.gra-step-form__content-inner input:valid + label {
+.gra-step-form__content-inner input.gra-codigo-parceiro-inpu + label,
+.gra-step-form__content-inner input.gra-active.gra-codigo-parceiro-input + label,
+.gra-step-form__content-inner input.gra-active + label {
     top: 12px;
 }
 
