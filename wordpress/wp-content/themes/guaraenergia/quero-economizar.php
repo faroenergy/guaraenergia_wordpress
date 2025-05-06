@@ -136,7 +136,7 @@
                         <div class="lds-ring" style="display:none"><div></div><div></div><div></div><div></div></div>
                     </div>
                     <div class="gra-col gra-col--half">
-                        <input disabled class="jsField jsOptional gra-label-normal" type="text" />
+                        <input disabled class="jsField jsFieldAddress jsOptional gra-label-normal" type="text" />
                         <label>Endereço</label>
                     </div>
                     <div class="gra-col gra-col--half">
@@ -605,6 +605,13 @@
                                         const data = await response.json();
                                         
                                         self.utility_id = data.utility_id;
+
+                                        if (typeof data.address !== 'undefined') {
+                                            if (typeof data.address.logradouro !== 'undefined') {
+                                                $('.jsFieldAddress').val(data.address.logradouro);
+                                                $('.jsFieldAddress').removeClass('gra-label-normal');
+                                            }
+                                        }
 
                                         btn.disabled = false;
                                         btn.focus();
