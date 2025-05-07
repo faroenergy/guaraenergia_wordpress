@@ -561,6 +561,8 @@
                             let value = null, valueLength = null, btn = null;
 
                             let customError = false;
+
+                            var fieldAddressEl = document.querySelector('.jsFieldAddress');
                             
                             self.stepContainer.querySelector('.jsFieldSearchCEP').oninput = async function() {
                                 btn = this;
@@ -608,8 +610,10 @@
 
                                         if (typeof data.address !== 'undefined') {
                                             if (typeof data.address.logradouro !== 'undefined') {
-                                                $('.jsFieldAddress').val(data.address.logradouro);
-                                                $('.jsFieldAddress').removeClass('gra-label-normal');
+                                                fieldAddressEl.value = data.address.logradouro;
+                                                if (fieldAddressEl.classList.contains('gra-label-normal')) {
+                                                    fieldAddressEl.classList.remove('gra-label-normal');
+                                                }
                                             }
                                         }
 
@@ -624,6 +628,9 @@
                                             CustomAlert(true, 'Não foi possível encontrar o CEP. Por favor, verifique se digitou corretamente.');
                                             customError = false;
                                         }
+                                        
+                                        fieldAddressEl.value = '';
+                                        fieldAddressEl.classList.add('gra-label-normal');
                                     }
 
                                 }
