@@ -417,7 +417,8 @@ body, html {
                     font-weight: 400;
                     color: $primary;
                     border: 1px solid #C1C1C1;
-                    background: none;
+                    background: none !important;
+                    background-color: rgba(0,0,0,0) !important;
                     text-align: left;
                     transition: .3s padding-left, 9999999999999s background-color;
                     font-weight: 500;
@@ -1117,13 +1118,17 @@ body, html {
 }
 
 .gra-step-form__content-inner input[type="file"] + label {
+    top: 24px;
+}
+
+.gra-step-form__content-inner input[type="file"]:valid + label {
     top: 12px;
 }
 
-.gra-step-form__content-inner input:focus + label,
-.gra-step-form__content-inner input.gra-codigo-parceiro-inpu + label,
-.gra-step-form__content-inner input.gra-active.gra-codigo-parceiro-input + label,
-.gra-step-form__content-inner input.gra-active + label {
+.gra-step-form__content-inner input:not([type="file"]):focus + label,
+.gra-step-form__content-inner input:not([type="file"]).gra-codigo-parceiro-inpu + label,
+.gra-step-form__content-inner input:not([type="file"]).gra-active.gra-codigo-parceiro-input + label,
+.gra-step-form__content-inner input:not([type="file"]).gra-active + label {
     top: 12px;
 }
 
@@ -1134,4 +1139,18 @@ body, html {
 .gra-col-resend-code:disabled {
     opacity: .75;
     cursor: not-allowed;
+}
+
+.gra-step-form {
+    input[type="file"] {
+        &:invalid {
+            color: transparent;
+        }
+        &::-webkit-file-upload-button {
+            width: 0;
+            padding: 0;
+            background-color: rgba(0, 0, 0, 0);
+            border: 0;
+        }
+    }
 }

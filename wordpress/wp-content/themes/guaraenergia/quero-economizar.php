@@ -246,8 +246,8 @@
                         <label>CEP*</label>
                     </div>
                     <div class="gra-col gra-col--half">
-                        <input required class="jsField jsInstallationName" type="text" disabled />
-                        <label>Distribuidora*</label>
+                        <input class="jsField jsInstallationName gra-label-normal" type="text" disabled />
+                        <label class="jsDistribuidoraName">Distribuidora:</label>
                         <div class="gra-tooltip-icon gra-tooltip-icon--lock"></div>
                     </div>
                     <div class="gra-col gra-col--half">
@@ -255,28 +255,28 @@
                         <label>Nº de instalação*</label>
                     </div>
                     <div class="gra-col gra-col--half">
-                        <input class="jsField jsBillFile" type="file" placeholder="Anexe sua última fatura" />
+                        <input required class="jsField jsBillFile" type="file" placeholder="Anexe sua última fatura" />
                         <label>
                             <div class="gra-tooltip-icon gra-tooltip-icon--clip"></div>
                             Anexe sua última fatura*
                         </label>
                     </div>
                     <div class="gra-col gra-col--half jsIsCpf">
-                        <input class="jsField jsIdFile" type="file" placeholder="Anexe seu documento" />
+                        <input required class="jsField jsIdFile" type="file" placeholder="Anexe seu documento" />
                         <label>
                             <div class="gra-tooltip-icon gra-tooltip-icon--clip"></div>
                             Anexe seu documento*
                         </label>
                     </div>
                     <div class="gra-col gra-col--half jsIsCnpj">
-                        <input class="jsField jsIdFile2 push" type="file" placeholder="Anexe seu documento" />
+                        <input required class="jsField jsIdFile2 push" type="file" placeholder="Anexe seu documento" />
                         <label>
                             <div class="gra-tooltip-icon gra-tooltip-icon--clip"></div>
                             Anexe o documento de identificação do representante legal*
                         </label>
                     </div>
                     <div class="gra-col gra-col--half jsIsCnpj">
-                        <input class="jsField jsContractFile push" type="file" placeholder="Anexe seu documento" />
+                        <input required class="jsField jsContractFile push" type="file" placeholder="Anexe seu documento" />
                         <label>
                             <div class="gra-tooltip-icon gra-tooltip-icon--clip"></div>
                             Anexe o cartão CNPJ ou Contrato Social*
@@ -627,6 +627,8 @@
                                         if (!customError) {
                                             CustomAlert(true, 'Não foi possível encontrar o CEP. Por favor, verifique se digitou corretamente.');
                                             customError = false;
+                                        } else {
+                                            alert('Erro ao enviar');
                                         }
                                         
                                         fieldAddressEl.value = '';
@@ -658,7 +660,8 @@
                         }
                         
                         self.stepContainer.querySelector('.jsClientCEP').value = `${self.cep}`;  
-                        self.stepContainer.querySelector('.jsInstallationName').value = `${self.installation.utility.name}`;
+                        // self.stepContainer.querySelector('.jsInstallationName').value = `${self.installation.utility.name}`;
+                        self.stepContainer.querySelector('.jsDistribuidoraName').textContent = `Distribuidora: ${self.installation.utility.name}`;
                     }
 
                 } else if (step === 3) {
@@ -731,6 +734,7 @@
                                     console.log(error);
                                     downloadProposta = false;
                                     btnDownloadElText.textContent = textoAntesDownload;
+                                    alert('Erro ao baixar arquivo');
                                 }
                             }
                         });
@@ -833,6 +837,7 @@
                                     //     customError = false;
                                     // }
                                     self.stepContainer.classList.remove('gra-loading');
+                                    // alert('Erro ao enviar');
                                 }
                             })();
                         })();
@@ -1075,6 +1080,7 @@
                                         
                                     } catch (error) {
                                         Container.classList.remove('gra-loading');
+                                        // alert('Erro ao enviar');
                                     }
                                 })();
                             } else {
@@ -1123,6 +1129,7 @@
                             } catch (error) {
                                 console.log(error);
                                 Container.classList.remove('gra-loading');
+                                alert('Erro ao enviar');
                             }
                         })();
                     } else {
@@ -1215,6 +1222,7 @@
                                     } catch (error) {
                                         console.log(error);
                                         Container.classList.remove('gra-loading');
+                                        alert('Erro ao enviar');
                                     }
                                 })();
                             } else {
@@ -1270,6 +1278,7 @@
                             } catch (error) {
                                 console.log(error);
                                 Container.classList.remove('gra-loading');
+                                alert('Erro ao enviar');
                             }
                         })();
                     }
