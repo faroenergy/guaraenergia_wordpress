@@ -138,6 +138,7 @@
                     <div class="gra-col gra-col--half">
                         <input disabled class="jsField jsFieldAddress jsOptional gra-label-normal" type="text" />
                         <label>Endereço</label>
+                        <div class="gra-tooltip-icon gra-tooltip-icon--lock"></div>
                     </div>
                     <div class="gra-col gra-col--half">
                         <input class="jsOptional jsField jsFieldNumeroEnd" type="text" mask-number />
@@ -246,7 +247,7 @@
                         <label>CEP*</label>
                     </div>
                     <div class="gra-col gra-col--half">
-                        <input class="jsField jsInstallationName gra-label-normal" type="text" disabled />
+                        <input class="jsField jsInstallationName gra-label-normal jsOptional" type="text" disabled />
                         <label class="jsDistribuidoraName">Distribuidora:</label>
                         <div class="gra-tooltip-icon gra-tooltip-icon--lock"></div>
                     </div>
@@ -463,6 +464,17 @@
                             } else {
                                 item.classList.remove('gra-active');
                             }
+                        }
+                    });
+                });
+
+
+                document.querySelectorAll('.jsField + label').forEach(function(item) {
+                    item.addEventListener('click', function() {
+                        if (this.previousElementSibling.type === "file") {
+                            this.previousElementSibling.click();
+                        } else {
+                            this.previousElementSibling.focus();
                         }
                     });
                 });

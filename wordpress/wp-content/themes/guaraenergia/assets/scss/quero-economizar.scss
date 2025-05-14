@@ -418,12 +418,15 @@ body, html {
                     color: $primary;
                     border: 1px solid #C1C1C1;
                     background: none !important;
-                    background-color: rgba(0,0,0,0) !important;
+                    background-color: #fff !important;
                     text-align: left;
-                    transition: .3s padding-left, 9999999999999s background-color;
+                    transition: .3s padding-left;
                     font-weight: 500;
                     z-index: 1;
                     position: relative;
+                    &.jsFieldAddress {
+                        background-color: #F5F5F5 !important;
+                    }
                     &[type="file"] {
                         padding: 30px 43px 2px;
                         font-size: 12px;
@@ -444,7 +447,7 @@ body, html {
                         color: $primary;
                     }
                     &[disabled] {
-                        background-color: #F5F5F5;
+                        background-color: #F5F5F5 !important;
                         &:not(.gra-label-normal) + label {
                             z-index: 1;
                         }
@@ -605,6 +608,7 @@ body, html {
                 top: 12px;
                 font-weight: 500;
                 color: $primary;
+                z-index: 1;
             }
 
             @media (max-width: $container-md - 1) {
@@ -1101,7 +1105,7 @@ body, html {
 .gra-step-form__content-inner input:not([type="file"]) + label {
     top: 24px;
     transition: .3s top ease-out;
-    z-index: 0;
+    z-index: 1;
 }
 
 .gra-step-form__content-inner input.gra-codigo-parceiro-input + label {
@@ -1153,4 +1157,22 @@ body, html {
             border: 0;
         }
     }
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0px 1000px white inset !important;
+}   
+
+input:-internal-autofill-selected, input[data-autocompleted] {
+    -webkit-box-shadow: 0 0 0px 1000px white inset !important;
+}
+
+input.jsFieldAddress:-webkit-autofill,
+input.jsFieldAddress:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0px 1000px #F5F5F5 inset !important;
+}   
+
+input.jsFieldAddress:-internal-autofill-selected, input.jsFieldAddress[data-autocompleted] {
+    -webkit-box-shadow: 0 0 0px 1000px #F5F5F5 inset !important;
 }
