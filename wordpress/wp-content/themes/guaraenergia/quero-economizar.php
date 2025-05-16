@@ -890,7 +890,7 @@
                     widgetSignature = new Clicksign(self.request_signature_key);
 
                     widgetSignature.endpoint = 'https://app.clicksign.com';
-                    widgetSignature.origin = 'https://guaraenergia.com';
+                    // widgetSignature.origin = 'https://guaraenergia.com';
                     widgetSignature.mount('sign_container');
 
                     widgetSignature.on('loaded', function (ev) { console.log('loaded!'); });

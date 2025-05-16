@@ -78,32 +78,40 @@
         white-space: nowrap;
     }
     .c1 .container {
-        display: flex;
+        display: block;
         flex-direction: column;
         align-items: flex-start;
-        gap: 43px;
     }
     .c1__itens {
         display: flex;
         flex-wrap: wrap;
         align-items: center;
         width: 100%;
-        gap: 10px;
-        row-gap: 10px;
         font-size: 24px;
         line-height: 41px;
         justify-content: space-between;
+        margin-top: 33px;
     }
     .c1__itens-first {
         display: flex;
         flex-wrap: wrap;
-        gap: 10px;
     }
+
+    .c1__itens-first > * {
+        margin-right: 10px;
+    }
+
+    .c1__itens > * {
+        margin-top: 10px;
+    }
+
     .c2__itens-first {
         display: flex;
         flex-wrap: wrap;
-        gap: 30px;
-        row-gap: 10px;
+    }
+
+    .c2__itens-first > * {
+        margin-right: 30px;
     }
 
     .c1__itens img {
@@ -118,12 +126,20 @@
         display: flex;
         flex-wrap: wrap;
         align-items: center;
-        gap: 10px;
         width: 100%;
-        margin-top: 20px;
+        margin-top: 10px;
         font-size: 24px;
         line-height: 41px;
         justify-content: space-between;
+    }
+
+    .c2 > * {
+        margin-top: 10px;
+        margin-right: 5px;
+    }
+
+    .c2 > *:last-child {
+        margin-right: 0;
     }
 
     .c2 span {
@@ -141,13 +157,14 @@
     .c3__content {
         display: flex;
         align-items: center;
-        gap: 46px;
         text-align: center;
+        margin: 0 -23px;
     }
     .c3__item {
         padding: 50px 18px 35px;
         flex: 1;
         border-radius: 46px;
+        margin: 0 23px;
     }
     .c3__item--1 {
         background-color: #F0F0F0;
@@ -255,8 +272,10 @@
     <div class="wrapper">
         <div class="banner-topo"></div>
         <div class="c1">
-            <diva class="container">
-                <div class="c1__title">Escolha o melhor plano de adesão para você</div>
+            <div class="container">
+                <div>
+                    <div class="c1__title">Escolha o melhor plano de adesão para você</div>
+                </div>
                 <div class="c1__itens">
                     <div class="c1__itens-first">
                         <div><img src="https://www.guaraenergia.com/wp-content/themes/guaraenergia/assets/proposta/user.png" alt="Ícone de usuário">Cliente: <span> {{ client_name }}</span></div>
@@ -264,7 +283,7 @@
                     </div>
                     <div>Cód. do parceiro/cupom promocional: <span>{{ code_partner }}</span></div>
                 </div>
-            </diva>
+            </div>
         </div>
         <div class="container c2">
             <div class="c2__itens-first">
