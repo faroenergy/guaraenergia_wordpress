@@ -48,6 +48,7 @@ Template Name: Confirmar Código
 
         let installationId = null;
         let email = null;
+        let validationCode = null;
 
         document.addEventListener('DOMContentLoaded', async function() {
             const params = new URLSearchParams(window.location.search);
@@ -66,6 +67,7 @@ Template Name: Confirmar Código
 
                     installationId = installation_id;
                     email = emailResponse;
+                    validationCode = code;
 
                     const codeEl = document.querySelector('.jsVerificationCode');
                     codeEl.value = code;
@@ -100,7 +102,7 @@ Template Name: Confirmar Código
                                 email: email,
                                 password: password1El.value,
                                 confirm_password: password2El.value,
-                                verification_code: codeEl.value
+                                verification_code: validationCode
                             })
                         });
                         
