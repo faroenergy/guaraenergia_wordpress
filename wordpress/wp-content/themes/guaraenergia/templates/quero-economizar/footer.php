@@ -1,4 +1,4 @@
-<div class="gra-btns-footer">
+<div class="gra-btns-footer" style="display: flex;">
     <?php if ($args['go_back'] === true): ?>
         <button class="gra-btn-back jsPrevStep" type="button">
             <img src="<?php echo get_template_directory_uri(); ?>/assets/images/icons/quero-economizar/arrow-back.svg" alt="">
