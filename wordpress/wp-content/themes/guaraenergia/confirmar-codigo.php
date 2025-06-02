@@ -12,12 +12,11 @@ Template Name: Confirmar Código
 
 <?php
     $page_id = 407;
-    $passo_6 = get_field('passo_6', $page_id);
     $texto_privacidade = get_field('texto_privacidade', $page_id);
 ?>
 
 <div class="gra-step-form__content-inner" step-side="2" step-side-inner="3" step="6">
-    <div class="gra-title"><?php echo $passo_6['titulo']; ?></div>
+    <div class="gra-title">Confirme o código de verificação e crie sua senha</div>
     <div class="gra-subtitle jsApplyEmailOnText">Enviamos um código de verificação para o e-mail cadastrado, confirme o código e crie uma senha forte para ter acesso a área do cliente.</div>
     <hr class="gra-separator" />           
     <div class="gra-content">
@@ -37,7 +36,7 @@ Template Name: Confirmar Código
             <label>Confirme sua senha*</label>
         </div>
     </div>
-    <?php get_template_part('templates/quero-economizar/footer', null, array('botao' => 'Confirmar', 'texto_privacidade' => $texto_privacidade))?>
+    <?php get_template_part('templates/quero-economizar/footer', null, array('botao' => 'Finalizar', 'texto_privacidade' => $texto_privacidade))?>
 </div>
 <script src="<?php echo get_template_directory_uri(); ?>/assets/js/vanilla-masker.min.js"></script>
 <script>
@@ -83,12 +82,13 @@ Template Name: Confirmar Código
 
                 if (password1El.value === '' || password2El.value === '' || codeEl.value === '') {
                     alert('Por favor, preencha todos os campos');
+                    return;
                 } else if (password1El.value !== password2El.value) {
                     alert('As senhas não coincidem');
+                    return;
                 }
 
                 if (password1El.value === password2El.value) {
-
                     Container.classList.add('gra-loading');
 
                     try {
@@ -108,12 +108,16 @@ Template Name: Confirmar Código
                         
                         Container.classList.remove('gra-loading');
 
+                        if (response.status === 409) {
+                            window.location.href = '<?php echo home_url(); ?>/feedback';
+                            return;
+                        }
+
                         if (response.ok) {
                             window.location.href = 'https://portal.guaraenergia.com/';
                         } else {
                             throw new Error(`Response status: ${response.status}`);
                         }
-                        
                     } catch (error) {
                         console.log(error);
                         Container.classList.remove('gra-loading');
