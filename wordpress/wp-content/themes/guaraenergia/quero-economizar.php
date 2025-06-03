@@ -1278,7 +1278,12 @@
                                     },
                                     body: JSON.stringify(obj)
                                 });
-                                
+
+                                if (response.status === 409) {
+                                    window.location.href = '<?php echo home_url(); ?>/feedback';
+                                    return;
+                                }
+                                        
                                 if (!response.ok) {
                                     throw new Error(`Response status: ${response.status}`);
                                 }
