@@ -409,6 +409,66 @@
             init: function() {
                 const self = this;
     
+                // Verifica se tem hash na URL
+                const params = new URLSearchParams(window.location.search);
+                const hash = params.get('hash');
+
+                if (hash) {
+                    try {
+                        const response = await fetch(`http://localhost:8007/hash/decode/?hash=${hash}`, {
+                            method: 'GET',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                        });
+
+                        if (response.ok) {
+                            const { step, client_provider_id } = await response.json();
+                            
+                            if (step === 2) {
+                                // Força o step inicial para 2
+                                self.stepStart = 2;
+                                self.currentStep = 2;
+                                self.lastStep = 2;
+
+                                // Esconde todos os steps
+                                document.querySelectorAll('[step]').forEach(el => {
+                                    el.style.display = 'none';
+                                });
+                                
+                                // Esconde todos os step-sides
+                                document.querySelectorAll('[step-side]').forEach(el => {
+                                    el.style.display = 'none';
+                                });
+
+                                // Mostra o step 2
+                                const step2Element = document.querySelector('[step="2"]');
+                                if (step2Element) {
+                                    step2Element.style.display = 'block';
+                                    
+                                    const stepSide2 = document.querySelector('[step-side="2"]');
+                                    if (stepSide2) {
+                                        stepSide2.style.display = 'block';
+                                        stepSide2.setAttribute('step-side-inner', '0');
+                                    }
+
+                                    const cpfFields = document.querySelectorAll('.jsIsCpf');
+                                    const cnpjFields = document.querySelectorAll('.jsIsCnpj');
+                                    
+                                    cpfFields.forEach(field => {
+                                        field.style.display = '';
+                                    });
+                                    cnpjFields.forEach(field => {
+                                        field.style.display = 'none';
+                                    });
+                                }
+                            }
+                        }
+                    } catch (error) {
+                        // Ignora silenciosamente qualquer erro
+                    }
+                }
+    
                 self.currentStep = self.stepStart;
                 self.lastStep = self.stepStart;
                 const initialStep = self.showStep(self.stepStart);
@@ -1535,4 +1595,59 @@
     })();
  </script>
  <script src="https://cdn-public-library.clicksign.com/embedded/embedded.min-1.0.0.js" type="text/javascript"></script>
+ <script>
+    document.addEventListener('DOMContentLoaded', async function() {
+        const params = new URLSearchParams(window.location.search);
+        const hash = params.get('hash');
+
+        if (hash) {
+            try {
+                const response = await fetch(`http://localhost:8007/hash/decode/?hash=${hash}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                });
+
+                if (response.ok) {
+                    const { step, client_provider_id } = await response.json();
+                    
+                    if (step === 2) {
+                        document.querySelectorAll('[step]').forEach(el => {
+                            el.style.display = 'none';
+                        });
+
+                        document.querySelectorAll('[step-side]').forEach(el => {
+                            el.style.display = 'none';
+                        });
+                        
+                        
+                        const step2Element = document.querySelector('[step="2"]');
+                        if (step2Element) {
+                            step2Element.style.display = 'block';
+                            
+                            const stepSide2 = document.querySelector('[step-side="2"]');
+                            if (stepSide2) {
+                                stepSide2.style.display = 'block';
+                                stepSide2.setAttribute('step-side-inner', '0');
+                            }
+
+                            const cpfFields = document.querySelectorAll('.jsIsCpf');
+                            const cnpjFields = document.querySelectorAll('.jsIsCnpj');
+                            
+                            cpfFields.forEach(field => {
+                                field.style.display = '';
+                            });
+                            cnpjFields.forEach(field => {
+                                field.style.display = 'none';
+                            });
+                        }
+                    }
+                }
+            } catch (error) {
+                
+            }
+        }
+    });
+ </script>
  </body>
