@@ -54,7 +54,7 @@ Template Name: Confirmar Código
             const hash = params.get('hash');
             
             if (hash) {
-                const response = await fetch(`${baseUrl}/confirmation-code/decode/?hash=${hash}`, {
+                const response = await fetch(`${baseUrl}/hash/decode/?hash=${hash}`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json'
