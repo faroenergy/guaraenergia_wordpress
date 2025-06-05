@@ -409,8 +409,9 @@
             init: async function() {
                 const self = this;
 
-                // self.baseUrl = 'https://api.guaraenergia.com';
-                self.baseUrl = 'http://localhost:8007';
+                self.baseUrl = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
+                    ? 'http://localhost:8007'
+                    : 'https://api.guaraenergia.com';
 
                 const params = new URLSearchParams(window.location.search);
                 const hash = params.get('hash');
