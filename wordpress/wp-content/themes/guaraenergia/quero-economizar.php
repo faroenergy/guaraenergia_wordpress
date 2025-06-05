@@ -406,13 +406,33 @@
                 '<?php echo $passo_3['plano_3']; ?>'
             ],
     
-            init: function() {
+            init: async function() {
                 const self = this;
+
+                self.baseUrl = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
+                    ? 'http://localhost:8007'
+                    : 'https://api.guaraenergia.com';
+
+                const params = new URLSearchParams(window.location.search);
+                const hash = params.get('hash');
+
+                self.currentStep = self.stepStart;
+                self.lastStep = self.stepStart;
+                self.clientProviderId = null;
+                
+                if (hash) {
+                    const response = await fetch(`${self.baseUrl}/hash/decode/?hash=${hash}`)
+                    if (response.ok) {
+                        const { step, client_provider_id} = await response.json();
+
+                        self.clientProviderId = client_provider_id;
+                    }
+                }
     
                 self.currentStep = self.stepStart;
                 self.lastStep = self.stepStart;
                 const initialStep = self.showStep(self.stepStart);
-                self.startEvents();
+                self.startEvents(); 
             },
     
             startEvents: function() {
@@ -589,10 +609,8 @@
                                         zip_code: value
                                     }).toString();
 
-                                    const url = `https://api.guaraenergia.com/utility-address?${queryParams}`;
-
                                     try {
-                                        const response = await fetch(url, {
+                                        const response = await fetch(`${self.baseUrl}/utility-address?${queryParams}`, {
                                             method: "GET",
                                             headers: {
                                                 'Content-Type': 'application/json'
@@ -699,7 +717,7 @@
                                 btnDownloadElText.textContent = textoDownload;
                                 
                                 try {
-                                    const response = await fetch(`https://api.guaraenergia.com/download-propose/?installation_id=${self.installation.id}`)
+                                    const response = await fetch(`${self.baseUrl}/download-propose/?installation_id=${self.installation.id}`)
                                     .then(response => {
                                         if (!response.ok) {
                                             throw new Error("Erro no download");
@@ -787,11 +805,8 @@
                             };
 
                             (async function() {
-
-                                const url = `https://api.guaraenergia.com/propose/?installation_id=${self.installation.id}`;
-    
                                 try {
-                                    const response = await fetch(url, {
+                                    const response = await fetch(`${self.baseUrl}/propose/?installation_id=${self.installation.id}`, {
                                         method: "GET",
                                         headers: {
                                             'Content-Type': 'application/json'
@@ -921,7 +936,7 @@
                             codeEl.textContent = `${codeElTextBase} (${count})`;
 
 
-                            fetch('https://api.guaraenergia.com/send-confirmation-code/', {
+                            fetch(`${self.baseUrl}/send-confirmation-code/`, {
                                 method: 'POST',
                                 headers: {
                                     'Content-Type': 'application/json'
@@ -1050,10 +1065,11 @@
                                 }
 
                                 obj.name = self.fullName;
+                                obj.client_provider_id = self.clientProviderId;
     
                                 (async function() {
                                     try {
-                                        const response = await fetch('https://api.guaraenergia.com/client/register/', {
+                                        const response = await fetch(`${self.baseUrl}/client/register/`, {
                                             method: "POST",
                                             headers: {
                                                 'Content-Type': 'application/json'
@@ -1116,7 +1132,7 @@
 
                         (async function() {
                             try {
-                                const response = await fetch('https://api.guaraenergia.com/select-propose/', {
+                                const response = await fetch(`${self.baseUrl}/select-propose/`, {
                                     method: "POST",
                                     headers: {
                                         'Content-Type': 'application/json'
@@ -1213,7 +1229,7 @@
                             if (different) {
                                 (async function() {
                                     try {
-                                        const response = await fetch('https://api.guaraenergia.com/cadastro/step-3/', {
+                                        const response = await fetch(`${self.baseUrl}/cadastro/step-3/`, {
                                             method: 'POST',
                                             // 'Content-Type': 'multipart/form',
                                             body: formData
@@ -1271,14 +1287,19 @@
 
                         (async function() {
                             try {
-                                const response = await fetch('https://api.guaraenergia.com/confirm-email/', {
+                                const response = await fetch(`${self.baseUrl}/confirm-email/`, {
                                     method: 'POST',
                                     headers: {
                                         'Content-Type': 'application/json'
                                     },
                                     body: JSON.stringify(obj)
                                 });
-                                
+
+                                if (response.status === 409) {
+                                    window.location.href = '<?php echo home_url(); ?>/feedback';
+                                    return;
+                                }
+                                        
                                 if (!response.ok) {
                                     throw new Error(`Response status: ${response.status}`);
                                 }
