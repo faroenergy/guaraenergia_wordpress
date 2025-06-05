@@ -406,73 +406,32 @@
                 '<?php echo $passo_3['plano_3']; ?>'
             ],
     
-            init: function() {
+            init: async function() {
                 const self = this;
-    
-                // Verifica se tem hash na URL
+
+                // self.baseUrl = 'https://api.guaraenergia.com';
+                self.baseUrl = 'http://localhost:8007';
+
                 const params = new URLSearchParams(window.location.search);
                 const hash = params.get('hash');
 
+                self.currentStep = self.stepStart;
+                self.lastStep = self.stepStart;
+                self.clientProviderId = null;
+                
                 if (hash) {
-                    try {
-                        const response = await fetch(`http://localhost:8007/hash/decode/?hash=${hash}`, {
-                            method: 'GET',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                        });
+                    const response = await fetch(`${self.baseUrl}/hash/decode/?hash=${hash}`)
+                    if (response.ok) {
+                        const { step, client_provider_id} = await response.json();
 
-                        if (response.ok) {
-                            const { step, client_provider_id } = await response.json();
-                            
-                            if (step === 2) {
-                                // Força o step inicial para 2
-                                self.stepStart = 2;
-                                self.currentStep = 2;
-                                self.lastStep = 2;
-
-                                // Esconde todos os steps
-                                document.querySelectorAll('[step]').forEach(el => {
-                                    el.style.display = 'none';
-                                });
-                                
-                                // Esconde todos os step-sides
-                                document.querySelectorAll('[step-side]').forEach(el => {
-                                    el.style.display = 'none';
-                                });
-
-                                // Mostra o step 2
-                                const step2Element = document.querySelector('[step="2"]');
-                                if (step2Element) {
-                                    step2Element.style.display = 'block';
-                                    
-                                    const stepSide2 = document.querySelector('[step-side="2"]');
-                                    if (stepSide2) {
-                                        stepSide2.style.display = 'block';
-                                        stepSide2.setAttribute('step-side-inner', '0');
-                                    }
-
-                                    const cpfFields = document.querySelectorAll('.jsIsCpf');
-                                    const cnpjFields = document.querySelectorAll('.jsIsCnpj');
-                                    
-                                    cpfFields.forEach(field => {
-                                        field.style.display = '';
-                                    });
-                                    cnpjFields.forEach(field => {
-                                        field.style.display = 'none';
-                                    });
-                                }
-                            }
-                        }
-                    } catch (error) {
-                        // Ignora silenciosamente qualquer erro
+                        self.clientProviderId = client_provider_id;
                     }
                 }
     
                 self.currentStep = self.stepStart;
                 self.lastStep = self.stepStart;
                 const initialStep = self.showStep(self.stepStart);
-                self.startEvents();
+                self.startEvents(); 
             },
     
             startEvents: function() {
@@ -649,10 +608,8 @@
                                         zip_code: value
                                     }).toString();
 
-                                    const url = `https://api.guaraenergia.com/utility-address?${queryParams}`;
-
                                     try {
-                                        const response = await fetch(url, {
+                                        const response = await fetch(`${self.baseUrl}/utility-address?${queryParams}`, {
                                             method: "GET",
                                             headers: {
                                                 'Content-Type': 'application/json'
@@ -759,7 +716,7 @@
                                 btnDownloadElText.textContent = textoDownload;
                                 
                                 try {
-                                    const response = await fetch(`https://api.guaraenergia.com/download-propose/?installation_id=${self.installation.id}`)
+                                    const response = await fetch(`${self.baseUrl}/download-propose/?installation_id=${self.installation.id}`)
                                     .then(response => {
                                         if (!response.ok) {
                                             throw new Error("Erro no download");
@@ -847,11 +804,8 @@
                             };
 
                             (async function() {
-
-                                const url = `https://api.guaraenergia.com/propose/?installation_id=${self.installation.id}`;
-    
                                 try {
-                                    const response = await fetch(url, {
+                                    const response = await fetch(`${self.baseUrl}/propose/?installation_id=${self.installation.id}`, {
                                         method: "GET",
                                         headers: {
                                             'Content-Type': 'application/json'
@@ -981,7 +935,7 @@
                             codeEl.textContent = `${codeElTextBase} (${count})`;
 
 
-                            fetch('https://api.guaraenergia.com/send-confirmation-code/', {
+                            fetch(`${self.baseUrl}/send-confirmation-code/`, {
                                 method: 'POST',
                                 headers: {
                                     'Content-Type': 'application/json'
@@ -1110,10 +1064,11 @@
                                 }
 
                                 obj.name = self.fullName;
+                                obj.client_provider_id = self.clientProviderId;
     
                                 (async function() {
                                     try {
-                                        const response = await fetch('https://api.guaraenergia.com/client/register/', {
+                                        const response = await fetch(`${self.baseUrl}/client/register/`, {
                                             method: "POST",
                                             headers: {
                                                 'Content-Type': 'application/json'
@@ -1176,7 +1131,7 @@
 
                         (async function() {
                             try {
-                                const response = await fetch('https://api.guaraenergia.com/select-propose/', {
+                                const response = await fetch(`${self.baseUrl}/select-propose/`, {
                                     method: "POST",
                                     headers: {
                                         'Content-Type': 'application/json'
@@ -1273,7 +1228,7 @@
                             if (different) {
                                 (async function() {
                                     try {
-                                        const response = await fetch('https://api.guaraenergia.com/cadastro/step-3/', {
+                                        const response = await fetch(`${self.baseUrl}/cadastro/step-3/`, {
                                             method: 'POST',
                                             // 'Content-Type': 'multipart/form',
                                             body: formData
@@ -1331,7 +1286,7 @@
 
                         (async function() {
                             try {
-                                const response = await fetch('https://api.guaraenergia.com/confirm-email/', {
+                                const response = await fetch(`${self.baseUrl}/confirm-email/`, {
                                     method: 'POST',
                                     headers: {
                                         'Content-Type': 'application/json'
@@ -1595,59 +1550,4 @@
     })();
  </script>
  <script src="https://cdn-public-library.clicksign.com/embedded/embedded.min-1.0.0.js" type="text/javascript"></script>
- <script>
-    document.addEventListener('DOMContentLoaded', async function() {
-        const params = new URLSearchParams(window.location.search);
-        const hash = params.get('hash');
-
-        if (hash) {
-            try {
-                const response = await fetch(`http://localhost:8007/hash/decode/?hash=${hash}`, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                });
-
-                if (response.ok) {
-                    const { step, client_provider_id } = await response.json();
-                    
-                    if (step === 2) {
-                        document.querySelectorAll('[step]').forEach(el => {
-                            el.style.display = 'none';
-                        });
-
-                        document.querySelectorAll('[step-side]').forEach(el => {
-                            el.style.display = 'none';
-                        });
-                        
-                        
-                        const step2Element = document.querySelector('[step="2"]');
-                        if (step2Element) {
-                            step2Element.style.display = 'block';
-                            
-                            const stepSide2 = document.querySelector('[step-side="2"]');
-                            if (stepSide2) {
-                                stepSide2.style.display = 'block';
-                                stepSide2.setAttribute('step-side-inner', '0');
-                            }
-
-                            const cpfFields = document.querySelectorAll('.jsIsCpf');
-                            const cnpjFields = document.querySelectorAll('.jsIsCnpj');
-                            
-                            cpfFields.forEach(field => {
-                                field.style.display = '';
-                            });
-                            cnpjFields.forEach(field => {
-                                field.style.display = 'none';
-                            });
-                        }
-                    }
-                }
-            } catch (error) {
-                
-            }
-        }
-    });
- </script>
  </body>
