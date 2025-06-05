@@ -308,6 +308,7 @@
                         <input required class="jsField jsSameField jsPassword1" minlength="4" type="password" />
                         <label>Crie sua senha*</label>
                     </div>
+                    <div class="gra-col jsPasswordError" style="color: red; display: none; font-size: 12px; margin: 8px 0 10px 0; text-align: left;"></div>
                     <div class="gra-col">
                         <input required class="jsField jsSameField jsPassword2" minlength="4" type="password" />
                         <label>Confirme sua senha*</label>
@@ -431,7 +432,7 @@
     
                 self.currentStep = self.stepStart;
                 self.lastStep = self.stepStart;
-                const initialStep = self.showStep(self.stepStart);
+                const initialStep = self.showStep(6);
                 self.startEvents(); 
             },
     
@@ -1277,9 +1278,48 @@
                         const passwordConfirm = Container.querySelector('.jsPassword2').value.trim();
                         const verification_code = Container.querySelector('.jsVerificationCode').value.trim();
 
+                        function validarSenhaForte(senha) {
+                            const regexSenhaForte = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+                            return regexSenhaForte.test(senha);
+                        }
+
+                        function showPasswordError(show, message) {
+                            const password1El = Container.querySelector('.jsPassword1');
+                            const password2El = Container.querySelector('.jsPassword2');
+                            const errorDiv = Container.querySelector('.jsPasswordError');
+                            
+                            if (show) {
+                                password1El.style.borderColor = 'red';
+                                password2El.style.borderColor = 'red';
+                                errorDiv.style.display = 'block';
+                                errorDiv.innerHTML = message;
+                            } else {
+                                password1El.style.borderColor = '';
+                                password2El.style.borderColor = '';
+                                errorDiv.style.display = 'none';
+                                errorDiv.innerHTML = '';
+                            }
+                        }
+
+                        if (password === '' || passwordConfirm === '' || verification_code === '') {
+                            Container.classList.remove('gra-loading');
+                            CustomAlert(true, 'Por favor, preencha todos os campos');
+                            return;
+                        } else if (password !== passwordConfirm) {
+                            Container.classList.remove('gra-loading');
+                            showPasswordError(true, 'As senhas não coincidem');
+                            return;
+                        } else if (!validarSenhaForte(password)) {
+                            Container.classList.remove('gra-loading');
+                            showPasswordError(true, 'A senha deve conter pelo menos 8 caracteres, incluindo uma letra maiúscula, uma minúscula, um número e um caractere especial (@$!%*?&)');
+                            return;
+                        } else {
+                            showPasswordError(false, '');
+                        }
+
                         const obj = {
-                            installation_id: self.installation.id,
-                            email: self.email,
+                            installation_id: 296,
+                            email: 'gustavo.santos-ext@faroenergy.com',
                             password: passwordConfirm,
                             confirm_password: passwordConfirm,
                             verification_code: verification_code
@@ -1287,6 +1327,7 @@
 
                         (async function() {
                             try {
+                                console.log(obj);
                                 const response = await fetch(`${self.baseUrl}/confirm-email/`, {
                                     method: 'POST',
                                     headers: {

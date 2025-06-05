@@ -31,6 +31,7 @@ Template Name: Confirmar Código
             <input required class="jsField jsSameField jsPassword1" minlength="4" type="password" />
             <label>Crie sua senha*</label>
         </div>
+        <div class="jsPasswordError" style="color: red; display: none; font-size: 12px; margin: -10px 0 10px 0; padding-left: 15px;"></div>
         <div class="gra-col">
             <input required class="jsField jsSameField jsPassword2" minlength="4" type="password" />
             <label>Confirme sua senha*</label>
@@ -41,8 +42,10 @@ Template Name: Confirmar Código
 <script src="<?php echo get_template_directory_uri(); ?>/assets/js/vanilla-masker.min.js"></script>
 <script>
     (function() {
-        const baseUrl = 'https://api.guaraenergia.com';
-        // const baseUrl = 'http://localhost:8007';
+        self.baseUrl = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
+            ? 'http://localhost:8007'
+            : 'https://api.guaraenergia.com';
+            
         const Container = document.querySelector('.gra-step-form__content-inner');
 
         let installationId = null;
@@ -75,6 +78,30 @@ Template Name: Confirmar Código
             }
 
             const btnConfirmar = document.querySelector('.jsNextStep');
+            const passwordErrorLabel = document.querySelector('.jsPasswordError');
+            
+            function validarSenhaForte(senha) {
+                const regexSenhaForte = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+                return regexSenhaForte.test(senha);
+            }
+
+            function showPasswordError(show, message) {
+                const password1El = document.querySelector('.jsPassword1');
+                const password2El = document.querySelector('.jsPassword2');
+                
+                if (show) {
+                    password1El.style.borderColor = 'red';
+                    password2El.style.borderColor = 'red';
+                    passwordErrorLabel.style.display = 'block';
+                    passwordErrorLabel.innerHTML = message;
+                } else {
+                    password1El.style.borderColor = '';
+                    password2El.style.borderColor = '';
+                    passwordErrorLabel.style.display = 'none';
+                    passwordErrorLabel.innerHTML = '';
+                }
+            }
+
             btnConfirmar.addEventListener('click', async function() {
                 const password1El = document.querySelector('.jsPassword1');
                 const password2El = document.querySelector('.jsPassword2');
@@ -84,8 +111,13 @@ Template Name: Confirmar Código
                     alert('Por favor, preencha todos os campos');
                     return;
                 } else if (password1El.value !== password2El.value) {
-                    alert('As senhas não coincidem');
+                    showPasswordError(true, 'As senhas não coincidem');
                     return;
+                } else if (!validarSenhaForte(password1El.value)) {
+                    showPasswordError(true, 'A senha deve conter pelo menos 8 caracteres, incluindo uma letra maiúscula, uma minúscula, um número e um caractere especial (@$!%*?&)');
+                    return;
+                } else {
+                    showPasswordError(false, '');
                 }
 
                 if (password1El.value === password2El.value) {
