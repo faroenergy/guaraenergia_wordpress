@@ -432,7 +432,7 @@
     
                 self.currentStep = self.stepStart;
                 self.lastStep = self.stepStart;
-                const initialStep = self.showStep(6);
+                const initialStep = self.showStep(self.stepStart);
                 self.startEvents(); 
             },
     
@@ -1318,8 +1318,8 @@
                         }
 
                         const obj = {
-                            installation_id: 296,
-                            email: 'gustavo.santos-ext@faroenergy.com',
+                            installation_id: self.installation.id,
+                            email: self.email,
                             password: passwordConfirm,
                             confirm_password: passwordConfirm,
                             verification_code: verification_code
