@@ -136,9 +136,8 @@
                         <div class="lds-ring" style="display:none"><div></div><div></div><div></div><div></div></div>
                     </div>
                     <div class="gra-col gra-col--half">
-                        <input disabled class="jsField jsFieldAddress jsOptional gra-label-normal" type="text" />
+                        <input class="jsField jsFieldAddress jsOptional" type="text" style="background-color: white !important;" />
                         <label>Endereço</label>
-                        <div class="gra-tooltip-icon gra-tooltip-icon--lock"></div>
                     </div>
                     <div class="gra-col gra-col--half">
                         <input class="jsOptional jsField jsFieldNumeroEnd" type="text" mask-number />
@@ -1011,6 +1010,7 @@
                             const field_companyName = Container.querySelector('.jsFieldCompanyName').value.trim();
                             const field_email = Container.querySelector('.jsFieldEmail').value.trim();
                             const field_cep = Container.querySelector('.jsFieldSearchCEP').value.trim().replaceAll('.', '').replaceAll('-', '');
+                            const field_address = Container.querySelector('.jsFieldAddress').value.trim();
         
                             const field_codePartner = Container.querySelector('.jsFieldCodePartner').value.trim();
                             const field_averageConsumption = Container.querySelector('.jsFieldAverage').value.trim().replaceAll('.', '').replaceAll(',', '.');
@@ -1041,6 +1041,7 @@
                                 self.companyName = field_companyName;
                                 self.email = field_email;
                                 self.cep = field_cep;
+                                self.address = field_address;
                                 self.codePartner = field_codePartner;
                                 self.averageConsumption = field_averageConsumption;
                                 self.phone = field_phone;
@@ -1056,6 +1057,7 @@
                                     phone: self.phone,
                                     installation_address_number: self.installation_address_number,
                                     installation_address_complement: self.installation_address_complement,
+                                    installation_address_street: self.address,
                                 };
 
                                 if (self.stepType === "cpf") {
