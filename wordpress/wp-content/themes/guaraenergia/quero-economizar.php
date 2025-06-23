@@ -136,8 +136,8 @@
                         <div class="lds-ring" style="display:none"><div></div><div></div><div></div><div></div></div>
                     </div>
                     <div class="gra-col gra-col--half">
-                        <input class="jsField jsFieldAddress jsOptional" type="text" style="background-color: white !important;" />
-                        <label>Endereço</label>
+                        <input class="jsField jsFieldAddress" type="text" style="background-color: white !important;" />
+                        <label>Endereço*</label>
                     </div>
                     <div class="gra-col gra-col--half">
                         <input class="jsOptional jsField jsFieldNumeroEnd" type="text" mask-number />
