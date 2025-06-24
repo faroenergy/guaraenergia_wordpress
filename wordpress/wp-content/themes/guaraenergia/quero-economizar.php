@@ -393,7 +393,7 @@
             cnpj: null,
             phone: null,
             codePartner: null,
-            averageConsumption: null,
+            monthlyExpense: null,
             social_contract: null,
 
             installationIdInitial: null,
@@ -1013,7 +1013,7 @@
                             const field_address = Container.querySelector('.jsFieldAddress').value.trim();
         
                             const field_codePartner = Container.querySelector('.jsFieldCodePartner').value.trim();
-                            const field_averageConsumption = Container.querySelector('.jsFieldAverage').value.trim().replaceAll('.', '').replaceAll(',', '.');
+                            const field_monthlyExpense = Container.querySelector('.jsFieldAverage').value.trim().replaceAll('.', '').replaceAll(',', '.');
 
                             const field_phone = Container.querySelector('.jsFieldPhone').value.trim().replaceAll('(', '').replaceAll(')', '').replaceAll(' ', '').replaceAll('-', '');
 
@@ -1027,11 +1027,11 @@
     
                                     field_lastName = Container.querySelector('.jsFieldLastName').value.trim();
     
-                                    return self.firstName !== field_firstName || self.lastName !== field_lastName || self.email !== field_email || self.cep !== field_cep || self.phone !== field_phone || self.codePartner !== field_codePartner || self.averageConsumption !== field_averageConsumption || self.installation_address_number !== field_numEnd || self.installation_address_complement !== field_complementoEnd;
+                                    return self.firstName !== field_firstName || self.lastName !== field_lastName || self.email !== field_email || self.cep !== field_cep || self.phone !== field_phone || self.codePartner !== field_codePartner || self.monthlyExpense !== field_monthlyExpense || self.installation_address_number !== field_numEnd || self.installation_address_complement !== field_complementoEnd;
     
                                 } else if (self.stepType === "cnpj") {
                                     
-                                    return self.companyName !== field_companyName || self.email !== field_email || self.cep !== field_cep || self.phone !== field_phone || self.codePartner !== field_codePartner || self.averageConsumption !== field_averageConsumption || self.installation_address_number !== field_numEnd || self.installation_address_complement !== field_complementoEnd;
+                                    return self.companyName !== field_companyName || self.email !== field_email || self.cep !== field_cep || self.phone !== field_phone || self.codePartner !== field_codePartner || self.monthlyExpense !== field_monthlyExpense || self.installation_address_number !== field_numEnd || self.installation_address_complement !== field_complementoEnd;
                                 }
                             }
     
@@ -1043,7 +1043,7 @@
                                 self.cep = field_cep;
                                 self.address = field_address;
                                 self.codePartner = field_codePartner;
-                                self.averageConsumption = field_averageConsumption;
+                                self.monthlyExpense = field_monthlyExpense;
                                 self.phone = field_phone;
                                 self.installation_address_number = field_numEnd;
                                 self.installation_address_complement = field_complementoEnd;
@@ -1052,7 +1052,7 @@
                                     type: self.stepType,
                                     email: self.email,
                                     zip_code: self.cep,
-                                    average_consumption: parseFloat(self.averageConsumption),
+                                    monthly_expense: parseFloat(self.monthlyExpense),
                                     partner_code: self.codePartner,
                                     phone: self.phone,
                                     installation_address_number: self.installation_address_number,
@@ -1071,6 +1071,8 @@
                                 obj.client_provider_id = self.clientProviderId;
     
                                 (async function() {
+
+                                    console.log(obj);
                                     try {
                                         const response = await fetch(`${self.baseUrl}/client/register/`, {
                                             method: "POST",
