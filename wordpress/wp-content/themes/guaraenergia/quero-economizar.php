@@ -692,6 +692,8 @@
                         self.stepContainer.querySelector('.jsClientCEP').value = `${self.cep}`;  
                         // self.stepContainer.querySelector('.jsInstallationName').value = `${self.installation.utility.name}`;
                         self.stepContainer.querySelector('.jsDistribuidoraName').textContent = `Distribuidora: ${self.installation.utility.name}`;
+                        self.stepContainer.querySelector('#terms-link').href = `https://s3.us-east-1.amazonaws.com/guara.terms/T%26C_Plataforma+-+Guara+Energia.pdf?utility=${self.utility_id}`;
+                        self.stepContainer.querySelector('#conditions-link').href = `https://s3.us-east-1.amazonaws.com/guara.terms/T%26C_Plataforma+-+Guara+Energia.pdf?utility=${self.utility_id}`;
                     }
 
                 } else if (step === 3) {

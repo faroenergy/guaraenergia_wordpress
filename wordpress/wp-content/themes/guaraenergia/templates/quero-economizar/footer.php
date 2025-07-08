@@ -47,7 +47,7 @@
                 <input style="width: min-content;" class="jsField" id="data-checkbox" type="checkbox" required> Aceito ceder meus dados pessoais para elaboração da proposta;
             </div> 
             <div style="display: flex; align-items: start; gap: 8px;">
-                <input style="width: min-content;" class="jsField" id="terms-checkbox" type="checkbox" required> Aceito os <a href="https://s3.us-east-1.amazonaws.com/guara.terms/Pol%C3%ADtica+de+Privacidade+-+Guara+Energia.pdf" target="_blank">Termos de Privacidade</a> e os <a href="https://s3.us-east-1.amazonaws.com/guara.terms/T%26C_Plataforma+-+Guara+Energia.pdf" target="_blank">Termos e Condições.</a>
+                <input style="width: min-content;" class="jsField" id="terms-checkbox" type="checkbox" required> Aceito os <a id="terms-link" href="https://s3.us-east-1.amazonaws.com/guara.terms/Pol%C3%ADtica+de+Privacidade+-+Guara+Energia.pdf" target="_blank">Termos de Privacidade</a> e os <a id="conditions-link" href="https://s3.us-east-1.amazonaws.com/guara.terms/T%26C_Plataforma+-+Guara+Energia.pdf" target="_blank">Termos e Condições.</a>
             </div>
         </div>
         <?php get_template_part('templates/quero-economizar/footer-links'); ?>
