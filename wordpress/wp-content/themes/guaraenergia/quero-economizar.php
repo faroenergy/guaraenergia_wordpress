@@ -103,7 +103,7 @@
                         </button>
                     </div>
                 </div>
-                <?php get_template_part('templates/quero-economizar/footer', null, array('botao' => $passo_1['botao'], 'go_back' => true, 'texto_privacidade' => $texto_privacidade))?>
+                <?php get_template_part('templates/quero-economizar/footer', null, array('botao' => $passo_1['botao'], 'go_back' => true))?>
             </div>
 
             <div class="gra-step-form__content-inner" step-side="2" step-side-inner="0" step="2" style="display:none">
@@ -283,7 +283,7 @@
                         </label>
                     </div>
                 </div>
-                <?php get_template_part('templates/quero-economizar/footer', null, array('botao' => $passo_4['botao'], 'go_back' => true, 'texto_privacidade' => $texto_privacidade))?>
+                <?php get_template_part('templates/quero-economizar/footer', null, array('botao' => $passo_4['botao'], 'go_back' => true, 'texto_privacidade' => true))?>
             </div>
             <div class="gra-step-form__content-inner" step-side="2" step-side-inner="2" step="5" style="display:none">
                 <div class="gra-title"><?php echo $passo_5['titulo']; ?></div>
@@ -1185,6 +1185,15 @@
                         const field_cnpj = Container.querySelector('.jsFieldCNPJ').value.trim().replaceAll('.', '').replaceAll('-', '').replaceAll('/', '');
                         const field_contractfile = Container.querySelector('.jsContractFile').files[0];
                         const field_installationnumber = Container.querySelector('.jsInstallationNumber').value.trim();
+                        const field_cookie = Container.querySelector('#cookie-checkbox')
+                        const field_data = Container.querySelector('#data-checkbox')
+                        const field_terms = Container.querySelector('#terms-checkbox')
+                        
+                        if (!field_cookie.checked || !field_data.checked || !field_terms.checked) {
+                            Container.classList.remove('gra-loading');
+                            CustomAlert(true, 'Por favor, aceite todos os termos e condições');
+                            return;
+                        }
 
                         const validationType = self.stepType === 'cpf' ? isValidCPF(field_cpf) : (isValidCPF(field_cpfrepresentant) && isValidCNPJ(field_cnpj));
 
