@@ -147,6 +147,12 @@
                         <input class="jsOptional jsField jsFieldComplementoEnd" type="text" />
                         <label>Complemento</label>
                     </div>
+                    <div id="utility-select" class="gra-col gra-col--half" style="display:none">
+                        <select class="jsOptional jsField jsFieldUtility">
+                            <option value="">Selecione a distribuidora</option>
+                        </select>
+                        <label>Distribuidora</label>
+                    </div>
                     <div class="gra-col gra-col--half">
                         <input required class="jsField jsFieldPhone" type="text" mask-phone />
                         <label>Telefone*</label>
@@ -620,18 +626,29 @@
                                         if (!response.ok) {
                                             btn.disabled = false;
 
-                                            if (response.status == 404 || response.status == 400) {
-                                                const data = await response.json();
-                                                
-                                                if (data) {
-                                                    if (typeof data.detail !== 'undefined') {
-                                                        customError = true;
-                                                        CustomAlert(true, data.detail);
-                                                    }
+                                            const res = await fetch(`${self.baseUrl}/utilities/`, {
+                                                method: "GET",
+                                                headers: {
+                                                    'Content-Type': 'application/json'
                                                 }
-                                            } else {
-                                                throw new Error(`Response status: ${response.status}`);
+                                            });
+
+                                            const data = await res.json();
+
+                                            if (data) {
+                                                if (data.length > 0) {
+                                                    const selectUtility = document.querySelector('#utility-select').style.display = 'block';
+
+                                                    data.forEach(item => {
+                                                        const option = document.createElement('option');
+                                                        option.value = item.id;
+                                                        option.textContent = item.name;
+                                                        selectUtility.appendChild(option);
+                                                    });
+                                                }
                                             }
+
+                                            // throw new Error(`Response status: ${response.status}`);
                                         }
                                         
                                         const data = await response.json();
