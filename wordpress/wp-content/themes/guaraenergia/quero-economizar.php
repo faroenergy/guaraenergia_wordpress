@@ -1056,7 +1056,7 @@
                                     monthly_expense: parseFloat(self.monthlyExpense),
                                     partner_code: self.codePartner,
                                     phone: self.phone,
-                                    installation_address_number: self.installation_address_number,
+                                    installation_address_number: self.installation_address_number !== '' ? self.installation_address_number : null,
                                     installation_address_complement: self.installation_address_complement,
                                     installation_address_street: self.address,
                                 };
