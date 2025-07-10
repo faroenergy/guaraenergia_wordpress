@@ -407,7 +407,7 @@ body, html {
                         }
                     }
                 }
-                input {
+                input, select {
                     display: block;
                     width: 100%;
                     padding: 20px 43px 0;
@@ -846,9 +846,13 @@ body, html {
         width: 100%;
     }
 
-    .gra-step-form__content-inner[step="2"] input, .gra-step-form__content-inner[step="4"] input, .gra-step-form__content-inner[step="6"] input {
+    .gra-step-form__content-inner[step="2"] input, .gra-step-form__content-inner[step="2"] select, .gra-step-form__content-inner[step="4"] input, .gra-step-form__content-inner[step="6"] input {
         padding: 16px 20px 0;
         font-size: 14px;
+    }
+    
+    .gra-step-form__content-inner[step="2"] select {
+        height: 93.58%;
     }
 
     .gra-step-form__content-inner label {
@@ -1093,16 +1097,18 @@ body, html {
   }
 
 .gra-step-form {
-    input[disabled] ~ .lds-ring {
-        display: block !important;
-    }
+    input[disabled] ~ .lds-ring,
+select[disabled] ~ .lds-ring {
+    display: block !important;
+}
 }
 
 .gra-step-form__content-inner input[type="file"].push {
     padding-top: 57px;
 }
 
-.gra-step-form__content-inner input:not([type="file"]) + label {
+.gra-step-form__content-inner input:not([type="file"]) + label,
+.gra-step-form__content-inner select + label {
     top: 24px;
     transition: .3s top ease-out;
     z-index: 1;
@@ -1113,11 +1119,13 @@ body, html {
     font-size: 12px;
 }
 
-.gra-step-form__content-inner input:disabled:not(.gra-label-normal) + label {
+.gra-step-form__content-inner input:disabled:not(.gra-label-normal) + label,
+.gra-step-form__content-inner select:disabled:not(.gra-label-normal) + label {
     top: 12px;
 }
 
-.gra-step-form__content-inner input:disabled.gra-label-normal + label {
+.gra-step-form__content-inner input:disabled.gra-label-normal + label,
+.gra-step-form__content-inner select:disabled.gra-label-normal + label {
     z-index: 1;
 }
 
@@ -1132,7 +1140,9 @@ body, html {
 .gra-step-form__content-inner input:not([type="file"]):focus + label,
 .gra-step-form__content-inner input:not([type="file"]).gra-codigo-parceiro-inpu + label,
 .gra-step-form__content-inner input:not([type="file"]).gra-active.gra-codigo-parceiro-input + label,
-.gra-step-form__content-inner input:not([type="file"]).gra-active + label {
+.gra-step-form__content-inner input:not([type="file"]).gra-active + label,
+.gra-step-form__content-inner select:focus + label,
+.gra-step-form__content-inner select.gra-active + label {
     top: 12px;
 }
 

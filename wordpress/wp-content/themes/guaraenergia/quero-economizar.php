@@ -46,30 +46,6 @@
             background-image: url(<?php echo $sem_usinas['imagem_mobile'] ?>)
         }
     }
-    #utility {
-        align-items: center;
-        justify-content: center;
-        width: 311.5px;
-        height: 69.33px;
-    }
-    #utility > select {
-        width: 93.58%;
-        height: 100%;
-        padding: 20px 43px 0;
-        border-radius: 20px;
-        font-size: 16px;
-        line-height: 3;
-        font-weight: 400;
-        color: #064A3C;
-        border: 1px solid #C1C1C1;
-        background: none !important;
-        background-color: #fff !important;
-        text-align: left;
-        transition: .3s padding-left;
-        font-weight: 500;
-        z-index: 1;
-        position: relative;
-    }
 </style>
 
 <section class="gra-step-form">
@@ -171,7 +147,11 @@
                         <input class="jsOptional jsField jsFieldComplementoEnd" type="text" />
                         <label>Complemento</label>
                     </div>
-                    <div id="utility" class="gra-col--half" style="display:none">
+                    <div id="div-city" class="gra-col gra-col--half" style="display:none">
+                        <input required class="jsField jsFieldCity" type="text" />
+                        <label>Cidade*</label>
+                    </div>
+                    <div id="div-utility" class="gra-col gra-col--half" style="display:none">
                         <select required class="jsField jsFieldUtility">
                             <option value="">Distribuidora*</option>
                         </select>
@@ -639,6 +619,12 @@
                                     }).toString();
 
                                     try {
+                                        const divUtility = document.querySelector('#div-utility');
+                                        divUtility.style.display = 'none';
+
+                                        const divCity = document.querySelector('#div-city');
+                                        divCity.style.display = 'none';
+
                                         const response = await fetch(`${self.baseUrl}/utility-address?${queryParams}`, {
                                             method: "GET",
                                             headers: {
@@ -683,11 +669,14 @@
                                         const data = await res.json();
 
                                         if (data) {
-                                            const divUtility = document.querySelector('#utility');
-                                            divUtility.style.display = 'flex';
+                                            const divUtility = document.querySelector('#div-utility');
+                                            divUtility.style.display = 'block';
+
+                                            const divCity = document.querySelector('#div-city');
+                                            divCity.style.display = 'block';
 
                                             data.forEach(item => {
-                                                const selectUtility = document.querySelector('#utility > select');
+                                                const selectUtility = document.querySelector('#div-utility > .jsFieldUtility');
                                                 let option = `<option value="${item.id}">${item.name}</option>`;
 
                                                 selectUtility.innerHTML += option;
@@ -1051,6 +1040,12 @@
                     if (ValidateWrongFields()) {
     
                         Container.classList.add('gra-loading');
+
+                        const selectUtility = Container.querySelector('.jsFieldUtility');
+
+                        if (selectUtility.value !== '') {
+                            self.utility_id = parseInt(selectUtility.value);
+                        }
                         
                         if (self.utility_id !== false) {
 
@@ -1059,6 +1054,7 @@
                             const field_email = Container.querySelector('.jsFieldEmail').value.trim();
                             const field_cep = Container.querySelector('.jsFieldSearchCEP').value.trim().replaceAll('.', '').replaceAll('-', '');
                             const field_address = Container.querySelector('.jsFieldAddress').value.trim();
+                            const field_city = Container.querySelector('.jsFieldCity').value.trim();
         
                             const field_codePartner = Container.querySelector('.jsFieldCodePartner').value.trim();
                             const field_monthlyExpense = Container.querySelector('.jsFieldAverage').value.trim().replaceAll('.', '').replaceAll(',', '.');
@@ -1073,6 +1069,7 @@
 
                             const field_numEnd = Container.querySelector('.jsFieldNumeroEnd').value.trim();
                             const field_complementoEnd = Container.querySelector('.jsFieldComplementoEnd').value.trim();
+                            const field_utility = Container.querySelector('.jsFieldUtility').value.trim();
     
                             let field_lastName = null;
                                     
@@ -1088,12 +1085,6 @@
                                     return self.companyName !== field_companyName || self.email !== field_email || self.cep !== field_cep || self.phone !== field_phone || self.codePartner !== field_codePartner || self.monthlyExpense !== field_monthlyExpense || self.installation_address_number !== field_numEnd || self.installation_address_complement !== field_complementoEnd;
                                 }
                             }
-
-                            const selectUtility = Container.querySelector('.jsFieldUtility');
-                            const isSelectUtilityVisible = selectUtility.style.display === 'flex';
-                            
-                            // Se o select está visível, ele será validado pela função ValidateWrongFields()
-                            // que já foi chamada anteriormente no código
     
                             if(checkFields(self.stepType)) {
 
@@ -1105,8 +1096,10 @@
                                 self.codePartner = field_codePartner;
                                 self.monthlyExpense = field_monthlyExpense;
                                 self.phone = field_phone;
-                                self.installation_address_number = field_numEnd;
-                                self.installation_address_complement = field_complementoEnd;
+                                self.installation_address_number = field_numEnd !== '' ? field_numEnd : null;
+                                self.installation_address_complement = field_complementoEnd !== '' ? field_complementoEnd : null;
+                                self.city = field_city !== '' ? field_city : null;
+                                self.utilityId = field_utility !== '' ? parseInt(field_utility) : null;
 
                                 let obj = {
                                     type: self.stepType,
@@ -1115,9 +1108,11 @@
                                     monthly_expense: parseFloat(self.monthlyExpense),
                                     partner_code: self.codePartner,
                                     phone: self.phone,
+                                    installation_address_city: self.city,
                                     installation_address_number: self.installation_address_number,
                                     installation_address_complement: self.installation_address_complement,
                                     installation_address_street: self.address,
+                                    utility_id: self.utilityId,
                                 };
 
                                 if (self.stepType === "cpf") {
@@ -1594,6 +1589,10 @@
             function addError(el, msg) {
                 valid = false;
                 el.classList.add('gra-error');
+
+                if (el.parentElement.querySelector('.gra-error-msg')) {
+                    el.parentElement.querySelector('.gra-error-msg').remove();
+                }
 
                 let errorDiv = document.createElement("div");
                 errorDiv.append(msg);
