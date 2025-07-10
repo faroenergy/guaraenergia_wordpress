@@ -46,6 +46,30 @@
             background-image: url(<?php echo $sem_usinas['imagem_mobile'] ?>)
         }
     }
+    #utility {
+        align-items: center;
+        justify-content: center;
+        width: 311.5px;
+        height: 69.33px;
+    }
+    #utility > select {
+        width: 93.58%;
+        height: 100%;
+        padding: 20px 43px 0;
+        border-radius: 20px;
+        font-size: 16px;
+        line-height: 3;
+        font-weight: 400;
+        color: #064A3C;
+        border: 1px solid #C1C1C1;
+        background: none !important;
+        background-color: #fff !important;
+        text-align: left;
+        transition: .3s padding-left;
+        font-weight: 500;
+        z-index: 1;
+        position: relative;
+    }
 </style>
 
 <section class="gra-step-form">
@@ -147,11 +171,10 @@
                         <input class="jsOptional jsField jsFieldComplementoEnd" type="text" />
                         <label>Complemento</label>
                     </div>
-                    <div id="utility-select" class="gra-col gra-col--half" style="display:none">
-                        <select class="jsOptional jsField jsFieldUtility">
-                            <option value="">Selecione a distribuidora</option>
+                    <div id="utility" class="gra-col--half" style="display:none">
+                        <select required class="jsField jsFieldUtility">
+                            <option value="">Distribuidora*</option>
                         </select>
-                        <label>Distribuidora</label>
                     </div>
                     <div class="gra-col gra-col--half">
                         <input required class="jsField jsFieldPhone" type="text" mask-phone />
@@ -625,30 +648,7 @@
                                         
                                         if (!response.ok) {
                                             btn.disabled = false;
-
-                                            const res = await fetch(`${self.baseUrl}/utilities/`, {
-                                                method: "GET",
-                                                headers: {
-                                                    'Content-Type': 'application/json'
-                                                }
-                                            });
-
-                                            const data = await res.json();
-
-                                            if (data) {
-                                                if (data.length > 0) {
-                                                    const selectUtility = document.querySelector('#utility-select').style.display = 'block';
-
-                                                    data.forEach(item => {
-                                                        const option = document.createElement('option');
-                                                        option.value = item.id;
-                                                        option.textContent = item.name;
-                                                        selectUtility.appendChild(option);
-                                                    });
-                                                }
-                                            }
-
-                                            // throw new Error(`Response status: ${response.status}`);
+                                            throw new Error(`Response status: ${response.status}`);
                                         }
                                         
                                         const data = await response.json();
@@ -668,14 +668,44 @@
                                         btn.focus();
                                         
                                     } catch (error) {
+                                        console.log(error);
+
                                         btn.disabled = false;
                                         self.utility_id = false;
-                                        
-                                        if (!customError) {
-                                            CustomAlert(true, 'Não foi possível encontrar o CEP. Por favor, verifique se digitou corretamente.');
-                                            customError = false;
-                                        } else {
-                                            alert('Erro ao enviar');
+
+                                        const res = await fetch(`${self.baseUrl}/utilities/`, {
+                                                method: "GET",
+                                                headers: {
+                                                    'Content-Type': 'application/json'
+                                                }
+                                            });
+
+                                        const data = await res.json();
+
+                                        if (data) {
+                                            const divUtility = document.querySelector('#utility');
+                                            divUtility.style.display = 'flex';
+
+                                            data.forEach(item => {
+                                                const selectUtility = document.querySelector('#utility > select');
+                                                let option = `<option value="${item.id}">${item.name}</option>`;
+
+                                                selectUtility.innerHTML += option;
+                                            });
+
+                                            // Adicionar evento de change para o select da distribuidora
+                                            const selectUtility = document.querySelector('#utility > select');
+                                            selectUtility.addEventListener('change', function() {
+                                                this.classList.remove('gra-error');
+                                                if (this.parentElement.querySelector('.gra-error-msg')) {
+                                                    this.parentElement.querySelector('.gra-error-msg').remove();
+                                                }
+                                                if (this.value !== '') {
+                                                    this.classList.add('gra-active');
+                                                } else {
+                                                    this.classList.remove('gra-active');
+                                                }
+                                            });
                                         }
                                         
                                         fieldAddressEl.value = '';
@@ -1059,6 +1089,12 @@
                                     return self.companyName !== field_companyName || self.email !== field_email || self.cep !== field_cep || self.phone !== field_phone || self.codePartner !== field_codePartner || self.monthlyExpense !== field_monthlyExpense || self.installation_address_number !== field_numEnd || self.installation_address_complement !== field_complementoEnd;
                                 }
                             }
+
+                            const selectUtility = Container.querySelector('.jsFieldUtility');
+                            const isSelectUtilityVisible = selectUtility.style.display === 'flex';
+                            
+                            // Se o select está visível, ele será validado pela função ValidateWrongFields()
+                            // que já foi chamada anteriormente no código
     
                             if(checkFields(self.stepType)) {
 
@@ -1468,6 +1504,12 @@
             const fields = StepController.stepContainer.querySelectorAll('.gra-col:not([style="display: none;"]) > .jsField');
             let valid = true;
 
+            const selectUtility = StepController.stepContainer.querySelector('.jsFieldUtility');
+
+            if (selectUtility.parentElement.style.display === 'flex' && selectUtility.value === '') {
+                addError(selectUtility, 'Campo obrigatório');
+            }
+
             fields.forEach(el => {
 
                 if (!el.classList.contains('jsOptional')) {
@@ -1513,6 +1555,12 @@
                             addError(el, 'Campo com valor incorreto');
                         } else if (el.classList.contains('jsSameField')) {
                             checkForSameField(el);
+                        }
+
+                    } else if (el.classList.contains('jsFieldUtility')) {
+
+                        if (el.parentElement.style.display === 'flex' && el.value === '') {
+                            addError(el, 'Selecione uma distribuidora');
                         }
 
                     } else if (el.hasAttribute('mask-name')) {
