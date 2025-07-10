@@ -692,8 +692,7 @@
                         self.stepContainer.querySelector('.jsClientCEP').value = `${self.cep}`;  
                         // self.stepContainer.querySelector('.jsInstallationName').value = `${self.installation.utility.name}`;
                         self.stepContainer.querySelector('.jsDistribuidoraName').textContent = `Distribuidora: ${self.installation.utility.name}`;
-                        self.stepContainer.querySelector('#terms-link').href = `https://s3.us-east-1.amazonaws.com/guara.terms/T%26C_Plataforma+-+Guara+Energia.pdf?utility=${self.utility_id}`;
-                        self.stepContainer.querySelector('#conditions-link').href = `https://s3.us-east-1.amazonaws.com/guara.terms/T%26C_Plataforma+-+Guara+Energia.pdf?utility=${self.utility_id}`;
+                        self.stepContainer.querySelector('#constitution-link').href = `https://s3.us-east-1.amazonaws.com/guara.consortium-docs/index.html?utility=${self.utility_id}`;
                     }
 
                 } else if (step === 3) {
@@ -1187,11 +1186,13 @@
                         const field_cnpj = Container.querySelector('.jsFieldCNPJ').value.trim().replaceAll('.', '').replaceAll('-', '').replaceAll('/', '');
                         const field_contractfile = Container.querySelector('.jsContractFile').files[0];
                         const field_installationnumber = Container.querySelector('.jsInstallationNumber').value.trim();
+
                         const field_cookie = Container.querySelector('#cookie-checkbox')
                         const field_data = Container.querySelector('#data-checkbox')
                         const field_terms = Container.querySelector('#terms-checkbox')
+                        const field_constitution = Container.querySelector('#constitution-checkbox')
                         
-                        if (!field_cookie.checked || !field_data.checked || !field_terms.checked) {
+                        if (!field_cookie.checked || !field_data.checked || !field_terms.checked || !field_constitution.checked) {
                             Container.classList.remove('gra-loading');
                             CustomAlert(true, 'Por favor, aceite todos os termos e condições');
                             return;

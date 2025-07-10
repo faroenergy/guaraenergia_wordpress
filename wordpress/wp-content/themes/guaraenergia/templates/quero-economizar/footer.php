@@ -41,13 +41,27 @@
     <div class="gra-step-footer">
         <div class="gra-step-footer__text" style="display: flex; flex-direction: column; gap: 10px; align-items: flex-start; font-size: 12px; font-weight: 500; max-width: 580px;">
             <div style="display: flex; align-items: start; gap: 8px;">
-                <input style="width: min-content;" class="jsField" id="cookie-checkbox" type="checkbox" required> Estou ciente de que a Guará utiliza cookies para melhorar minha experiência e oferecer conteúdo adequado aos meus interesses;
+                <input style="width: min-content;" class="jsField terms-conditions" id="cookie-checkbox" type="checkbox" required> Estou ciente de que a Guará utiliza cookies para melhorar minha experiência e oferecer conteúdo adequado aos meus interesses;
             </div>
             <div style="display: flex; align-items: start; gap: 8px;">
-                <input style="width: min-content;" class="jsField" id="data-checkbox" type="checkbox" required> Aceito ceder meus dados pessoais para elaboração da proposta;
+                <input style="width: min-content;" class="jsField terms-conditions" id="data-checkbox" type="checkbox" required> Aceito ceder meus dados pessoais para elaboração da proposta;
             </div> 
             <div style="display: flex; align-items: start; gap: 8px;">
-                <input style="width: min-content;" class="jsField" id="terms-checkbox" type="checkbox" required> Aceito os <a id="terms-link" href="https://s3.us-east-1.amazonaws.com/guara.terms/Pol%C3%ADtica+de+Privacidade+-+Guara+Energia.pdf" target="_blank">Termos de Privacidade</a> e os <a id="conditions-link" href="https://s3.us-east-1.amazonaws.com/guara.terms/T%26C_Plataforma+-+Guara+Energia.pdf" target="_blank">Termos e Condições.</a>
+                <input style="width: min-content;" class="jsField terms-conditions" id="terms-checkbox" type="checkbox" required> 
+                <span>
+                    Aceito os 
+                    <a id="terms-link" href="https://s3.us-east-1.amazonaws.com/guara.terms/Pol%C3%ADtica+de+Privacidade+-+Guara+Energia.pdf" target="_blank">Termos de Privacidade</a> 
+                    e os 
+                    <a id="conditions-link" href="https://s3.us-east-1.amazonaws.com/guara.terms/T%26C_Plataforma+-+Guara+Energia.pdf" target="_blank">Termos e Condições</a>.
+                </span>
+            </div>
+            <div style="display: flex; align-items: start; gap: 8px;">
+                <input style="width: min-content;" class="jsField terms-conditions" id="constitution-checkbox" type="checkbox" required> 
+                <span>
+                    Declaro que li, compreendi e estou ciente do conteúdo do 
+                    <a id="constitution-link" href="" target="_blank">Instrumento de Constituição do Consórcio Solar</a>, 
+                    sendo esta leitura condição para a adesão ao consórcio.
+                </span>
             </div>
         </div>
         <?php get_template_part('templates/quero-economizar/footer-links'); ?>
