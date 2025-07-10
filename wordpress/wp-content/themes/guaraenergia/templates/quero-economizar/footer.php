@@ -37,7 +37,25 @@
     
 </div>
 
-<div class="gra-step-footer">
-    <div class="gra-step-footer__text"><?php echo $args['texto_privacidade']; ?></div>
-    <?php get_template_part('templates/quero-economizar/footer-links'); ?>
-</div>
+<?php if ($args['texto_privacidade'] === true): ?>
+    <div class="gra-step-footer">
+        <div class="gra-step-footer__text" style="display: flex; flex-direction: column; gap: 10px; align-items: flex-start; font-size: 12px; font-weight: 500; max-width: 580px;">
+            <div style="display: flex; align-items: start; gap: 8px;">
+                <input style="width: min-content;" class="jsField" id="cookie-checkbox" type="checkbox" required> Estou ciente de que a Guará utiliza cookies para melhorar minha experiência e oferecer conteúdo adequado aos meus interesses;
+            </div>
+            <div style="display: flex; align-items: start; gap: 8px;">
+                <input style="width: min-content;" class="jsField" id="data-checkbox" type="checkbox" required> Aceito ceder meus dados pessoais para elaboração da proposta;
+            </div> 
+            <div style="display: flex; align-items: start; gap: 8px;">
+                <input style="width: min-content;" class="jsField" id="terms-checkbox" type="checkbox" required> Aceito os <a id="terms-link" href="https://s3.us-east-1.amazonaws.com/guara.terms/Pol%C3%ADtica+de+Privacidade+-+Guara+Energia.pdf" target="_blank">Termos de Privacidade</a> e os <a id="conditions-link" href="https://s3.us-east-1.amazonaws.com/guara.terms/T%26C_Plataforma+-+Guara+Energia.pdf" target="_blank">Termos e Condições.</a>
+            </div>
+        </div>
+        <?php get_template_part('templates/quero-economizar/footer-links'); ?>
+    </div>
+<?php else: ?>
+    <div class="gra-step-footer" style="align-items: end; justify-content: flex-end;">
+        <div class="gra-step-footer__text" style="max-width: none; margin: 0 auto;">
+            <?php get_template_part('templates/quero-economizar/footer-links'); ?>
+        </div>
+    </div>
+<?php endif; ?>
