@@ -148,11 +148,11 @@
                         <label>Complemento</label>
                     </div>
                     <div id="div-city" class="gra-col gra-col--half" style="display:none">
-                        <input required class="jsField jsFieldCity" type="text" />
+                        <input required class="jsFieldCity" type="text" />
                         <label>Cidade*</label>
                     </div>
                     <div id="div-utility" class="gra-col gra-col--half" style="display:none">
-                        <select required class="jsField jsFieldUtility">
+                        <select required class="jsFieldUtility" style="height: 4.4rem;">
                             <option value="">Distribuidora*</option>
                         </select>
                     </div>
@@ -620,10 +620,12 @@
 
                                     try {
                                         const divUtility = document.querySelector('#div-utility');
+                                        divUtility.querySelector('.jsFieldUtility').value = '';
                                         divUtility.style.display = 'none';
 
                                         const divCity = document.querySelector('#div-city');
-                                        divCity.style.display = 'none';
+                                        divCity.querySelector('.jsFieldCity').value = '';
+                                        divCity.style.display = 'none'; 
 
                                         const response = await fetch(`${self.baseUrl}/utility-address?${queryParams}`, {
                                             method: "GET",
@@ -671,15 +673,20 @@
                                         if (data) {
                                             const divUtility = document.querySelector('#div-utility');
                                             divUtility.style.display = 'block';
+                                            divUtility.querySelector('.jsFieldUtility').classList.add('jsField');
 
                                             const divCity = document.querySelector('#div-city');
                                             divCity.style.display = 'block';
+                                            divCity.querySelector('.jsFieldCity').classList.add('jsField');
 
                                             data.forEach(item => {
-                                                const selectUtility = document.querySelector('#div-utility > .jsFieldUtility');
-                                                let option = `<option value="${item.id}">${item.name}</option>`;
 
-                                                selectUtility.innerHTML += option;
+                                                if (item.valid === true) {
+                                                    const selectUtility = document.querySelector('#div-utility > .jsFieldUtility');
+                                                    let option = `<option value="${item.id}">${item.name}</option>`;
+
+                                                    selectUtility.innerHTML += option;
+                                                }
                                             });
 
                                             // Adicionar evento de change para o select da distribuidora
@@ -1047,7 +1054,7 @@
                             self.utility_id = parseInt(selectUtility.value);
                         }
                         
-                        if (self.utility_id !== false) {
+                        if (self.utility_id !== false && self.utility_id !== null && self.utility_id !== '') {
 
                             const field_firstName = Container.querySelector('.jsFieldFirstName').value.trim();
                             const field_companyName = Container.querySelector('.jsFieldCompanyName').value.trim();
@@ -1499,12 +1506,6 @@
         function ValidateWrongFields() {
             const fields = StepController.stepContainer.querySelectorAll('.gra-col:not([style="display: none;"]) > .jsField');
             let valid = true;
-
-            const selectUtility = StepController.stepContainer.querySelector('.jsFieldUtility');
-
-            if (selectUtility.parentElement.style.display === 'flex' && selectUtility.value === '') {
-                addError(selectUtility, 'Campo obrigatório');
-            }
 
             fields.forEach(el => {
 
