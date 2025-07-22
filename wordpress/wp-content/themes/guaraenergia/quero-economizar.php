@@ -1068,7 +1068,7 @@
 
                             if (parseFloat(field_monthlyExpense) < 200) {
                                 Container.classList.remove('gra-loading');
-                                CustomAlert(true, 'A média do valor pago na fatura deve ser maior que R$ 250,00');
+                                CustomAlert(true, 'A média do valor pago na fatura deve ser maior ou igual a R$ 200,00');
                                 return;
                             }
 
