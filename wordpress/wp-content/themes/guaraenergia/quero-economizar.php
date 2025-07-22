@@ -147,6 +147,15 @@
                         <input class="jsOptional jsField jsFieldComplementoEnd" type="text" />
                         <label>Complemento</label>
                     </div>
+                    <div id="div-city" class="gra-col gra-col--half" style="display:none">
+                        <input required class="jsFieldCity" type="text" />
+                        <label>Cidade*</label>
+                    </div>
+                    <div id="div-utility" class="gra-col gra-col--half" style="display:none">
+                        <select required class="jsFieldUtility" style="height: 4.4rem;">
+                            <option value="">Distribuidora*</option>
+                        </select>
+                    </div>
                     <div class="gra-col gra-col--half">
                         <input required class="jsField jsFieldPhone" type="text" mask-phone />
                         <label>Telefone*</label>
@@ -610,6 +619,14 @@
                                     }).toString();
 
                                     try {
+                                        const divUtility = document.querySelector('#div-utility');
+                                        divUtility.querySelector('.jsFieldUtility').value = '';
+                                        divUtility.style.display = 'none';
+
+                                        const divCity = document.querySelector('#div-city');
+                                        divCity.querySelector('.jsFieldCity').value = '';
+                                        divCity.style.display = 'none'; 
+
                                         const response = await fetch(`${self.baseUrl}/utility-address?${queryParams}`, {
                                             method: "GET",
                                             headers: {
@@ -619,19 +636,7 @@
                                         
                                         if (!response.ok) {
                                             btn.disabled = false;
-
-                                            if (response.status == 404 || response.status == 400) {
-                                                const data = await response.json();
-                                                
-                                                if (data) {
-                                                    if (typeof data.detail !== 'undefined') {
-                                                        customError = true;
-                                                        CustomAlert(true, data.detail);
-                                                    }
-                                                }
-                                            } else {
-                                                throw new Error(`Response status: ${response.status}`);
-                                            }
+                                            throw new Error(`Response status: ${response.status}`);
                                         }
                                         
                                         const data = await response.json();
@@ -651,14 +656,52 @@
                                         btn.focus();
                                         
                                     } catch (error) {
+                                        console.log(error);
+
                                         btn.disabled = false;
                                         self.utility_id = false;
-                                        
-                                        if (!customError) {
-                                            CustomAlert(true, 'Não foi possível encontrar o CEP. Por favor, verifique se digitou corretamente.');
-                                            customError = false;
-                                        } else {
-                                            alert('Erro ao enviar');
+
+                                        const res = await fetch(`${self.baseUrl}/utilities/`, {
+                                                method: "GET",
+                                                headers: {
+                                                    'Content-Type': 'application/json'
+                                                }
+                                            });
+
+                                        const data = await res.json();
+
+                                        if (data) {
+                                            const divUtility = document.querySelector('#div-utility');
+                                            divUtility.style.display = 'block';
+                                            divUtility.querySelector('.jsFieldUtility').classList.add('jsField');
+
+                                            const divCity = document.querySelector('#div-city');
+                                            divCity.style.display = 'block';
+                                            divCity.querySelector('.jsFieldCity').classList.add('jsField');
+
+                                            data.forEach(item => {
+
+                                                if (item.valid === true) {
+                                                    const selectUtility = document.querySelector('#div-utility > .jsFieldUtility');
+                                                    let option = `<option value="${item.id}">${item.name}</option>`;
+
+                                                    selectUtility.innerHTML += option;
+                                                }
+                                            });
+
+                                            // Adicionar evento de change para o select da distribuidora
+                                            const selectUtility = document.querySelector('#utility > select');
+                                            selectUtility.addEventListener('change', function() {
+                                                this.classList.remove('gra-error');
+                                                if (this.parentElement.querySelector('.gra-error-msg')) {
+                                                    this.parentElement.querySelector('.gra-error-msg').remove();
+                                                }
+                                                if (this.value !== '') {
+                                                    this.classList.add('gra-active');
+                                                } else {
+                                                    this.classList.remove('gra-active');
+                                                }
+                                            });
                                         }
                                         
                                         fieldAddressEl.value = '';
@@ -1004,22 +1047,36 @@
                     if (ValidateWrongFields()) {
     
                         Container.classList.add('gra-loading');
+
+                        const selectUtility = Container.querySelector('.jsFieldUtility');
+
+                        if (selectUtility.value !== '') {
+                            self.utility_id = parseInt(selectUtility.value);
+                        }
                         
-                        if (self.utility_id !== false) {
+                        if (self.utility_id !== false && self.utility_id !== null && self.utility_id !== '') {
 
                             const field_firstName = Container.querySelector('.jsFieldFirstName').value.trim();
                             const field_companyName = Container.querySelector('.jsFieldCompanyName').value.trim();
                             const field_email = Container.querySelector('.jsFieldEmail').value.trim();
                             const field_cep = Container.querySelector('.jsFieldSearchCEP').value.trim().replaceAll('.', '').replaceAll('-', '');
                             const field_address = Container.querySelector('.jsFieldAddress').value.trim();
+                            const field_city = Container.querySelector('.jsFieldCity').value.trim();
         
                             const field_codePartner = Container.querySelector('.jsFieldCodePartner').value.trim();
                             const field_monthlyExpense = Container.querySelector('.jsFieldAverage').value.trim().replaceAll('.', '').replaceAll(',', '.');
+
+                            if (parseFloat(field_monthlyExpense) < 250) {
+                                Container.classList.remove('gra-loading');
+                                CustomAlert(true, 'A média do valor pago na fatura deve ser maior que R$ 250,00');
+                                return;
+                            }
 
                             const field_phone = Container.querySelector('.jsFieldPhone').value.trim().replaceAll('(', '').replaceAll(')', '').replaceAll(' ', '').replaceAll('-', '');
 
                             const field_numEnd = Container.querySelector('.jsFieldNumeroEnd').value.trim();
                             const field_complementoEnd = Container.querySelector('.jsFieldComplementoEnd').value.trim();
+                            const field_utility = Container.querySelector('.jsFieldUtility').value.trim();
     
                             let field_lastName = null;
                                     
@@ -1046,8 +1103,10 @@
                                 self.codePartner = field_codePartner;
                                 self.monthlyExpense = field_monthlyExpense;
                                 self.phone = field_phone;
-                                self.installation_address_number = field_numEnd;
-                                self.installation_address_complement = field_complementoEnd;
+                                self.installation_address_number = field_numEnd !== '' ? field_numEnd : null;
+                                self.installation_address_complement = field_complementoEnd !== '' ? field_complementoEnd : null;
+                                self.city = field_city !== '' ? field_city : null;
+                                self.utilityId = field_utility !== '' ? parseInt(field_utility) : null;
 
                                 let obj = {
                                     type: self.stepType,
@@ -1056,9 +1115,11 @@
                                     monthly_expense: parseFloat(self.monthlyExpense),
                                     partner_code: self.codePartner,
                                     phone: self.phone,
-                                    installation_address_number: self.installation_address_number !== '' ? self.installation_address_number : null,
+                                    installation_address_city: self.city,
+                                    installation_address_number: self.installation_address_number,
                                     installation_address_complement: self.installation_address_complement,
                                     installation_address_street: self.address,
+                                    utility_id: self.utilityId,
                                 };
 
                                 if (self.stepType === "cpf") {
@@ -1493,6 +1554,12 @@
                             checkForSameField(el);
                         }
 
+                    } else if (el.classList.contains('jsFieldUtility')) {
+
+                        if (el.parentElement.style.display === 'flex' && el.value === '') {
+                            addError(el, 'Selecione uma distribuidora');
+                        }
+
                     } else if (el.hasAttribute('mask-name')) {
                         var str = el.value.trim();
                         var values = str.replace(/\s\s+/g, ' ').split(' ').filter(function(v){return v!==''});
@@ -1523,6 +1590,10 @@
             function addError(el, msg) {
                 valid = false;
                 el.classList.add('gra-error');
+
+                if (el.parentElement.querySelector('.gra-error-msg')) {
+                    el.parentElement.querySelector('.gra-error-msg').remove();
+                }
 
                 let errorDiv = document.createElement("div");
                 errorDiv.append(msg);
