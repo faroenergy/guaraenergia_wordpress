@@ -1066,7 +1066,7 @@
                             const field_codePartner = Container.querySelector('.jsFieldCodePartner').value.trim();
                             const field_monthlyExpense = Container.querySelector('.jsFieldAverage').value.trim().replaceAll('.', '').replaceAll(',', '.');
 
-                            if (parseFloat(field_monthlyExpense) < 250) {
+                            if (parseFloat(field_monthlyExpense) < 200) {
                                 Container.classList.remove('gra-loading');
                                 CustomAlert(true, 'A média do valor pago na fatura deve ser maior que R$ 250,00');
                                 return;
