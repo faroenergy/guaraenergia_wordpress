@@ -1107,12 +1107,14 @@
                                 self.installation_address_complement = field_complementoEnd !== '' ? field_complementoEnd : null;
                                 self.city = field_city !== '' ? field_city : null;
                                 self.utilityId = field_utility !== '' ? parseInt(field_utility) : null;
+                                self.installation_type = self.stepType === 'cpf' ? 'CPF' : 'CNPJ';
 
                                 let obj = {
                                     type: self.stepType,
                                     email: self.email,
                                     zip_code: self.cep,
                                     monthly_expense: parseFloat(self.monthlyExpense),
+                                    installation_type: self.installation_type,
                                     partner_code: self.codePartner,
                                     phone: self.phone,
                                     installation_address_city: self.city,
