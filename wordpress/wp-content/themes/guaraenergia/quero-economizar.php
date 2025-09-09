@@ -759,7 +759,7 @@
 
                             async function validatePartnerCode(code) {
                                 try {
-                                    const response = await fetch(`${self.baseUrl}/partners/coupon/${code}`, {
+                                    const response = await fetch(`${self.baseUrl}/partners/coupons/validate/${code}`, {
                                         method: "GET",
                                         headers: {
                                             'Content-Type': 'application/json'
