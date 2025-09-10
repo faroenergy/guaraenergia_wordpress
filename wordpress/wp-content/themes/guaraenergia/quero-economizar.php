@@ -46,6 +46,11 @@
             background-image: url(<?php echo $sem_usinas['imagem_mobile'] ?>)
         }
     }
+
+    /* Estilos para validação do código do parceiro */
+    .gra-codigo-parceiro-input.gra-error {
+        border-color: #dc3545 !important;
+    }
 </style>
 
 <section class="gra-step-form">
@@ -402,6 +407,7 @@
             cnpj: null,
             phone: null,
             codePartner: null,
+            partnerCodeValidated: false,
             monthlyExpense: null,
             social_contract: null,
 
@@ -479,10 +485,13 @@
 
                 document.querySelectorAll('.jsField').forEach(function(item) {
                     item.addEventListener('focus', function() {
-                        item.classList.remove('gra-error');
+                        // Não remover erro do código do parceiro automaticamente
+                        if (!this.classList.contains('jsFieldCodePartner')) {
+                            this.classList.remove('gra-error');
 
-                        if (item.parentElement.querySelector('.gra-error-msg')) {
-                            item.parentElement.querySelector('.gra-error-msg').remove();
+                            if (this.parentElement.querySelector('.gra-error-msg')) {
+                                this.parentElement.querySelector('.gra-error-msg').remove();
+                            }
                         }
                     });
 
@@ -718,6 +727,84 @@
                             self.stepContainer.querySelector('.jsFieldLastName').addEventListener('input', function() {
                                 this.value = this.value.replace(/[^a-zA-Z\'\u00C0-\u017F\s]/g, '');
                             });
+
+                            const partnerCodeField = self.stepContainer.querySelector('.jsFieldCodePartner');
+                            let validationTimeout = null;
+
+                            partnerCodeField.addEventListener('input', function() {
+                                const code = this.value.trim();
+                                
+                                if (validationTimeout) {
+                                    clearTimeout(validationTimeout);
+                                }
+
+                                removePartnerCodeError();
+
+                                if (code === '') {
+                                    self.partnerCodeValidated = false;
+                                    return;
+                                }
+
+                                validationTimeout = setTimeout(async () => {
+                                    await validatePartnerCode(code);
+                                }, 500);
+                            });
+
+                            partnerCodeField.addEventListener('focus', function() {
+                                const code = this.value.trim();
+                                if (code !== '' && !self.partnerCodeValidated) {
+                                    validatePartnerCode(code);
+                                }
+                            });
+
+                            async function validatePartnerCode(code) {
+                                try {
+                                    const response = await fetch(`${self.baseUrl}/partners/coupons/validate/${code}`, {
+                                        method: "GET",
+                                        headers: {
+                                            'Content-Type': 'application/json'
+                                        }
+                                    });
+
+                                    if (response.ok) {
+                                        const data = await response.json();
+                                        self.coupon = data.coupon;
+                                        self.partnerCodeValidated = true;
+                                        
+                                        partnerCodeField.classList.remove('gra-error');
+                                        
+                                        removePartnerCodeError();
+                                    } else {
+                                        self.partnerCodeValidated = false;
+                                        partnerCodeField.classList.add('gra-error');
+                                        
+                                        addPartnerCodeError('Código do parceiro inválido');
+                                    }
+                                } catch (error) {
+                                    console.log('Erro na validação do código do parceiro:', error);
+                                    
+                                    self.partnerCodeValidated = false;
+                                    partnerCodeField.classList.add('gra-error');
+                                    
+                                    addPartnerCodeError('Erro ao validar código do parceiro');
+                                }
+                            }
+
+                            function addPartnerCodeError(message) {
+                                removePartnerCodeError();
+
+                                const errorDiv = document.createElement("div");
+                                errorDiv.textContent = message;
+                                errorDiv.classList.add('gra-error-msg');
+                                partnerCodeField.parentElement.appendChild(errorDiv);
+                            }
+
+                            function removePartnerCodeError() {
+                                const existingError = partnerCodeField.parentElement.querySelector('.gra-error-msg');
+                                if (existingError) {
+                                    existingError.remove();
+                                }
+                            }
                         }
                     }
                        
@@ -1094,6 +1181,13 @@
                             }
     
                             if(checkFields(self.stepType)) {
+                                if (field_codePartner.trim() !== '') {
+                                    if (!self.partnerCodeValidated) {
+                                        Container.classList.remove('gra-loading');
+                                        CustomAlert(true, 'Por favor, insira um código de parceiro válido ou deixe o campo vazio.');
+                                        return;
+                                    }
+                                }
 
                                 self.firstName = field_firstName;
                                 self.companyName = field_companyName;
@@ -1107,12 +1201,14 @@
                                 self.installation_address_complement = field_complementoEnd !== '' ? field_complementoEnd : null;
                                 self.city = field_city !== '' ? field_city : null;
                                 self.utilityId = field_utility !== '' ? parseInt(field_utility) : null;
+                                self.installation_type = self.stepType === 'cpf' ? 'CPF' : 'CNPJ';
 
                                 let obj = {
                                     type: self.stepType,
                                     email: self.email,
                                     zip_code: self.cep,
                                     monthly_expense: parseFloat(self.monthlyExpense),
+                                    installation_type: self.installation_type,
                                     partner_code: self.codePartner,
                                     phone: self.phone,
                                     installation_address_city: self.city,
