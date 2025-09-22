@@ -431,16 +431,26 @@
                 const params = new URLSearchParams(window.location.search);
                 const hash = params.get('hash');
 
-                self.currentStep = self.stepStart;
-                self.lastStep = self.stepStart;
                 self.clientProviderId = null;
                 
                 if (hash) {
                     const response = await fetch(`${self.baseUrl}/hash/decode/?hash=${hash}`)
                     if (response.ok) {
-                        const { step, client_provider_id} = await response.json();
+                        const { client_provider_id, partner_code } = await response.json();
 
                         self.clientProviderId = client_provider_id;
+                        self.stepStart = 2;
+                        self.stepType = 'cpf';
+                        self.stepAlert = null;
+                        self.codePartner = partner_code;
+                        self.partnerCodeValidated = true;
+                        
+                        document.querySelectorAll('.jsIsCpf').forEach(function(item) {
+                            item.style.display = '';
+                        });
+                        document.querySelectorAll('.jsIsCnpj').forEach(function(item) {
+                            item.style.display = 'none';
+                        });
                     }
                 }
     
@@ -729,6 +739,12 @@
                             });
 
                             const partnerCodeField = self.stepContainer.querySelector('.jsFieldCodePartner');
+                            
+                            if (self.codePartner && self.partnerCodeValidated) { 
+                                partnerCodeField.value = self.codePartner;
+                                partnerCodeField.disabled = true;
+                            }
+
                             let validationTimeout = null;
 
                             partnerCodeField.addEventListener('input', function() {
