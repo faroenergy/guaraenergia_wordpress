@@ -31,6 +31,11 @@
             </p>
         </div>
     </div>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript>
+        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MNTX28WZ" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+    </noscript>
+    <!-- End Google Tag Manager (noscript) -->
 </footer>
 
 <?php echo do_shortcode('[wpcode id="497"]'); ?>
