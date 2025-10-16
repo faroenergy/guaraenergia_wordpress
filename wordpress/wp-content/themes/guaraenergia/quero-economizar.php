@@ -268,25 +268,27 @@
                         <input required class="jsField jsInstallationNumber" type="text" minlength="1" />
                         <label>Nº de instalação*</label>
                     </div>
+                    <div class="gra-col gra-col--half jsIsCpf">
+                        <input required class="jsField jsIdFile" type="file" multiple placeholder="Anexe seus documentos" accept="image/*,.pdf" />
+                        <label>
+                            <div class="gra-tooltip-icon gra-tooltip-icon--clip"></div>
+                            Anexe seus documentos*<br>
+                            <small style="color: #666; font-size: 0.8em;">Máximo 3 arquivos</small>
+                        </label>
+                    </div>
+                    <div class="gra-col gra-col--half jsIsCnpj">
+                        <input required class="jsField jsIdFile3" type="file" multiple placeholder="Anexe os documentos" accept="image/*,.pdf" />
+                        <label>
+                            <div class="gra-tooltip-icon gra-tooltip-icon--clip"></div>
+                            Anexe os documentos de identificação do representante legal<br>
+                            <small style="color: #666; font-size: 0.8em;">Máximo 3 arquivos</small>
+                        </label>
+                    </div>
                     <div class="gra-col gra-col--half">
                         <input required class="jsField jsBillFile" type="file" placeholder="Anexe sua última fatura" />
                         <label>
                             <div class="gra-tooltip-icon gra-tooltip-icon--clip"></div>
                             Anexe sua última fatura*
-                        </label>
-                    </div>
-                    <div class="gra-col gra-col--half jsIsCpf">
-                        <input required class="jsField jsIdFile" type="file" placeholder="Anexe seu documento" />
-                        <label>
-                            <div class="gra-tooltip-icon gra-tooltip-icon--clip"></div>
-                            Anexe seu documento*
-                        </label>
-                    </div>
-                    <div class="gra-col gra-col--half jsIsCnpj">
-                        <input required class="jsField jsIdFile2 push" type="file" placeholder="Anexe seu documento" />
-                        <label>
-                            <div class="gra-tooltip-icon gra-tooltip-icon--clip"></div>
-                            Anexe o documento de identificação do representante legal*
                         </label>
                     </div>
                     <div class="gra-col gra-col--half jsIsCnpj">
@@ -523,6 +525,15 @@
                             this.previousElementSibling.click();
                         } else {
                             this.previousElementSibling.focus();
+                        }
+                    });
+                });
+
+                document.querySelectorAll('.jsIdFile, .jsIdFile3').forEach(function(item) {
+                    item.addEventListener('change', function() {
+                        if (this.files.length > 3) {
+                            CustomAlert(true, 'Por favor, selecione no máximo 3 arquivos.');
+                            this.value = '';
                         }
                     });
                 });
@@ -1345,8 +1356,8 @@
                         const field_cpfrepresentant = Container.querySelector('.jsFieldCPFRepresentant').value.replaceAll('.', '').replaceAll('-', '');
                         const field_namerepresentant = Container.querySelector('.jsFieldNameRepresentant').value.trim();
                         const field_billfile = Container.querySelector('.jsBillFile').files[0];
-                        const field_idfile = Container.querySelector('.jsIdFile').files[0];
-                        const field_idfile2 = Container.querySelector('.jsIdFile2').files[0];
+                        const field_idfile = Container.querySelector('.jsIdFile').files;
+                        const field_idfile3 = Container.querySelector('.jsIdFile3').files;
                         const field_cnpj = Container.querySelector('.jsFieldCNPJ').value.trim().replaceAll('.', '').replaceAll('-', '').replaceAll('/', '');
                         const field_contractfile = Container.querySelector('.jsContractFile').files[0];
                         const field_installationnumber = Container.querySelector('.jsInstallationNumber').value.trim();
@@ -1378,22 +1389,29 @@
                             
                             if (self.stepType === "cnpj") {
                                 obj.cnpj = field_cnpj;
-                                obj.id_file = field_idfile2;
                                 obj.social_contract_file = field_contractfile;
                                 obj.legal_representant_name = field_namerepresentant;
                                 obj.legal_representant_cpf = field_cpfrepresentant;
 
                                 formData.append("cnpj", field_cnpj);
-                                formData.append("id_file", field_idfile2);
+                                
+                                // Adicionar múltiplos arquivos de ID
+                                for (let i = 0; i < field_idfile3.length; i++) {
+                                    formData.append("id_file", field_idfile3[i]);
+                                }
+                                
                                 formData.append("social_contract_file", field_contractfile);
                                 formData.append("legal_representant_name", field_namerepresentant);
                                 formData.append("legal_representant_cpf", field_cpfrepresentant);
                                 
                             } else {
-                                obj.id_file = field_idfile;
                                 obj.legal_representant_cpf = field_cpf;
 
-                                formData.append("id_file", field_idfile);
+                                // Adicionar múltiplos arquivos de ID
+                                for (let i = 0; i < field_idfile.length; i++) {
+                                    formData.append("id_file", field_idfile[i]);
+                                }
+                                
                                 formData.append("legal_representant_cpf", field_cpf);
                             }
 
