@@ -268,19 +268,12 @@
                         <input required class="jsField jsInstallationNumber" type="text" minlength="1" />
                         <label>Nº de instalação*</label>
                     </div>
-                    <div class="gra-col gra-col--half">
+                    <div class="gra-col gra-col--half jsIsCpf">
                         <input required class="jsField jsIdFile" type="file" multiple placeholder="Anexe seus documentos" accept="image/*,.pdf" />
                         <label>
                             <div class="gra-tooltip-icon gra-tooltip-icon--clip"></div>
                             Anexe seus documentos*<br>
-                            <small style="color: #666; font-size: 0.8em;">Máximo 2 arquivos (frente e verso)</small>
-                        </label>
-                    </div>
-                    <div class="gra-col gra-col--half">
-                        <input required class="jsField jsBillFile" type="file" placeholder="Anexe sua última fatura" />
-                        <label>
-                            <div class="gra-tooltip-icon gra-tooltip-icon--clip"></div>
-                            Anexe sua última fatura*
+                            <small style="color: #666; font-size: 0.8em;">Máximo 3 arquivos</small>
                         </label>
                     </div>
                     <div class="gra-col gra-col--half jsIsCnpj">
@@ -288,7 +281,14 @@
                         <label>
                             <div class="gra-tooltip-icon gra-tooltip-icon--clip"></div>
                             Anexe os documentos de identificação do representante legal<br>
-                            <small style="color: #666; font-size: 0.8em;">Máximo 2 arquivos (frente e verso)*</small>
+                            <small style="color: #666; font-size: 0.8em;">Máximo 3 arquivos</small>
+                        </label>
+                    </div>
+                    <div class="gra-col gra-col--half">
+                        <input required class="jsField jsBillFile" type="file" placeholder="Anexe sua última fatura" />
+                        <label>
+                            <div class="gra-tooltip-icon gra-tooltip-icon--clip"></div>
+                            Anexe sua última fatura*
                         </label>
                     </div>
                     <div class="gra-col gra-col--half jsIsCnpj">
@@ -531,8 +531,8 @@
 
                 document.querySelectorAll('.jsIdFile, .jsIdFile3').forEach(function(item) {
                     item.addEventListener('change', function() {
-                        if (this.files.length > 2) {
-                            CustomAlert(true, 'Por favor, selecione no máximo 2 arquivos (frente e verso).');
+                        if (this.files.length > 3) {
+                            CustomAlert(true, 'Por favor, selecione no máximo 3 arquivos.');
                             this.value = '';
                         }
                     });
