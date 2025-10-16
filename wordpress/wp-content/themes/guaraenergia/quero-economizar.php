@@ -268,11 +268,12 @@
                         <input required class="jsField jsInstallationNumber" type="text" minlength="1" />
                         <label>Nº de instalação*</label>
                     </div>
-                    <div class="gra-col">
-                        <input required class="jsField jsIdFile" type="file" multiple placeholder="Anexe seus documentos" />
+                    <div class="gra-col gra-col--half">
+                        <input required class="jsField jsIdFile" type="file" multiple placeholder="Anexe seus documentos" accept="image/*,.pdf" />
                         <label>
                             <div class="gra-tooltip-icon gra-tooltip-icon--clip"></div>
-                            Anexe seus documentos (frente e verso)*
+                            Anexe seus documentos*<br>
+                            <small style="color: #666; font-size: 0.8em;">Máximo 2 arquivos (frente e verso)</small>
                         </label>
                     </div>
                     <div class="gra-col gra-col--half">
@@ -282,11 +283,12 @@
                             Anexe sua última fatura*
                         </label>
                     </div>
-                    <div class="gra-col jsIsCnpj">
-                        <input required class="jsField jsIdFile3" type="file" multiple placeholder="Anexe os documentos" />
+                    <div class="gra-col gra-col--half jsIsCnpj">
+                        <input required class="jsField jsIdFile3" type="file" multiple placeholder="Anexe os documentos" accept="image/*,.pdf" />
                         <label>
                             <div class="gra-tooltip-icon gra-tooltip-icon--clip"></div>
-                            Anexe os documentos de identificação do representante legal (frente e verso)*
+                            Anexe os documentos de identificação do representante legal<br>
+                            <small style="color: #666; font-size: 0.8em;">Máximo 2 arquivos (frente e verso)*</small>
                         </label>
                     </div>
                     <div class="gra-col gra-col--half jsIsCnpj">
@@ -523,6 +525,15 @@
                             this.previousElementSibling.click();
                         } else {
                             this.previousElementSibling.focus();
+                        }
+                    });
+                });
+
+                document.querySelectorAll('.jsIdFile, .jsIdFile3').forEach(function(item) {
+                    item.addEventListener('change', function() {
+                        if (this.files.length > 2) {
+                            CustomAlert(true, 'Por favor, selecione no máximo 2 arquivos (frente e verso).');
+                            this.value = '';
                         }
                     });
                 });
