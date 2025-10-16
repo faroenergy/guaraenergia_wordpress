@@ -1157,150 +1157,141 @@
                             self.utility_id = parseInt(selectUtility.value);
                         }
                         
-                        if (self.utility_id !== false && self.utility_id !== null && self.utility_id !== '') {
+                        
 
-                            const field_firstName = Container.querySelector('.jsFieldFirstName').value.trim();
-                            const field_companyName = Container.querySelector('.jsFieldCompanyName').value.trim();
-                            const field_email = Container.querySelector('.jsFieldEmail').value.trim();
-                            const field_cep = Container.querySelector('.jsFieldSearchCEP').value.trim().replaceAll('.', '').replaceAll('-', '');
-                            const field_address = Container.querySelector('.jsFieldAddress').value.trim();
-                            const field_city = Container.querySelector('.jsFieldCity').value.trim();
-        
-                            const field_codePartner = Container.querySelector('.jsFieldCodePartner').value.trim();
-                            const field_monthlyExpense = Container.querySelector('.jsFieldAverage').value.trim().replaceAll('.', '').replaceAll(',', '.');
+                        const field_firstName = Container.querySelector('.jsFieldFirstName').value.trim();
+                        const field_companyName = Container.querySelector('.jsFieldCompanyName').value.trim();
+                        const field_email = Container.querySelector('.jsFieldEmail').value.trim();
+                        const field_cep = Container.querySelector('.jsFieldSearchCEP').value.trim().replaceAll('.', '').replaceAll('-', '');
+                        const field_address = Container.querySelector('.jsFieldAddress').value.trim();
+                        const field_city = Container.querySelector('.jsFieldCity').value.trim();
+    
+                        const field_codePartner = Container.querySelector('.jsFieldCodePartner').value.trim();
+                        const field_monthlyExpense = Container.querySelector('.jsFieldAverage').value.trim().replaceAll('.', '').replaceAll(',', '.');
 
-                            if (parseFloat(field_monthlyExpense) < 200) {
-                                Container.classList.remove('gra-loading');
-                                CustomAlert(true, 'A média do valor pago na fatura deve ser maior ou igual a R$ 200,00');
-                                return;
+                        const field_phone = Container.querySelector('.jsFieldPhone').value.trim().replaceAll('(', '').replaceAll(')', '').replaceAll(' ', '').replaceAll('-', '');
+
+                        const field_numEnd = Container.querySelector('.jsFieldNumeroEnd').value.trim();
+                        const field_complementoEnd = Container.querySelector('.jsFieldComplementoEnd').value.trim();
+                        const field_utility = Container.querySelector('.jsFieldUtility').value.trim();
+
+                        let field_lastName = null;
+                                
+                        function checkFields(type) {
+                            if (self.stepType === "cpf") {
+
+                                field_lastName = Container.querySelector('.jsFieldLastName').value.trim();
+
+                                return self.firstName !== field_firstName || self.lastName !== field_lastName || self.email !== field_email || self.cep !== field_cep || self.phone !== field_phone || self.codePartner !== field_codePartner || self.monthlyExpense !== field_monthlyExpense || self.installation_address_number !== field_numEnd || self.installation_address_complement !== field_complementoEnd;
+
+                            } else if (self.stepType === "cnpj") {
+                                
+                                return self.companyName !== field_companyName || self.email !== field_email || self.cep !== field_cep || self.phone !== field_phone || self.codePartner !== field_codePartner || self.monthlyExpense !== field_monthlyExpense || self.installation_address_number !== field_numEnd || self.installation_address_complement !== field_complementoEnd;
                             }
-
-                            const field_phone = Container.querySelector('.jsFieldPhone').value.trim().replaceAll('(', '').replaceAll(')', '').replaceAll(' ', '').replaceAll('-', '');
-
-                            const field_numEnd = Container.querySelector('.jsFieldNumeroEnd').value.trim();
-                            const field_complementoEnd = Container.querySelector('.jsFieldComplementoEnd').value.trim();
-                            const field_utility = Container.querySelector('.jsFieldUtility').value.trim();
-    
-                            let field_lastName = null;
-                                    
-                            function checkFields(type) {
-                                if (self.stepType === "cpf") {
-    
-                                    field_lastName = Container.querySelector('.jsFieldLastName').value.trim();
-    
-                                    return self.firstName !== field_firstName || self.lastName !== field_lastName || self.email !== field_email || self.cep !== field_cep || self.phone !== field_phone || self.codePartner !== field_codePartner || self.monthlyExpense !== field_monthlyExpense || self.installation_address_number !== field_numEnd || self.installation_address_complement !== field_complementoEnd;
-    
-                                } else if (self.stepType === "cnpj") {
-                                    
-                                    return self.companyName !== field_companyName || self.email !== field_email || self.cep !== field_cep || self.phone !== field_phone || self.codePartner !== field_codePartner || self.monthlyExpense !== field_monthlyExpense || self.installation_address_number !== field_numEnd || self.installation_address_complement !== field_complementoEnd;
-                                }
-                            }
-    
-                            if(checkFields(self.stepType)) {
-                                if (field_codePartner.trim() !== '') {
-                                    if (!self.partnerCodeValidated) {
-                                        Container.classList.remove('gra-loading');
-                                        CustomAlert(true, 'Por favor, insira um código de parceiro válido ou deixe o campo vazio.');
-                                        return;
-                                    }
-                                }
-
-                                self.firstName = field_firstName;
-                                self.companyName = field_companyName;
-                                self.email = field_email;
-                                self.cep = field_cep;
-                                self.address = field_address;
-                                self.codePartner = field_codePartner;
-                                self.monthlyExpense = field_monthlyExpense;
-                                self.phone = field_phone;
-                                self.installation_address_number = field_numEnd !== '' ? field_numEnd : null;
-                                self.installation_address_complement = field_complementoEnd !== '' ? field_complementoEnd : null;
-                                self.city = field_city !== '' ? field_city : null;
-                                self.utilityId = field_utility !== '' ? parseInt(field_utility) : null;
-                                self.installation_type = self.stepType === 'cpf' ? 'CPF' : 'CNPJ';
-
-                                let obj = {
-                                    type: self.stepType,
-                                    email: self.email,
-                                    zip_code: self.cep,
-                                    monthly_expense: parseFloat(self.monthlyExpense),
-                                    installation_type: self.installation_type,
-                                    partner_code: self.codePartner,
-                                    phone: self.phone,
-                                    installation_address_city: self.city,
-                                    installation_address_number: self.installation_address_number,
-                                    installation_address_complement: self.installation_address_complement,
-                                    installation_address_street: self.address,
-                                    utility_id: self.utilityId,
-                                };
-
-                                if (self.stepType === "cpf") {
-                                    self.lastName = field_lastName;
-                                    self.fullName = field_firstName + ' ' + field_lastName;
-                                } else {
-                                    self.fullName = field_companyName;
-                                }
-
-                                obj.name = self.fullName;
-                                obj.client_provider_id = self.clientProviderId;
-    
-                                (async function() {
-
-                                    console.log(obj);
-                                    try {
-                                        const response = await fetch(`${self.baseUrl}/client/register/`, {
-                                            method: "POST",
-                                            headers: {
-                                                'Content-Type': 'application/json'
-                                            },
-                                            body: JSON.stringify(obj)
-                                        });
-
-
-                                        if (response.status === 400) {
-                                            self.showStep(8);
-                                        }
-
-                                        if (!response.ok) {
-                                            Container.classList.remove('gra-loading');
-                                            throw new Error(`Response status: ${response.status}`);
-                                        }
-
-                                        const data = await response.json();
-                                        self.installation = data.installation;
-                                        self.client = data.client;
-    
-                                        self.distribuidora = data.installation.utility.name;
-    
-                                        Container.classList.remove('gra-loading');
-                                        
-                                        self.stepNewPlano = true;
-                                        self.lastFormDataStep4 = null;
-                                        self.installationIdInitial = null;
-                                        self.propose_id = null;
-
-                                        if (self.utility_id === null) {
-                                            self.showStep(8);
-                                        } else {
-                                            callback();
-                                        }
-                                        
-                                    } catch (error) {
-                                        Container.classList.remove('gra-loading');
-                                        // alert('Erro ao enviar');
-                                    }
-                                })();
-                            } else {
-                                Container.classList.remove('gra-loading');
-                                callback();
-                            }
-    
-                        } else {
-                            setTimeout(() => {
-                                self.showStep(8);
-                            }, 1000);
                         }
-                    }
+
+                        if(checkFields(self.stepType)) {
+                            if (field_codePartner.trim() !== '') {
+                                if (!self.partnerCodeValidated) {
+                                    Container.classList.remove('gra-loading');
+                                    CustomAlert(true, 'Por favor, insira um código de parceiro válido ou deixe o campo vazio.');
+                                    return;
+                                }
+                            }
+
+                            self.firstName = field_firstName;
+                            self.companyName = field_companyName;
+                            self.email = field_email;
+                            self.cep = field_cep;
+                            self.address = field_address;
+                            self.codePartner = field_codePartner;
+                            self.monthlyExpense = field_monthlyExpense;
+                            self.phone = field_phone;
+                            self.installation_address_number = field_numEnd !== '' ? field_numEnd : null;
+                            self.installation_address_complement = field_complementoEnd !== '' ? field_complementoEnd : null;
+                            self.city = field_city !== '' ? field_city : null;
+                            self.utilityId = field_utility !== '' ? parseInt(field_utility) : null;
+                            self.installation_type = self.stepType === 'cpf' ? 'CPF' : 'CNPJ';
+
+                            let obj = {
+                                type: self.stepType,
+                                email: self.email,
+                                zip_code: self.cep,
+                                monthly_expense: parseFloat(self.monthlyExpense),
+                                installation_type: self.installation_type,
+                                partner_code: self.codePartner,
+                                phone: self.phone,
+                                installation_address_city: self.city,
+                                installation_address_number: self.installation_address_number,
+                                installation_address_complement: self.installation_address_complement,
+                                installation_address_street: self.address,
+                                utility_id: self.utilityId,
+                            };
+
+                            if (self.stepType === "cpf") {
+                                self.lastName = field_lastName;
+                                self.fullName = field_firstName + ' ' + field_lastName;
+                            } else {
+                                self.fullName = field_companyName;
+                            }
+
+                            obj.name = self.fullName;
+                            obj.client_provider_id = self.clientProviderId;
+
+                            (async function() {
+
+                                console.log(obj);
+                                try {
+                                    const response = await fetch(`${self.baseUrl}/client/register/`, {
+                                        method: "POST",
+                                        headers: {
+                                            'Content-Type': 'application/json'
+                                        },
+                                        body: JSON.stringify(obj)
+                                    });
+
+                                    if (response.status === 400) {
+                                        self.showStep(8);
+                                    }
+
+                                    if (!response.ok) {
+                                        Container.classList.remove('gra-loading');
+                                        throw new Error(`Response status: ${response.status}`);
+                                    }
+
+                                    const data = await response.json();
+                                    self.installation = data.installation;
+                                    self.client = data.client;
+
+                                    self.distribuidora = data.installation.utility.name;
+
+                                    Container.classList.remove('gra-loading');
+                                    
+                                    // Validate monthly expense after successful registration
+                                    if (parseFloat(field_monthlyExpense) < 200) {
+                                        CustomAlert(true, 'A média do valor pago na fatura deve ser maior ou igual a R$ 200,00');
+                                        return false;
+                                    }
+                                    
+                                    self.stepNewPlano = true;
+                                    self.lastFormDataStep4 = null;
+                                    self.installationIdInitial = null;
+                                    self.propose_id = null;
+
+                                    callback();
+                                    
+                                } catch (error) {
+                                    Container.classList.remove('gra-loading');
+                                    // alert('Erro ao enviar');
+                                }
+                            })();
+                        } else {
+                            Container.classList.remove('gra-loading');
+                            callback();
+                        }
+
+                    } 
+                    
 
                 } else if (step === 3) {                    
                     Container.classList.add('gra-loading');
