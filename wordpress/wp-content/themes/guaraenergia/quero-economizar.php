@@ -167,9 +167,15 @@
                     </div>
                     <div class="gra-col gra-col--half">
                         <input class="jsField jsFieldCodePartner gra-codigo-parceiro-input jsOptional" type="text" />
-                        <label>Código do Parceiro/Cupom Promocional</label>
+                        <label>Código do Parceiro</label>
                         <div class="gra-tooltip-icon gra-tooltip-icon--info"></div>
                         <span class="gra-tooltip">Caso você tenha nos conhecido através de um parceiro comercial coloque neste campo o código do parceiro.</span>
+                    </div>
+                    <div class="gra-col gra-col--half">
+                        <input class="jsField jsFieldPromoCode gra-cupom-promocional-input jsOptional" type="text" />
+                        <label>Cupom Promocional</label>
+                        <div class="gra-tooltip-icon gra-tooltip-icon--info"></div>
+                        <span class="gra-tooltip">Digite aqui seu cupom promocional para obter descontos especiais.</span>
                     </div>
                     <div class="gra-col">
                         <input required class="jsField jsFieldAverage" type="text" minlength="4" mask-money />
@@ -497,8 +503,8 @@
 
                 document.querySelectorAll('.jsField').forEach(function(item) {
                     item.addEventListener('focus', function() {
-                        // Não remover erro do código do parceiro automaticamente
-                        if (!this.classList.contains('jsFieldCodePartner')) {
+                        // Não remover erro do código do parceiro e cupom promocional automaticamente
+                        if (!this.classList.contains('jsFieldCodePartner') && !this.classList.contains('jsFieldPromoCode')) {
                             this.classList.remove('gra-error');
 
                             if (this.parentElement.querySelector('.gra-error-msg')) {
@@ -828,6 +834,84 @@
 
                             function removePartnerCodeError() {
                                 const existingError = partnerCodeField.parentElement.querySelector('.gra-error-msg');
+                                if (existingError) {
+                                    existingError.remove();
+                                }
+                            }
+                        }
+
+                        // Validação do Cupom Promocional
+                        const promoCodeField = self.stepContainer.querySelector('.jsFieldPromoCode');
+                        if (promoCodeField) {
+                            let promoValidationTimeout = null;
+
+                            promoCodeField.addEventListener('input', function() {
+                                const code = this.value.trim();
+                                
+                                clearTimeout(promoValidationTimeout);
+                                removePromoCodeError();
+
+                                if (code === '') {
+                                    self.promoCodeValidated = false;
+                                    return;
+                                }
+
+                                promoValidationTimeout = setTimeout(async () => {
+                                    await validatePromoCode(code);
+                                }, 500);
+                            });
+
+                            promoCodeField.addEventListener('focus', function() {
+                                const code = this.value.trim();
+                                if (code !== '' && !self.promoCodeValidated) {
+                                    validatePromoCode(code);
+                                }
+                            });
+
+                            async function validatePromoCode(code) {
+                                try {
+                                    const response = await fetch(`${self.baseUrl}/promo-code/validate/${code}`, {
+                                        method: "GET",
+                                        headers: {
+                                            'Content-Type': 'application/json'
+                                        }
+                                    });
+
+                                    if (response.ok) {
+                                        const data = await response.json();
+                                        self.promoCode = data.promoCode;
+                                        self.promoCodeValidated = true;
+                                        
+                                        promoCodeField.classList.remove('gra-error');
+                                        
+                                        removePromoCodeError();
+                                    } else {
+                                        self.promoCodeValidated = false;
+                                        promoCodeField.classList.add('gra-error');
+                                        
+                                        addPromoCodeError('Cupom promocional inválido');
+                                    }
+                                } catch (error) {
+                                    console.log('Erro na validação do cupom promocional:', error);
+                                    
+                                    self.promoCodeValidated = false;
+                                    promoCodeField.classList.add('gra-error');
+                                    
+                                    addPromoCodeError('Erro ao validar cupom promocional');
+                                }
+                            }
+
+                            function addPromoCodeError(message) {
+                                removePromoCodeError();
+
+                                const errorDiv = document.createElement("div");
+                                errorDiv.textContent = message;
+                                errorDiv.classList.add('gra-error-msg');
+                                promoCodeField.parentElement.appendChild(errorDiv);
+                            }
+
+                            function removePromoCodeError() {
+                                const existingError = promoCodeField.parentElement.querySelector('.gra-error-msg');
                                 if (existingError) {
                                     existingError.remove();
                                 }
@@ -1178,6 +1262,7 @@
                         const field_city = Container.querySelector('.jsFieldCity').value.trim();
     
                         const field_codePartner = Container.querySelector('.jsFieldCodePartner').value.trim();
+                        const field_promoCode = Container.querySelector('.jsFieldPromoCode').value.trim();
                         const field_monthlyExpense = Container.querySelector('.jsFieldAverage').value.trim().replaceAll('.', '').replaceAll(',', '.');
 
                         const field_phone = Container.querySelector('.jsFieldPhone').value.trim().replaceAll('(', '').replaceAll(')', '').replaceAll(' ', '').replaceAll('-', '');
@@ -1193,11 +1278,11 @@
 
                                 field_lastName = Container.querySelector('.jsFieldLastName').value.trim();
 
-                                return self.firstName !== field_firstName || self.lastName !== field_lastName || self.email !== field_email || self.cep !== field_cep || self.phone !== field_phone || self.codePartner !== field_codePartner || self.monthlyExpense !== field_monthlyExpense || self.installation_address_number !== field_numEnd || self.installation_address_complement !== field_complementoEnd;
+                                return self.firstName !== field_firstName || self.lastName !== field_lastName || self.email !== field_email || self.cep !== field_cep || self.phone !== field_phone || self.codePartner !== field_codePartner || self.promoCode !== field_promoCode || self.monthlyExpense !== field_monthlyExpense || self.installation_address_number !== field_numEnd || self.installation_address_complement !== field_complementoEnd;
 
                             } else if (self.stepType === "cnpj") {
                                 
-                                return self.companyName !== field_companyName || self.email !== field_email || self.cep !== field_cep || self.phone !== field_phone || self.codePartner !== field_codePartner || self.monthlyExpense !== field_monthlyExpense || self.installation_address_number !== field_numEnd || self.installation_address_complement !== field_complementoEnd;
+                                return self.companyName !== field_companyName || self.email !== field_email || self.cep !== field_cep || self.phone !== field_phone || self.codePartner !== field_codePartner || self.promoCode !== field_promoCode || self.monthlyExpense !== field_monthlyExpense || self.installation_address_number !== field_numEnd || self.installation_address_complement !== field_complementoEnd;
                             }
                         }
 
@@ -1210,12 +1295,21 @@
                                 }
                             }
 
+                            if (field_promoCode.trim() !== '') {
+                                if (!self.promoCodeValidated) {
+                                    Container.classList.remove('gra-loading');
+                                    CustomAlert(true, 'Por favor, insira um cupom promocional válido ou deixe o campo vazio.');
+                                    return;
+                                }
+                            }
+
                             self.firstName = field_firstName;
                             self.companyName = field_companyName;
                             self.email = field_email;
                             self.cep = field_cep;
                             self.address = field_address;
                             self.codePartner = field_codePartner;
+                            self.promoCode = field_promoCode;
                             self.monthlyExpense = field_monthlyExpense;
                             self.phone = field_phone;
                             self.installation_address_number = field_numEnd !== '' ? field_numEnd : null;
@@ -1237,6 +1331,7 @@
                                 installation_address_complement: self.installation_address_complement,
                                 installation_address_street: self.address,
                                 utility_id: self.utilityId,
+                                promo_code: self.promoCode
                             };
 
                             if (self.stepType === "cpf") {
