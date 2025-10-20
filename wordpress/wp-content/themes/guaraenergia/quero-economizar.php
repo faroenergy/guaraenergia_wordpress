@@ -135,6 +135,10 @@
                         <input required class="jsField jsSameField" type="email" />
                         <label>Confirme o e-mail*</label>
                     </div>
+                    <div class="gra-col">
+                        <input required class="jsField jsFieldPhone" type="text" mask-phone />
+                        <label>Telefone*</label>
+                    </div>
                     <div class="gra-col gra-col--half">
                         <input required class="jsField jsFieldSearchCEP" type="text" mask-cep />
                         <label>CEP*</label>
@@ -162,11 +166,7 @@
                         </select>
                     </div>
                     <div class="gra-col gra-col--half">
-                        <input required class="jsField jsFieldPhone" type="text" mask-phone />
-                        <label>Telefone*</label>
-                    </div>
-                    <div class="gra-col gra-col--half">
-                        <input class="jsField jsFieldCodePartner gra-codigo-parceiro-input jsOptional" type="text" />
+                        <input class="jsField jsFieldCodePartner gra-cupom-promocional-input jsOptional" type="text" />
                         <label>Código do Parceiro</label>
                         <div class="gra-tooltip-icon gra-tooltip-icon--info"></div>
                         <span class="gra-tooltip">Caso você tenha nos conhecido através de um parceiro comercial coloque neste campo o código do parceiro.</span>
