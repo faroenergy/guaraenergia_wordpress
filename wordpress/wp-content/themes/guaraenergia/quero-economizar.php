@@ -274,6 +274,14 @@
                         <input required class="jsField jsInstallationNumber" type="text" minlength="1" />
                         <label>Nº de instalação*</label>
                     </div>
+                    <div class="gra-col gra-col--half">
+                        <input required class="jsField jsBillFile" type="file" multiple placeholder="Anexe sua última fatura" accept="image/*,.pdf" />
+                        <label>
+                            <div class="gra-tooltip-icon gra-tooltip-icon--clip"></div>
+                            Anexe sua última fatura*<br>
+                            <small style="color: #666; font-size: 0.8em;">Máximo 3 arquivos</small>
+                        </label>
+                    </div>
                     <div class="gra-col gra-col--half jsIsCpf">
                         <input required class="jsField jsIdFile" type="file" multiple placeholder="Anexe seus documentos" accept="image/*,.pdf" />
                         <label>
@@ -282,7 +290,7 @@
                             <small style="color: #666; font-size: 0.8em;">Máximo 3 arquivos</small>
                         </label>
                     </div>
-                    <div class="gra-col gra-col--half jsIsCnpj">
+                    <div class="gra-col jsIsCnpj">
                         <input required class="jsField jsIdFile3" type="file" multiple placeholder="Anexe os documentos" accept="image/*,.pdf" />
                         <label>
                             <div class="gra-tooltip-icon gra-tooltip-icon--clip"></div>
@@ -290,18 +298,12 @@
                             <small style="color: #666; font-size: 0.8em;">Máximo 3 arquivos</small>
                         </label>
                     </div>
-                    <div class="gra-col gra-col--half">
-                        <input required class="jsField jsBillFile" type="file" placeholder="Anexe sua última fatura" />
+                    <div class="gra-col jsIsCnpj">
+                        <input required class="jsField jsContractFile" type="file" multiple placeholder="Anexe seu documento" accept="image/*,.pdf" />
                         <label>
                             <div class="gra-tooltip-icon gra-tooltip-icon--clip"></div>
-                            Anexe sua última fatura*
-                        </label>
-                    </div>
-                    <div class="gra-col gra-col--half jsIsCnpj">
-                        <input required class="jsField jsContractFile push" type="file" placeholder="Anexe seu documento" />
-                        <label>
-                            <div class="gra-tooltip-icon gra-tooltip-icon--clip"></div>
-                            Anexe o cartão CNPJ ou Contrato Social*
+                            Anexe o cartão CNPJ ou Contrato Social*<br>
+                            <small style="color: #666; font-size: 0.8em;">Máximo 3 arquivos</small>
                         </label>
                     </div>
                 </div>
@@ -535,7 +537,7 @@
                     });
                 });
 
-                document.querySelectorAll('.jsIdFile, .jsIdFile3').forEach(function(item) {
+                document.querySelectorAll('.jsIdFile, .jsIdFile3, .jsBillFile, .jsContractFile').forEach(function(item) {
                     item.addEventListener('change', function() {
                         if (this.files.length > 3) {
                             CustomAlert(true, 'Por favor, selecione no máximo 3 arquivos.');
@@ -1450,11 +1452,11 @@
                         const field_cpf = Container.querySelector('.jsFieldCPF').value.replaceAll('.', '').replaceAll('-', '');
                         const field_cpfrepresentant = Container.querySelector('.jsFieldCPFRepresentant').value.replaceAll('.', '').replaceAll('-', '');
                         const field_namerepresentant = Container.querySelector('.jsFieldNameRepresentant').value.trim();
-                        const field_billfile = Container.querySelector('.jsBillFile').files[0];
+                        const field_billfile = Container.querySelector('.jsBillFile').files;
                         const field_idfile = Container.querySelector('.jsIdFile').files;
                         const field_idfile3 = Container.querySelector('.jsIdFile3').files;
                         const field_cnpj = Container.querySelector('.jsFieldCNPJ').value.trim().replaceAll('.', '').replaceAll('-', '').replaceAll('/', '');
-                        const field_contractfile = Container.querySelector('.jsContractFile').files[0];
+                        const field_contractfile = Container.querySelector('.jsContractFile').files;
                         const field_installationnumber = Container.querySelector('.jsInstallationNumber').value.trim();
 
                         const field_cookie = Container.querySelector('#cookie-checkbox')
@@ -1495,7 +1497,10 @@
                                     formData.append("id_file", field_idfile3[i]);
                                 }
                                 
-                                formData.append("social_contract_file", field_contractfile);
+                                // Adicionar múltiplos arquivos de contrato
+                                for (let i = 0; i < field_contractfile.length; i++) {
+                                    formData.append("social_contract_file", field_contractfile[i]);
+                                }
                                 formData.append("legal_representant_name", field_namerepresentant);
                                 formData.append("legal_representant_cpf", field_cpfrepresentant);
                                 
@@ -1512,7 +1517,11 @@
 
                             formData.append("installation_id", self.installation.id);
                             formData.append("installation_number", field_installationnumber);
-                            formData.append("bill_file", field_billfile);
+                            
+                            // Adicionar múltiplos arquivos de fatura
+                            for (let i = 0; i < field_billfile.length; i++) {
+                                formData.append("bill_file", field_billfile[i]);
+                            }
 
                             let different = true
                             
