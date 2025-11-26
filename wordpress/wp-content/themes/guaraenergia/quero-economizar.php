@@ -328,12 +328,12 @@
                         <button type="button" class="gra-col-resend-code">Reenviar código</button>
                     </div>
                     <div class="gra-col">
-                        <input required class="jsField jsSameField jsPassword1" minlength="4" type="password" />
+                        <input required class="jsField jsSameField jsPassword1" minlength="4" type="password" autocomplete="new-password" />
                         <label>Crie sua senha*</label>
                     </div>
                     <div class="gra-col jsPasswordError" style="color: red; display: none; font-size: 12px; margin: 8px 0 10px 0; text-align: left;"></div>
                     <div class="gra-col">
-                        <input required class="jsField jsSameField jsPassword2" minlength="4" type="password" />
+                        <input required class="jsField jsSameField jsPassword2" minlength="4" type="password" autocomplete="new-password" />
                         <label>Confirme sua senha*</label>
                     </div>
                 </div>
@@ -1147,9 +1147,12 @@
                     if (widgetSignature) { widgetSignature.unmount(); }
 
                     widgetSignature = new Clicksign(self.request_signature_key);
+                        
+                    const clicksignEndpoint = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
+                    ? 'https://sandbox.clicksign.com' : 'https://app.clicksign.com';
 
-                    widgetSignature.endpoint = 'https://app.clicksign.com';
-                    // widgetSignature.origin = 'https://guaraenergia.com';
+                    widgetSignature.endpoint = clicksignEndpoint;
+                    widgetSignature.origin = window.origin;
                     widgetSignature.mount('sign_container');
 
                     widgetSignature.on('loaded', function (ev) { console.log('loaded!'); });
@@ -1543,7 +1546,7 @@
                                         }
                                         
                                         const data = await response.json();
-                                        self.request_signature_key = data.request_signature_key;
+                                        self.request_signature_key = data.signer_key;
                                         Container.classList.remove('gra-loading');
                                         
                                         self.lastFormDataStep4 = formData;
@@ -1903,7 +1906,7 @@
         StepController.init();
     })();
  </script>
- <script src="https://cdn-public-library.clicksign.com/embedded/embedded.min-1.0.0.js" type="text/javascript"></script>
+ <script src="https://cdn-public-library.clicksign.com/embedded/embedded.min-2.1.0.js" type="text/javascript"></script>
     <!-- Google Tag Manager (noscript) -->
     <noscript>
         <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MNTX28WZ" height="0" width="0" style="display:none;visibility:hidden"></iframe>
