@@ -275,6 +275,14 @@
                         <label>Nº de instalação*</label>
                     </div>
                     <div class="gra-col gra-col--half">
+                        <select required class="jsField jsContractChannel" style="height: 4.4rem;">
+                            <option value=""></option>
+                            <option value="email">Email</option>
+                            <option value="whatsapp">WhatsApp</option>
+                        </select>
+                        <label>Como prefere receber o contrato?*</label>
+                    </div>
+                    <div class="gra-col gra-col--half">
                         <input required class="jsField jsBillFile" type="file" multiple placeholder="Anexe sua última fatura" accept="image/*,.pdf" />
                         <label>
                             <div class="gra-tooltip-icon gra-tooltip-icon--clip"></div>
@@ -936,6 +944,24 @@
                         // self.stepContainer.querySelector('.jsInstallationName').value = `${self.installation.utility.name}`;
                         self.stepContainer.querySelector('.jsDistribuidoraName').textContent = `Distribuidora: ${self.installation.utility.name}`;
                         self.stepContainer.querySelector('#constitution-link').href = `https://s3.us-east-1.amazonaws.com/guara.consortium-docs/index.html?utility=${self.utility_id}`;
+
+                        const contractChannelField = self.stepContainer.querySelector('.jsContractChannel');
+                        if (contractChannelField) {
+                            const toggleActiveClass = () => {
+                                if (contractChannelField.value !== '') {
+                                    contractChannelField.classList.add('gra-active');
+                                } else {
+                                    contractChannelField.classList.remove('gra-active');
+                                }
+                            };
+
+                            if (!contractChannelField.dataset.listenerAdded) {
+                                contractChannelField.addEventListener('change', toggleActiveClass);
+                                contractChannelField.dataset.listenerAdded = 'true';
+                            }
+
+                            toggleActiveClass();
+                        }
                     }
 
                 } else if (step === 3) {
@@ -1461,6 +1487,7 @@
                         const field_cnpj = Container.querySelector('.jsFieldCNPJ').value.trim().replaceAll('.', '').replaceAll('-', '').replaceAll('/', '');
                         const field_contractfile = Container.querySelector('.jsContractFile').files;
                         const field_installationnumber = Container.querySelector('.jsInstallationNumber').value.trim();
+                        const field_contract_channel = Container.querySelector('.jsContractChannel').value;
 
                         const field_cookie = Container.querySelector('#cookie-checkbox')
                         const field_data = Container.querySelector('#data-checkbox')
@@ -1520,6 +1547,7 @@
 
                             formData.append("installation_id", self.installation.id);
                             formData.append("installation_number", field_installationnumber);
+                            formData.append("contract_delivery_channel", field_contract_channel);
                             
                             // Adicionar múltiplos arquivos de fatura
                             for (let i = 0; i < field_billfile.length; i++) {
