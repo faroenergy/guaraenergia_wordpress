@@ -276,8 +276,7 @@
                     </div>
                     <div class="gra-col gra-col--half">
                         <select required class="jsField jsContractChannel" style="height: 4.4rem;">
-                            <option value=""></option>
-                            <option value="email">Email</option>
+                            <option value="email" selected>Email</option>
                             <option value="whatsapp">WhatsApp</option>
                         </select>
                         <label>Como prefere receber o contrato?*</label>
