@@ -275,6 +275,13 @@
                         <label>Nº de instalação*</label>
                     </div>
                     <div class="gra-col gra-col--half">
+                        <select required class="jsField jsContractChannel" style="height: 4.4rem;">
+                            <option value="email" selected>Email</option>
+                            <option value="whatsapp">WhatsApp</option>
+                        </select>
+                        <label>Como prefere receber o contrato?*</label>
+                    </div>
+                    <div class="gra-col gra-col--half">
                         <input required class="jsField jsBillFile" type="file" multiple placeholder="Anexe sua última fatura" accept="image/*,.pdf" />
                         <label>
                             <div class="gra-tooltip-icon gra-tooltip-icon--clip"></div>
@@ -328,12 +335,12 @@
                         <button type="button" class="gra-col-resend-code">Reenviar código</button>
                     </div>
                     <div class="gra-col">
-                        <input required class="jsField jsSameField jsPassword1" minlength="4" type="password" />
+                        <input required class="jsField jsSameField jsPassword1" minlength="4" type="password" autocomplete="new-password" />
                         <label>Crie sua senha*</label>
                     </div>
                     <div class="gra-col jsPasswordError" style="color: red; display: none; font-size: 12px; margin: 8px 0 10px 0; text-align: left;"></div>
                     <div class="gra-col">
-                        <input required class="jsField jsSameField jsPassword2" minlength="4" type="password" />
+                        <input required class="jsField jsSameField jsPassword2" minlength="4" type="password" autocomplete="new-password" />
                         <label>Confirme sua senha*</label>
                     </div>
                 </div>
@@ -936,6 +943,24 @@
                         // self.stepContainer.querySelector('.jsInstallationName').value = `${self.installation.utility.name}`;
                         self.stepContainer.querySelector('.jsDistribuidoraName').textContent = `Distribuidora: ${self.installation.utility.name}`;
                         self.stepContainer.querySelector('#constitution-link').href = `https://s3.us-east-1.amazonaws.com/guara.consortium-docs/index.html?utility=${self.utility_id}`;
+
+                        const contractChannelField = self.stepContainer.querySelector('.jsContractChannel');
+                        if (contractChannelField) {
+                            const toggleActiveClass = () => {
+                                if (contractChannelField.value !== '') {
+                                    contractChannelField.classList.add('gra-active');
+                                } else {
+                                    contractChannelField.classList.remove('gra-active');
+                                }
+                            };
+
+                            if (!contractChannelField.dataset.listenerAdded) {
+                                contractChannelField.addEventListener('change', toggleActiveClass);
+                                contractChannelField.dataset.listenerAdded = 'true';
+                            }
+
+                            toggleActiveClass();
+                        }
                     }
 
                 } else if (step === 3) {
@@ -1147,9 +1172,12 @@
                     if (widgetSignature) { widgetSignature.unmount(); }
 
                     widgetSignature = new Clicksign(self.request_signature_key);
+                        
+                    const clicksignEndpoint = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
+                    ? 'https://sandbox.clicksign.com' : 'https://app.clicksign.com';
 
-                    widgetSignature.endpoint = 'https://app.clicksign.com';
-                    // widgetSignature.origin = 'https://guaraenergia.com';
+                    widgetSignature.endpoint = clicksignEndpoint;
+                    widgetSignature.origin = window.origin;
                     widgetSignature.mount('sign_container');
 
                     widgetSignature.on('loaded', function (ev) { console.log('loaded!'); });
@@ -1458,6 +1486,7 @@
                         const field_cnpj = Container.querySelector('.jsFieldCNPJ').value.trim().replaceAll('.', '').replaceAll('-', '').replaceAll('/', '');
                         const field_contractfile = Container.querySelector('.jsContractFile').files;
                         const field_installationnumber = Container.querySelector('.jsInstallationNumber').value.trim();
+                        const field_contract_channel = Container.querySelector('.jsContractChannel').value;
 
                         const field_cookie = Container.querySelector('#cookie-checkbox')
                         const field_data = Container.querySelector('#data-checkbox')
@@ -1517,6 +1546,7 @@
 
                             formData.append("installation_id", self.installation.id);
                             formData.append("installation_number", field_installationnumber);
+                            formData.append("contract_delivery_channel", field_contract_channel);
                             
                             // Adicionar múltiplos arquivos de fatura
                             for (let i = 0; i < field_billfile.length; i++) {
@@ -1543,7 +1573,7 @@
                                         }
                                         
                                         const data = await response.json();
-                                        self.request_signature_key = data.request_signature_key;
+                                        self.request_signature_key = data.signer_key;
                                         Container.classList.remove('gra-loading');
                                         
                                         self.lastFormDataStep4 = formData;
@@ -1903,7 +1933,7 @@
         StepController.init();
     })();
  </script>
- <script src="https://cdn-public-library.clicksign.com/embedded/embedded.min-1.0.0.js" type="text/javascript"></script>
+ <script src="https://cdn-public-library.clicksign.com/embedded/embedded.min-2.1.0.js" type="text/javascript"></script>
     <!-- Google Tag Manager (noscript) -->
     <noscript>
         <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MNTX28WZ" height="0" width="0" style="display:none;visibility:hidden"></iframe>
