@@ -5,6 +5,8 @@ on:
     branches: [main]
     paths:
       - 'wordpress/wp-content/**'
+      - '.github/workflows/deploy.yml'
+  workflow_dispatch: {}
 
 concurrency:
   group: deploy-production-v2
