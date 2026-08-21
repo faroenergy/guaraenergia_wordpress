@@ -1,4 +1,4 @@
-name: Deploy WordPress theme/plugins to EC2
+name: Deploy WordPress theme to EC2
 
 on:
   push:
@@ -41,17 +41,12 @@ jobs:
           chmod 600 ~/.ssh/deploy_key
           ssh-keyscan -H "${{ secrets.EC2_HOST }}" >> ~/.ssh/known_hosts
 
-      - name: Sincronizar tema e plugins via rsync
+      - name: Sincronizar tema via rsync
         run: |
           rsync -az \
             -e "ssh -i ~/.ssh/deploy_key" \
             wordpress/wp-content/themes/ \
             "${{ secrets.EC2_SSH_USER }}@${{ secrets.EC2_HOST }}:/opt/bitnami/wordpress/wp-content/themes/"
-
-          rsync -az \
-            -e "ssh -i ~/.ssh/deploy_key" \
-            wordpress/wp-content/plugins/ \
-            "${{ secrets.EC2_SSH_USER }}@${{ secrets.EC2_HOST }}:/opt/bitnami/wordpress/wp-content/plugins/"
 
       - name: Revogar liberação de SSH
         if: always()
