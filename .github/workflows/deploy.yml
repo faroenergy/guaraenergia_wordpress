@@ -1,0 +1,62 @@
+name: Deploy WordPress theme/plugins to EC2
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'wordpress/wp-content/**'
+
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: Descobrir IP público do runner
+        id: ip
+        run: echo "ip=$(curl -s https://checkip.amazonaws.com)" >> "$GITHUB_OUTPUT"
+
+      - name: Liberar SSH temporariamente para este runner
+        run: |
+          aws ec2 authorize-security-group-ingress \
+            --group-id "${{ secrets.SECURITY_GROUP_ID }}" \
+            --protocol tcp --port 22 \
+            --cidr "${{ steps.ip.outputs.ip }}/32"
+
+      - name: Configurar chave SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.EC2_SSH_PRIVATE_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H "${{ secrets.EC2_HOST }}" >> ~/.ssh/known_hosts
+
+      - name: Sincronizar tema e plugins via rsync
+        run: |
+          rsync -az \
+            -e "ssh -i ~/.ssh/deploy_key" \
+            wordpress/wp-content/themes/ \
+            "${{ secrets.EC2_SSH_USER }}@${{ secrets.EC2_HOST }}:/opt/bitnami/wordpress/wp-content/themes/"
+
+          rsync -az \
+            -e "ssh -i ~/.ssh/deploy_key" \
+            wordpress/wp-content/plugins/ \
+            "${{ secrets.EC2_SSH_USER }}@${{ secrets.EC2_HOST }}:/opt/bitnami/wordpress/wp-content/plugins/"
+
+      - name: Revogar liberação de SSH
+        if: always()
+        run: |
+          aws ec2 revoke-security-group-ingress \
+            --group-id "${{ secrets.SECURITY_GROUP_ID }}" \
+            --protocol tcp --port 22 \
+            --cidr "${{ steps.ip.outputs.ip }}/32"

@@ -1,28 +1,31 @@
 <!-- Template Name: Quero Economizar -->
 
-<?php get_template_part('head', null, 
- array( 
-    'title' => "Quero Economizar",
-    'css' => 'quero-economizar'
-))?>
+<?php get_template_part(
+    'head',
+    null,
+    array(
+        'title' => "Quero Economizar",
+        'css' => 'quero-economizar'
+    )
+) ?>
 
 
 <?php
-    $page_id = 407;
+$page_id = 407;
 ?>
 
 <?php
-    $passo_1 = get_field('passo_1', $page_id);
-    $passo_2 = get_field('passo_2', $page_id);
-    $passo_3 = get_field('passo_3', $page_id);
-    $passo_4 = get_field('passo_4', $page_id);
-    $passo_5 = get_field('passo_5', $page_id);
-    $passo_6 = get_field('passo_6', $page_id);
-    $passo_7 = get_field('passo_7', $page_id);
-    $sem_usinas = get_field('sem_usinas', $page_id);
-    $passos_lateral = get_field('passos_lateral', $page_id);
-    $texto_privacidade = get_field('texto_privacidade', $page_id);
-    $validade = $passo_3['validade'];
+$passo_1 = get_field('passo_1', $page_id);
+$passo_2 = get_field('passo_2', $page_id);
+$passo_3 = get_field('passo_3', $page_id);
+$passo_4 = get_field('passo_4', $page_id);
+$passo_5 = get_field('passo_5', $page_id);
+$passo_6 = get_field('passo_6', $page_id);
+$passo_7 = get_field('passo_7', $page_id);
+$sem_usinas = get_field('sem_usinas', $page_id);
+$passos_lateral = get_field('passos_lateral', $page_id);
+$texto_privacidade = get_field('texto_privacidade', $page_id);
+$validade = $passo_3['validade'];
 ?>
 
 <style>
@@ -31,16 +34,19 @@
             background-image: url(<?php echo $passo_7['imagem_mobile'] ?>)
         }
     }
+
     @media (min-width: 1012px) {
         .gra-step-form__side [step-side="3"] {
             background-image: url(<?php echo $passo_7['imagem'] ?>)
         }
     }
+
     @media (min-width: 1012px) {
         .gra-step-form__side [step-side="4"] {
             background-image: url(<?php echo $sem_usinas['imagem'] ?>)
         }
     }
+
     @media (max-width: 1011px) {
         .gra-step-form__side [step-side="4"] {
             background-image: url(<?php echo $sem_usinas['imagem_mobile'] ?>)
@@ -108,17 +114,17 @@
                         </button>
                     </div>
                 </div>
-                <?php get_template_part('templates/quero-economizar/footer', null, array('botao' => $passo_1['botao'], 'go_back' => true))?>
+                <?php get_template_part('templates/quero-economizar/footer', null, array('botao' => $passo_1['botao'], 'go_back' => true)) ?>
             </div>
 
             <div class="gra-step-form__content-inner" step-side="2" step-side-inner="0" step="2" style="display:none">
-               <div class="gra-title"><?php echo $passo_2['titulo']; ?></div>
-               <hr class="gra-separator" />           
-               <div class="gra-content">
-                   <div class="gra-col jsIsCnpj">
-                       <input required class="jsField jsFieldCompanyName" type="text" minlength="3" />
-                       <label>Nome fantasia ou razão social da empresa*</label>
-                   </div>
+                <div class="gra-title"><?php echo $passo_2['titulo']; ?></div>
+                <hr class="gra-separator" />
+                <div class="gra-content">
+                    <div class="gra-col jsIsCnpj">
+                        <input required class="jsField jsFieldCompanyName" type="text" minlength="3" />
+                        <label>Nome fantasia ou razão social da empresa*</label>
+                    </div>
                     <div class="gra-col gra-col--half jsIsCpf">
                         <input required class="jsField jsFieldFirstName" type="text" minlength="3" />
                         <label>Nome*</label>
@@ -142,7 +148,12 @@
                     <div class="gra-col gra-col--half">
                         <input required class="jsField jsFieldSearchCEP" type="text" mask-cep />
                         <label>CEP*</label>
-                        <div class="lds-ring" style="display:none"><div></div><div></div><div></div><div></div></div>
+                        <div class="lds-ring" style="display:none">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                        </div>
                     </div>
                     <div class="gra-col gra-col--half">
                         <input class="jsField jsFieldAddress" type="text" style="background-color: white !important;" />
@@ -182,7 +193,7 @@
                         <label class="gra-label-small">Média do Valor em R$ pago na fatura de energia*</label>
                     </div>
                 </div>
-                <?php get_template_part('templates/quero-economizar/footer', null, array('botao' => $passo_2['botao'], 'go_back' => true, 'texto_privacidade' => $texto_privacidade))?>
+                <?php get_template_part('templates/quero-economizar/footer', null, array('botao' => $passo_2['botao'], 'go_back' => true, 'texto_privacidade' => $texto_privacidade)) ?>
             </div>
 
             <div class="gra-step-form__content-inner" step-side="2" step-side-inner="1" step="3" style="display:none">
@@ -203,38 +214,16 @@
                     </div>
                 </div>
                 <hr class="gra-separator" />
-                <div class="gra-planos jsPlanoItemWrapper">
-                    <div class="gra-planos__item gray jsPlanoItem">
-                        <div>
-                            <p class="gra-planos__item-title"><?php echo $passo_3['plano_1']; ?></p>
-                            <p class="gra-planos__item-valor">Economize até <br><b>R$<span class="jsPlanoYearEconomy"></span>/ano</b></p>
-                        </div>
-                        <p class="gra-planos__item-desconto"><span>Tenha</span> <b><span class="jsPlanoDiscount"></span>% de economia</b></p>
-                    </div>
-                    <div class="gra-planos__item yellow jsPlanoItem">
-                        <div>
-                            <p class="gra-planos__item-title"><?php echo $passo_3['plano_2']; ?></p>
-                            <p class="gra-planos__item-valor">Economize até <br><b>R$<span class="jsPlanoYearEconomy"></span>/ano</b></p>
-                        </div>
-                        <p class="gra-planos__item-desconto"><span>Tenha</span> <b><span class="jsPlanoDiscount"></span>% de economia</b></p>
-                    </div>
-                    <div class="gra-planos__item green jsPlanoItem">
-                        <div>
-                            <p class="gra-planos__item-title"><?php echo $passo_3['plano_3']; ?></p>
-                            <p class="gra-planos__item-valor">Economize até <br><b>R$<span class="jsPlanoYearEconomy"></span>/ano</b></p>
-                        </div>
-                        <p class="gra-planos__item-desconto"><span>Tenha</span> <b><span class="jsPlanoDiscount"></span>% de economia</b></p>
-                    </div>
-                </div>
+                <div class="gra-planos jsPlanoItemWrapper"></div>
                 <p class="gra-texto-extra"><?php echo $passo_3['texto_extra']; ?></p>
                 <div class="gra-hide-print">
-                    <?php get_template_part('templates/quero-economizar/footer', null, array('botao' => $passo_3['botao'], 'go_back' => true, 'texto_privacidade' => $texto_privacidade, 'baixar_proposta' => true))?>
+                    <?php get_template_part('templates/quero-economizar/footer', null, array('botao' => $passo_3['botao'], 'go_back' => true, 'texto_privacidade' => $texto_privacidade, 'baixar_proposta' => true)) ?>
                 </div>
             </div>
-            
+
             <div class="gra-step-form__content-inner" step-side="2" step-side-inner="2" step="4" style="display:none">
                 <div class="gra-title"><?php echo $passo_4['titulo']; ?></div>
-                <hr class="gra-separator" />           
+                <hr class="gra-separator" />
                 <div class="gra-content">
                     <div class="gra-col jsIsCpf">
                         <input required class="jsField jsFieldFullName" type="text" disabled />
@@ -314,18 +303,18 @@
                         </label>
                     </div>
                 </div>
-                <?php get_template_part('templates/quero-economizar/footer', null, array('botao' => $passo_4['botao'], 'go_back' => true, 'texto_privacidade' => true))?>
+                <?php get_template_part('templates/quero-economizar/footer', null, array('botao' => $passo_4['botao'], 'go_back' => true, 'texto_privacidade' => true)) ?>
             </div>
             <div class="gra-step-form__content-inner" step-side="2" step-side-inner="2" step="5" style="display:none">
                 <div class="gra-title"><?php echo $passo_5['titulo']; ?></div>
-                <hr class="gra-separator" />           
+                <hr class="gra-separator" />
                 <div class="gra-content" id="sign_container"></div>
-                <?php get_template_part('templates/quero-economizar/footer', null, array('botao' => $passo_5['botao'], 'go_back' => true, 'texto_privacidade' => $texto_privacidade))?>
+                <?php get_template_part('templates/quero-economizar/footer', null, array('botao' => $passo_5['botao'], 'go_back' => true, 'texto_privacidade' => $texto_privacidade)) ?>
             </div>
             <div class="gra-step-form__content-inner" step-side="2" step-side-inner="3" step="6" style="display:none">
                 <div class="gra-title"><?php echo $passo_6['titulo']; ?></div>
                 <div class="gra-subtitle jsApplyEmailOnText"><?php echo $passo_6['subtitulo']; ?></div>
-                <hr class="gra-separator" />           
+                <hr class="gra-separator" />
                 <div class="gra-content">
                     <div class="gra-col">
                         <input required class="jsField jsVerificationCode" minlength="4" type="text" mask-number />
@@ -344,7 +333,7 @@
                         <label>Confirme sua senha*</label>
                     </div>
                 </div>
-                <?php get_template_part('templates/quero-economizar/footer', null, array('botao' => $passo_6['botao'], 'go_back' => true, 'texto_privacidade' => $texto_privacidade))?>
+                <?php get_template_part('templates/quero-economizar/footer', null, array('botao' => $passo_6['botao'], 'go_back' => true, 'texto_privacidade' => $texto_privacidade)) ?>
             </div>
             <div class="gra-step-form__content-inner" step-side="3" step="7" style="display:none">
                 <div class="gra-content">
@@ -397,7 +386,7 @@
     (function() {
 
         var widgetSignature;
-        
+
         const StepController = {
             dev: false,
 
@@ -407,7 +396,7 @@
             stepType: null,
             stepNewPlano: true,
             stepStep1_popUp: false,
-            
+
             installation: null,
             client: null,
             utility_id: false,
@@ -432,28 +421,25 @@
             lastFormDataStep4: null,
             propose_id: null,
 
-            planosText: [
-                '<?php echo $passo_3['plano_1']; ?>',
-                '<?php echo $passo_3['plano_2']; ?>',
-                '<?php echo $passo_3['plano_3']; ?>'
-            ],
-    
             init: async function() {
                 const self = this;
 
-                self.baseUrl = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
-                    ? 'http://localhost:8007'
-                    : 'https://api.guaraenergia.com';
+                self.baseUrl = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' ?
+                    'http://localhost:8007' :
+                    'https://api.guaraenergia.com';
 
                 const params = new URLSearchParams(window.location.search);
                 const hash = params.get('hash');
 
                 self.clientProviderId = null;
-                
+
                 if (hash) {
                     const response = await fetch(`${self.baseUrl}/hash/decode/?hash=${hash}`)
                     if (response.ok) {
-                        const { client_provider_id, partner_code } = await response.json();
+                        const {
+                            client_provider_id,
+                            partner_code
+                        } = await response.json();
 
                         self.clientProviderId = client_provider_id;
                         self.stepStart = 2;
@@ -461,7 +447,7 @@
                         self.stepAlert = null;
                         self.codePartner = partner_code;
                         self.partnerCodeValidated = true;
-                        
+
                         document.querySelectorAll('.jsIsCpf').forEach(function(item) {
                             item.style.display = '';
                         });
@@ -470,25 +456,25 @@
                         });
                     }
                 }
-    
+
                 self.currentStep = self.stepStart;
                 self.lastStep = self.stepStart;
                 const initialStep = self.showStep(self.stepStart);
-                self.startEvents(); 
+                self.startEvents();
             },
-    
+
             startEvents: function() {
                 const self = this;
-    
+
                 const NextStep = document.querySelectorAll('.jsNextStep');
                 const PrevStep = document.querySelectorAll('.jsPrevStep');
-    
+
                 NextStep.forEach(function(item) {
                     item.onclick = function() {
                         item.blur();
-                        
+
                         if (self.dev) {
-                            self.showStep(self.currentStep + 1);   
+                            self.showStep(self.currentStep + 1);
 
                         } else if (!this.classList.contains('disabled')) {
                             self.stepEventsBeforeNextStep(self.currentStep, function() {
@@ -497,7 +483,7 @@
                         }
                     };
                 });
-    
+
                 PrevStep.forEach(function(item) {
                     item.onclick = function() {
                         if (self.currentStep === 1 && document.querySelector('[data-opcoes="2"]')) {
@@ -505,7 +491,7 @@
 
                         } else {
                             item.blur();
-                            self.showStep(self.currentStep - 1);             
+                            self.showStep(self.currentStep - 1);
                         }
                     };
                 });
@@ -565,11 +551,11 @@
 
             showStep: function(step) {
                 const self = this;
-    
+
                 if (step !== self.lastStep) self.constrolStepVisibity('none', self.lastStep);
                 self.currentStep = step;
                 self.lastStep = step;
-    
+
                 self.constrolStepVisibity('', step);
                 self.stepEvents(step);
 
@@ -578,28 +564,28 @@
 
             constrolStepVisibity: function(blockOrNone, step) {
                 const self = this;
-    
+
                 self.stepContainer = document.querySelector(`.jsStepContent [step="${step}"]`);
-                
+
                 const stepSide = self.stepContainer.getAttribute('step-side');
                 const stepElSide = document.querySelector(`.jsStepSide [step-side="${stepSide}"]`);
-    
+
                 const stepSideInner = self.stepContainer.getAttribute('step-side-inner');
-                
+
                 if (stepSideInner !== null) {
                     document.querySelector(`.jsStepSide [step-side="${stepSide}"]`).setAttribute('step-side-inner', stepSideInner);
                 }
-    
+
                 self.stepContainer.style.display = blockOrNone;
                 stepElSide.style.display = blockOrNone;
             },
 
             stepEvents: function(step) {
                 const self = this;
-    
+
                 if (step === 1) {
                     if (self.stepStarted.indexOf(step) === -1) {
-    
+
                         (function() {
                             const contratacaoItemInit = self.stepContainer.querySelectorAll('.jsContratacaoOptionInit');
                             const contratacaoItemUser = self.stepContainer.querySelectorAll('.jsContratacaoOptionUser');
@@ -608,22 +594,22 @@
                             function activeContratacao(el, refEl) {
                                 if (!el.classList.contains('active')) {
                                     contratacaoActive = self.stepContainer.querySelector(`${refEl}.active`);
-        
+
                                     if (contratacaoActive) {
                                         contratacaoActive.classList.remove('active');
                                     }
-        
+
                                     el.classList.add('active');
                                     self.stepContainer.querySelector('.jsNextStep').classList.remove('disabled');
                                 }
                             }
-        
+
                             contratacaoItemInit.forEach(item => {
                                 item.onclick = function() {
                                     activeContratacao(this, '.jsContratacaoOptionInit');
                                 }
                             });
-                            
+
                             contratacaoItemUser.forEach(item => {
                                 item.onclick = function() {
                                     activeContratacao(this, '.jsContratacaoOptionUser');
@@ -644,17 +630,19 @@
 
 
                         if (step === 2) {
-                            let value = null, valueLength = null, btn = null;
+                            let value = null,
+                                valueLength = null,
+                                btn = null;
 
                             let customError = false;
 
                             var fieldAddressEl = document.querySelector('.jsFieldAddress');
-                            
+
                             self.stepContainer.querySelector('.jsFieldSearchCEP').oninput = async function() {
                                 btn = this;
                                 value = this.value;
                                 valueLength = value.length;
-                                
+
                                 if (valueLength === 10) {
                                     btn.disabled = true;
                                     value = value.replaceAll('.', '').replaceAll('-', '');
@@ -670,7 +658,7 @@
 
                                         const divCity = document.querySelector('#div-city');
                                         divCity.querySelector('.jsFieldCity').value = '';
-                                        divCity.style.display = 'none'; 
+                                        divCity.style.display = 'none';
 
                                         const response = await fetch(`${self.baseUrl}/utility-address?${queryParams}`, {
                                             method: "GET",
@@ -678,14 +666,14 @@
                                                 'Content-Type': 'application/json'
                                             }
                                         });
-                                        
+
                                         if (!response.ok) {
                                             btn.disabled = false;
                                             throw new Error(`Response status: ${response.status}`);
                                         }
-                                        
+
                                         const data = await response.json();
-                                        
+
                                         self.utility_id = data.utility_id;
 
                                         if (typeof data.address !== 'undefined') {
@@ -699,7 +687,7 @@
 
                                         btn.disabled = false;
                                         btn.focus();
-                                        
+
                                     } catch (error) {
                                         console.log(error);
 
@@ -707,11 +695,11 @@
                                         self.utility_id = false;
 
                                         const res = await fetch(`${self.baseUrl}/utilities/`, {
-                                                method: "GET",
-                                                headers: {
-                                                    'Content-Type': 'application/json'
-                                                }
-                                            });
+                                            method: "GET",
+                                            headers: {
+                                                'Content-Type': 'application/json'
+                                            }
+                                        });
 
                                         const data = await res.json();
 
@@ -748,7 +736,7 @@
                                                 }
                                             });
                                         }
-                                        
+
                                         fieldAddressEl.value = '';
                                         fieldAddressEl.classList.add('gra-label-normal');
                                     }
@@ -759,14 +747,14 @@
                             self.stepContainer.querySelector('.jsFieldFirstName').addEventListener('input', function() {
                                 this.value = this.value.replace(/[^a-zA-Z\'\u00C0-\u017F\s]/g, '');
                             });
-                            
+
                             self.stepContainer.querySelector('.jsFieldLastName').addEventListener('input', function() {
                                 this.value = this.value.replace(/[^a-zA-Z\'\u00C0-\u017F\s]/g, '');
                             });
 
                             const partnerCodeField = self.stepContainer.querySelector('.jsFieldCodePartner');
-                            
-                            if (self.codePartner && self.partnerCodeValidated) { 
+
+                            if (self.codePartner && self.partnerCodeValidated) {
                                 partnerCodeField.value = self.codePartner;
                                 partnerCodeField.disabled = true;
                             }
@@ -775,7 +763,7 @@
 
                             partnerCodeField.addEventListener('input', function() {
                                 const code = this.value.trim();
-                                
+
                                 if (validationTimeout) {
                                     clearTimeout(validationTimeout);
                                 }
@@ -812,22 +800,22 @@
                                         const data = await response.json();
                                         self.coupon = data.coupon;
                                         self.partnerCodeValidated = true;
-                                        
+
                                         partnerCodeField.classList.remove('gra-error');
-                                        
+
                                         removePartnerCodeError();
                                     } else {
                                         self.partnerCodeValidated = false;
                                         partnerCodeField.classList.add('gra-error');
-                                        
+
                                         addPartnerCodeError('Código do parceiro inválido');
                                     }
                                 } catch (error) {
                                     console.log('Erro na validação do código do parceiro:', error);
-                                    
+
                                     self.partnerCodeValidated = false;
                                     partnerCodeField.classList.add('gra-error');
-                                    
+
                                     addPartnerCodeError('Erro ao validar código do parceiro');
                                 }
                             }
@@ -856,7 +844,7 @@
 
                             promoCodeField.addEventListener('input', function() {
                                 const code = this.value.trim();
-                                
+
                                 clearTimeout(promoValidationTimeout);
                                 removePromoCodeError();
 
@@ -890,22 +878,22 @@
                                         const data = await response.json();
                                         self.promoCode = data.promoCode;
                                         self.promoCodeValidated = true;
-                                        
+
                                         promoCodeField.classList.remove('gra-error');
-                                        
+
                                         removePromoCodeError();
                                     } else {
                                         self.promoCodeValidated = false;
                                         promoCodeField.classList.add('gra-error');
-                                        
+
                                         addPromoCodeError('Cupom promocional inválido');
                                     }
                                 } catch (error) {
                                     console.log('Erro na validação do cupom promocional:', error);
-                                    
+
                                     self.promoCodeValidated = false;
                                     promoCodeField.classList.add('gra-error');
-                                    
+
                                     addPromoCodeError('Erro ao validar cupom promocional');
                                 }
                             }
@@ -927,7 +915,7 @@
                             }
                         }
                     }
-                       
+
                     if (step === 4) {
                         if (self.stepType === 'cpf') {
                             self.stepContainer.querySelector('.jsFieldFullName').value = `${self.fullName}`;
@@ -938,8 +926,8 @@
                                 this.value = this.value.replace(/[^a-zA-Z\'\u00C0-\u017F\s]/g, '');
                             });
                         }
-                        
-                        self.stepContainer.querySelector('.jsClientCEP').value = `${self.cep}`;  
+
+                        self.stepContainer.querySelector('.jsClientCEP').value = `${self.cep}`;
                         // self.stepContainer.querySelector('.jsInstallationName').value = `${self.installation.utility.name}`;
                         self.stepContainer.querySelector('.jsDistribuidoraName').textContent = `Distribuidora: ${self.installation.utility.name}`;
                         self.stepContainer.querySelector('#constitution-link').href = `https://s3.us-east-1.amazonaws.com/guara.consortium-docs/index.html?utility=${self.utility_id}`;
@@ -968,7 +956,7 @@
                     self.stepContainer.classList.add('gra-loading');
 
                     const planoItemActive = self.stepContainer.querySelector('.jsPlanoItem.active');
-                    
+
                     if (self.stepStarted.indexOf(step) === -1) {
                         let downloadProposta = false;
 
@@ -979,52 +967,52 @@
                         let textoAntesDownload = btnDownloadElText.textContent;
 
                         btnDownloadEl.addEventListener('click', async function() {
-                            
+
                             if (!downloadProposta) {
                                 downloadProposta = true;
 
                                 btnDownloadElText.textContent = textoDownload;
-                                
+
                                 try {
                                     const response = await fetch(`${self.baseUrl}/download-propose/?installation_id=${self.installation.id}`)
-                                    .then(response => {
-                                        if (!response.ok) {
-                                            throw new Error("Erro no download");
-                                        }
-
-                                        const contentDisposition = response.headers.get('Content-Disposition');
-
-                                        let fileName = "proposta.pdf";
-
-                                        if (contentDisposition && contentDisposition.includes('filename=')) {
-                                            const match = contentDisposition.match(/filename\*?=['"]?(?:UTF-8'')?([^'";]+)['"]?/i);
-                                            if (match && match[1]) {
-                                                fileName = decodeURIComponent(match[1]);
+                                        .then(response => {
+                                            if (!response.ok) {
+                                                throw new Error("Erro no download");
                                             }
-                                        }
 
-                                        return response.blob().then(blob => ({
+                                            const contentDisposition = response.headers.get('Content-Disposition');
+
+                                            let fileName = "proposta.pdf";
+
+                                            if (contentDisposition && contentDisposition.includes('filename=')) {
+                                                const match = contentDisposition.match(/filename\*?=['"]?(?:UTF-8'')?([^'";]+)['"]?/i);
+                                                if (match && match[1]) {
+                                                    fileName = decodeURIComponent(match[1]);
+                                                }
+                                            }
+
+                                            return response.blob().then(blob => ({
+                                                blob,
+                                                fileName
+                                            }));
+                                        })
+                                        .then(({
                                             blob,
                                             fileName
-                                        }));
-                                    })
-                                    .then(({
-                                        blob,
-                                        fileName
-                                    }) => {
-                                        const url = window.URL.createObjectURL(blob);
-                                        const a = document.createElement("a");
-                                        a.href = url;
-                                        a.download = fileName;
-                                        document.body.appendChild(a);
-                                        a.click();
-                                        a.remove();
-                                        window.URL.revokeObjectURL(url);
-                                    })
-                                    .catch(error => {
-                                        console.error("Erro ao baixar proposta:", error);
-                                        alert("Não foi possível baixar o arquivo.");
-                                    });
+                                        }) => {
+                                            const url = window.URL.createObjectURL(blob);
+                                            const a = document.createElement("a");
+                                            a.href = url;
+                                            a.download = fileName;
+                                            document.body.appendChild(a);
+                                            a.click();
+                                            a.remove();
+                                            window.URL.revokeObjectURL(url);
+                                        })
+                                        .catch(error => {
+                                            console.error("Erro ao baixar proposta:", error);
+                                            alert("Não foi possível baixar o arquivo.");
+                                        });
 
                                     downloadProposta = false;
                                     btnDownloadElText.textContent = textoAntesDownload;
@@ -1050,9 +1038,9 @@
 
                     if (self.stepNewPlano) {
                         self.stepContainer.querySelector('.jsNextStep').classList.add('disabled');
-                        
+
                         if (planoItemActive) {
-                            
+
                             planoItemActive.classList.remove('active');
                             planoItemActive.parentElement.classList.remove('gra-item-active');
                         };
@@ -1060,16 +1048,16 @@
                         (function() {
                             const dataPropostaEl = self.stepContainer.querySelector('.jsDataProposta');
                             const dataValidadeEl = self.stepContainer.querySelector('.jsDataValidade');
-    
+
                             function valueToBr(num) {
                                 return num < 1000 ? num.toString() : (num / 1000).toFixed(3);
                             };
-    
-                            function dataAtualFormatada(date){
+
+                            function dataAtualFormatada(date) {
                                 var data = new Date(date),
-                                dia  = data.getDate().toString().padStart(2, '0'),
-                                mes  = (data.getMonth()+1).toString().padStart(2, '0'),
-                                ano  = data.getFullYear();
+                                    dia = data.getDate().toString().padStart(2, '0'),
+                                    mes = (data.getMonth() + 1).toString().padStart(2, '0'),
+                                    ano = data.getFullYear();
                                 return dia + "/" + mes + "/" + ano;
                             };
 
@@ -1081,12 +1069,12 @@
                                             'Content-Type': 'application/json'
                                         }
                                     });
-                                    
+
                                     if (!response.ok) {
-    
+
                                         if (response.status == 404 || response.status == 400) {
                                             const data = await response.json();
-                                            
+
                                             if (data) {
                                                 if (response.status == 400) {
                                                     self.showStep(8);
@@ -1096,36 +1084,67 @@
                                             throw new Error(`Response status: ${response.status}`);
                                         }
                                     }
-                                    
+
                                     const data = await response.json();
-                                    
+
                                     dataPropostaEl.textContent = dataAtualFormatada(data.emission_date);
                                     dataValidadeEl.textContent = dataAtualFormatada(data.due_date);
-        
+
                                     const installationDiscount = data.installation_discount.find(function(el) {
                                         return el.is_default === true;
+                                    }) || data.installation_discount[0] || {};
+
+                                    const yearlyEconomy = installationDiscount.yearly_economy || {};
+                                    const colorClasses = ['gray', 'yellow', 'green'];
+
+                                    const contractProposes = (data.contract_proposes || []).slice().sort(function(a, b) {
+                                        return a.minimum_permanency - b.minimum_permanency;
                                     });
 
-                                    const discountValue = Object.values(installationDiscount.discounts);
-                                    const yearlyValue = Object.values(installationDiscount.yearly_economy);
-                                    const contract_proposes = data.contract_proposes;
-                                    
-                                    document.querySelectorAll(`.jsPlanoItem .jsPlanoDiscount`).forEach(function(item, i) {
-                                        item.textContent = Math.floor(discountValue[i] * 100);
-                                    });
-                                    
-                                    document.querySelectorAll(`.jsPlanoItem .jsPlanoYearEconomy`).forEach(function(item, i) {
-                                        item.textContent = valueToBr(yearlyValue[i]);
-                                    });
-                                    
-                                    document.querySelectorAll(`.jsPlanoItem`).forEach(function(item, i) {
-                                        item.setAttribute('data-id', contract_proposes[i].id);
+                                    const planoWrapper = self.stepContainer.querySelector('.jsPlanoItemWrapper');
+                                    planoWrapper.innerHTML = '';
+
+                                    contractProposes.forEach(function(propose, index) {
+                                        const term = propose.minimum_permanency || 0;
+                                        const yearEconomy = yearlyEconomy[term] || 0;
+                                        const title = term === 0 ?
+                                            'Plano de adesão sem fidelidade' :
+                                            `Plano de adesão com fidelidade de ${term} anos`;
+                                        const colorClass = colorClasses[index] || colorClasses[colorClasses.length - 1];
+
+                                        const planoItem = document.createElement('div');
+                                        planoItem.className = `gra-planos__item ${colorClass} jsPlanoItem`;
+                                        planoItem.setAttribute('data-id', propose.id);
+                                        planoItem.innerHTML = `
+                                            <div>
+                                                <p class="gra-planos__item-title">${title}</p>
+                                                <p class="gra-planos__item-valor">Economize até <br><b>R$<span class="jsPlanoYearEconomy">${valueToBr(yearEconomy)}</span>/ano</b></p>
+                                            </div>
+                                            <p class="gra-planos__item-desconto"><span>Tenha</span> <b><span class="jsPlanoDiscount">${Math.floor((propose.discount || 0) * 100)}</span>% de economia</b></p>
+                                        `;
+
+                                        planoItem.onclick = function() {
+                                            if (!this.classList.contains('active')) {
+                                                const planoActive = planoWrapper.querySelector('.jsPlanoItem.active');
+
+                                                if (planoActive) {
+                                                    planoActive.classList.remove('active');
+                                                }
+
+                                                this.classList.add('active');
+                                                this.parentElement.classList.add('gra-item-active');
+
+                                                self.stepContainer.querySelector('.jsNextStep').classList.remove('disabled');
+                                            }
+                                        };
+
+                                        planoWrapper.appendChild(planoItem);
                                     });
 
                                     self.stepNewPlano = false;
 
                                     self.stepContainer.classList.remove('gra-loading');
-                                        
+
                                 } catch (error) {
                                     // btn.disabled = false;
                                     // if (!customError) {
@@ -1142,55 +1161,36 @@
                         self.stepContainer.classList.remove('gra-loading');
                     };
 
-                    (function() {
-                        const planosItem = self.stepContainer.querySelectorAll('.jsPlanoItem');
-                        let planoActive = null;
-    
-                        planosItem.forEach(item => {
-                            item.onclick = function() {
-                                if (!this.classList.contains('active')) {
-                                    planoActive = self.stepContainer.querySelector('.jsPlanoItem.active');
-        
-                                    if (planoActive) {
-                                        planoActive.classList.remove('active');
-                                    }
-        
-                                    this.classList.add('active');
-                                    this.parentElement.classList.add('gra-item-active');
-                                    
-                                    self.stepContainer.querySelector('.jsNextStep').classList.remove('disabled');
-                                }
-                            }
-                        });
-                    })();
-                    
                 } else if (step === 5) {
                     const Container = self.stepContainer;
 
                     Container.querySelector('.jsNextStep').style.display = 'none';
 
-                    if (widgetSignature) { widgetSignature.unmount(); }
+                    if (widgetSignature) {
+                        widgetSignature.unmount();
+                    }
 
                     widgetSignature = new Clicksign(self.request_signature_key);
-                        
-                    const clicksignEndpoint = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
-                    ? 'https://sandbox.clicksign.com' : 'https://app.clicksign.com';
+
+                    const clicksignEndpoint = 'https://app.clicksign.com';
 
                     widgetSignature.endpoint = clicksignEndpoint;
                     widgetSignature.origin = window.origin;
                     widgetSignature.mount('sign_container');
 
-                    widgetSignature.on('loaded', function (ev) { console.log('loaded!'); });
-                    widgetSignature.on('signed', function (ev) { 
+                    widgetSignature.on('loaded', function(ev) {
+                        console.log('loaded!');
+                    });
+                    widgetSignature.on('signed', function(ev) {
                         Container.querySelector('.jsNextStep').style.display = '';
                     });
 
                 } else if (step === 6) {
                     const Container = self.stepContainer;
-                    
+
                     if (self.stepStarted.indexOf(step) === -1) {
                         const fields = Container.querySelectorAll('.jsField');
-    
+
                         fields.forEach(el => {
                             if (el.hasAttribute('mask-number')) {
                                 VMasker(el).maskNumber();
@@ -1244,36 +1244,36 @@
                 if (step === 1) {
                     if (document.querySelector('[data-opcoes="1"]') && self.stepContainer.querySelector('.jsContratacaoOptionInit.active')) {
                         document.querySelector('[data-opcoes="1"]').setAttribute('data-opcoes', '2');
-                        
+
                     } else if (self.stepContainer.querySelector('.jsContratacaoOptionUser.active')) {
                         const type = self.stepContainer.querySelector('.jsContratacaoOptionInit.active').getAttribute('data-type');
                         const alert = self.stepContainer.querySelector('.jsContratacaoOptionUser.active').getAttribute('data-alert');
-    
+
                         if (self.stepType !== null) {
                             if (self.stepType !== type) {
                                 document.querySelector('.jsFormStep').reset();
                             }
                         }
-    
+
                         self.stepType = type;
                         self.stepAlert = alert;
-    
+
                         let display1 = type === 'cpf' ? '' : 'none';
                         let display2 = type === 'cpf' ? 'none' : '';
-    
+
                         document.querySelectorAll('.jsIsCpf').forEach(function(item) {
                             item.style.display = display1;
                         });
                         document.querySelectorAll('.jsIsCnpj').forEach(function(item) {
                             item.style.display = display2;
                         });
-    
+
                         callback();
                     }
-                    
+
                 } else if (step === 2) {
                     if (ValidateWrongFields()) {
-    
+
                         Container.classList.add('gra-loading');
 
                         const selectUtility = Container.querySelector('.jsFieldUtility');
@@ -1281,8 +1281,8 @@
                         if (selectUtility.value !== '') {
                             self.utility_id = parseInt(selectUtility.value);
                         }
-                        
-                        
+
+
 
                         const field_firstName = Container.querySelector('.jsFieldFirstName').value.trim();
                         const field_companyName = Container.querySelector('.jsFieldCompanyName').value.trim();
@@ -1290,7 +1290,7 @@
                         const field_cep = Container.querySelector('.jsFieldSearchCEP').value.trim().replaceAll('.', '').replaceAll('-', '');
                         const field_address = Container.querySelector('.jsFieldAddress').value.trim();
                         const field_city = Container.querySelector('.jsFieldCity').value.trim();
-    
+
                         const field_codePartner = Container.querySelector('.jsFieldCodePartner').value.trim();
                         const field_promoCode = Container.querySelector('.jsFieldPromoCode').value.trim();
                         const field_monthlyExpense = Container.querySelector('.jsFieldAverage').value.trim().replaceAll('.', '').replaceAll(',', '.');
@@ -1302,7 +1302,7 @@
                         const field_utility = Container.querySelector('.jsFieldUtility').value.trim();
 
                         let field_lastName = null;
-                                
+
                         function checkFields(type) {
                             if (self.stepType === "cpf") {
 
@@ -1311,12 +1311,12 @@
                                 return self.firstName !== field_firstName || self.lastName !== field_lastName || self.email !== field_email || self.cep !== field_cep || self.phone !== field_phone || self.codePartner !== field_codePartner || self.promoCode !== field_promoCode || self.monthlyExpense !== field_monthlyExpense || self.installation_address_number !== field_numEnd || self.installation_address_complement !== field_complementoEnd;
 
                             } else if (self.stepType === "cnpj") {
-                                
+
                                 return self.companyName !== field_companyName || self.email !== field_email || self.cep !== field_cep || self.phone !== field_phone || self.codePartner !== field_codePartner || self.promoCode !== field_promoCode || self.monthlyExpense !== field_monthlyExpense || self.installation_address_number !== field_numEnd || self.installation_address_complement !== field_complementoEnd;
                             }
                         }
 
-                        if(checkFields(self.stepType)) {
+                        if (checkFields(self.stepType)) {
                             if (field_codePartner.trim() !== '') {
                                 if (!self.partnerCodeValidated) {
                                     Container.classList.remove('gra-loading');
@@ -1402,20 +1402,20 @@
                                     self.distribuidora = data.installation.utility.name;
 
                                     Container.classList.remove('gra-loading');
-                                    
+
                                     // Validate monthly expense after successful registration
                                     if (parseFloat(field_monthlyExpense) < 200) {
                                         CustomAlert(true, 'A média do valor pago na fatura deve ser maior ou igual a R$ 200,00');
                                         return false;
                                     }
-                                    
+
                                     self.stepNewPlano = true;
                                     self.lastFormDataStep4 = null;
                                     self.installationIdInitial = null;
                                     self.propose_id = null;
 
                                     callback();
-                                    
+
                                 } catch (error) {
                                     Container.classList.remove('gra-loading');
                                     // alert('Erro ao enviar');
@@ -1426,10 +1426,10 @@
                             callback();
                         }
 
-                    } 
-                    
+                    }
 
-                } else if (step === 3) {                    
+
+                } else if (step === 3) {
                     Container.classList.add('gra-loading');
 
                     var planoItemActive = parseInt(Container.querySelector('.jsPlanoItem.active').getAttribute('data-id'));
@@ -1448,18 +1448,18 @@
                                         propose_id: planoItemActive,
                                     })
                                 });
-                                
+
                                 if (!response.ok) {
                                     throw new Error(`Response status: ${response.status}`);
                                 }
-                                
+
                                 const data = await response.json();
                                 Container.classList.remove('gra-loading');
                                 self.installationIdInitial = self.installation.id;
                                 self.propose_id = planoItemActive;
 
                                 callback();
-                                
+
                             } catch (error) {
                                 console.log(error);
                                 Container.classList.remove('gra-loading');
@@ -1470,11 +1470,11 @@
                         Container.classList.remove('gra-loading');
                         callback();
                     }
-    
+
 
                 } else if (step === 4) {
                     if (ValidateWrongFields()) {
-                        
+
                         // const field_lastName = Container.querySelector('.jsFieldLastName').value;
                         // const field_email = Container.querySelector('.jsFieldEmail').value;
                         const field_cpf = Container.querySelector('.jsFieldCPF').value.replaceAll('.', '').replaceAll('-', '');
@@ -1492,7 +1492,7 @@
                         const field_data = Container.querySelector('#data-checkbox')
                         const field_terms = Container.querySelector('#terms-checkbox')
                         const field_constitution = Container.querySelector('#constitution-checkbox')
-                        
+
                         if (!field_cookie.checked || !field_data.checked || !field_terms.checked || !field_constitution.checked) {
                             Container.classList.remove('gra-loading');
                             CustomAlert(true, 'Por favor, aceite todos os termos e condições');
@@ -1502,17 +1502,17 @@
                         const validationType = self.stepType === 'cpf' ? isValidCPF(field_cpf) : (isValidCPF(field_cpfrepresentant) && isValidCNPJ(field_cnpj));
 
                         if (validationType) {
-                            
+
                             Container.classList.add('gra-loading');
 
                             const formData = new FormData();
 
                             const obj = {
-                               installation_id: self.installation.id,
-                               installation_number: field_installationnumber,
-                               bill_file: field_billfile,
+                                installation_id: self.installation.id,
+                                installation_number: field_installationnumber,
+                                bill_file: field_billfile,
                             };
-                            
+
                             if (self.stepType === "cnpj") {
                                 obj.cnpj = field_cnpj;
                                 obj.social_contract_file = field_contractfile;
@@ -1520,19 +1520,19 @@
                                 obj.legal_representant_cpf = field_cpfrepresentant;
 
                                 formData.append("cnpj", field_cnpj);
-                                
+
                                 // Adicionar múltiplos arquivos de ID
                                 for (let i = 0; i < field_idfile3.length; i++) {
                                     formData.append("id_file", field_idfile3[i]);
                                 }
-                                
+
                                 // Adicionar múltiplos arquivos de contrato
                                 for (let i = 0; i < field_contractfile.length; i++) {
                                     formData.append("social_contract_file", field_contractfile[i]);
                                 }
                                 formData.append("legal_representant_name", field_namerepresentant);
                                 formData.append("legal_representant_cpf", field_cpfrepresentant);
-                                
+
                             } else {
                                 obj.legal_representant_cpf = field_cpf;
 
@@ -1540,25 +1540,25 @@
                                 for (let i = 0; i < field_idfile.length; i++) {
                                     formData.append("id_file", field_idfile[i]);
                                 }
-                                
+
                                 formData.append("legal_representant_cpf", field_cpf);
                             }
 
                             formData.append("installation_id", self.installation.id);
                             formData.append("installation_number", field_installationnumber);
                             formData.append("contract_delivery_channel", field_contract_channel);
-                            
+
                             // Adicionar múltiplos arquivos de fatura
                             for (let i = 0; i < field_billfile.length; i++) {
                                 formData.append("bill_file", field_billfile[i]);
                             }
 
                             let different = true
-                            
+
                             if (new URLSearchParams(formData).toString() === new URLSearchParams(self.lastFormDataStep4).toString()) {
                                 different = false;
                             }
-                            
+
                             if (different) {
                                 (async function() {
                                     try {
@@ -1567,19 +1567,19 @@
                                             // 'Content-Type': 'multipart/form',
                                             body: formData
                                         });
-                                        
+
                                         if (!response.ok) {
                                             throw new Error(`Response status: ${response.status}`);
                                         }
-                                        
+
                                         const data = await response.json();
                                         self.request_signature_key = data.signer_key;
                                         Container.classList.remove('gra-loading');
-                                        
+
                                         self.lastFormDataStep4 = formData;
-    
+
                                         callback();
-                                        
+
                                     } catch (error) {
                                         console.log(error);
                                         Container.classList.remove('gra-loading');
@@ -1605,7 +1605,7 @@
                     if (ValidateWrongFields()) {
 
                         Container.classList.add('gra-loading');
-                        
+
                         const password = Container.querySelector('.jsPassword1').value.trim();
                         const passwordConfirm = Container.querySelector('.jsPassword2').value.trim();
                         const verification_code = Container.querySelector('.jsVerificationCode').value.trim();
@@ -1619,7 +1619,7 @@
                             const password1El = Container.querySelector('.jsPassword1');
                             const password2El = Container.querySelector('.jsPassword2');
                             const errorDiv = Container.querySelector('.jsPasswordError');
-                            
+
                             if (show) {
                                 password1El.style.borderColor = 'red';
                                 password2El.style.borderColor = 'red';
@@ -1672,15 +1672,15 @@
                                     window.location.href = '<?php echo home_url(); ?>/feedback';
                                     return;
                                 }
-                                        
+
                                 if (!response.ok) {
                                     throw new Error(`Response status: ${response.status}`);
                                 }
-                                
+
                                 const data = await response.json();
                                 Container.classList.remove('gra-loading');
                                 callback();
-                                
+
                             } catch (error) {
                                 console.log(error);
                                 Container.classList.remove('gra-loading');
@@ -1700,62 +1700,62 @@
             cpf = cpf.replace(/[^\d]+/g, '')
             if (cpf.length !== 11 || !!cpf.match(/(\d)\1{10}/)) return false
             cpf = cpf.split('').map(el => +el)
-            const rest = (count) => (cpf.slice(0, count-12)
-                .reduce( (soma, el, index) => (soma + el * (count-index)), 0 )*10) % 11 % 10
+            const rest = (count) => (cpf.slice(0, count - 12)
+                .reduce((soma, el, index) => (soma + el * (count - index)), 0) * 10) % 11 % 10
             return rest(10) === cpf[9] && rest(11) === cpf[10]
         }
 
         function isValidCNPJ(cnpj) {
-            let cnpjRef = cnpj.replace(/[^\d]+/g,'');
+            let cnpjRef = cnpj.replace(/[^\d]+/g, '');
 
-            if(cnpjRef == '') return false;
-            
+            if (cnpjRef == '') return false;
+
             if (cnpjRef.length != 14)
                 return false;
 
             // Elimina CNPJs invalidos conhecidos
-            if (cnpjRef == "00000000000000" || 
-                cnpjRef == "11111111111111" || 
-                cnpjRef == "22222222222222" || 
-                cnpjRef == "33333333333333" || 
-                cnpjRef == "44444444444444" || 
-                cnpjRef == "55555555555555" || 
-                cnpjRef == "66666666666666" || 
-                cnpjRef == "77777777777777" || 
-                cnpjRef == "88888888888888" || 
+            if (cnpjRef == "00000000000000" ||
+                cnpjRef == "11111111111111" ||
+                cnpjRef == "22222222222222" ||
+                cnpjRef == "33333333333333" ||
+                cnpjRef == "44444444444444" ||
+                cnpjRef == "55555555555555" ||
+                cnpjRef == "66666666666666" ||
+                cnpjRef == "77777777777777" ||
+                cnpjRef == "88888888888888" ||
                 cnpjRef == "99999999999999")
                 return false;
-                
+
             // Valida DVs
             tamanho = cnpjRef.length - 2
-            numeros = cnpjRef.substring(0,tamanho);
+            numeros = cnpjRef.substring(0, tamanho);
             digitos = cnpjRef.substring(tamanho);
             soma = 0;
             pos = tamanho - 7;
             for (i = tamanho; i >= 1; i--) {
-            soma += numeros.charAt(tamanho - i) * pos--;
-            if (pos < 2)
+                soma += numeros.charAt(tamanho - i) * pos--;
+                if (pos < 2)
                     pos = 9;
             }
             resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
             if (resultado != digitos.charAt(0))
                 return false;
-                
+
             tamanho = tamanho + 1;
-            numeros = cnpjRef.substring(0,tamanho);
+            numeros = cnpjRef.substring(0, tamanho);
             soma = 0;
             pos = tamanho - 7;
             for (i = tamanho; i >= 1; i--) {
-            soma += numeros.charAt(tamanho - i) * pos--;
-            if (pos < 2)
+                soma += numeros.charAt(tamanho - i) * pos--;
+                if (pos < 2)
                     pos = 9;
             }
             resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
             if (resultado != digitos.charAt(1))
                 return false;
-                    
+
             return true;
-            
+
         }
 
         function ValidateWrongFields() {
@@ -1775,33 +1775,33 @@
 
                     if (el.value.trim() === '') {
                         addError(el, 'Campo obrigatório');
-                        
-                        
+
+
                     } else if (el.hasAttribute('mask-cpf')) {
                         if (el.value.length !== 14) {
                             addError(el, 'Campo com valor incorreto');
                         }
-                        
+
                     } else if (el.hasAttribute('mask-cnpj')) {
                         if (el.value.length !== 18) {
                             addError(el, 'Campo com valor incorreto');
                         }
-                        
+
                     } else if (el.hasAttribute('mask-number')) {
                         if (isNaN(parseInt(el.value)) || el.value.indexOf('-') !== -1) {
                             addError(el, 'Campo com valor incorreto');
                         }
-                        
+
                     } else if (el.hasAttribute('mask-cep')) {
                         if (el.value.length !== 10) {
                             addError(el, 'Campo com valor incorreto');
                         }
-                    
+
                     } else if (el.hasAttribute('mask-phone')) {
                         if (el.value.length < 14) {
                             addError(el, 'Campo com valor incorreto');
                         }
-                        
+
                     } else if (el.type === 'email') {
                         if (!el.checkValidity()) {
                             addError(el, 'Campo com valor incorreto');
@@ -1817,22 +1817,24 @@
 
                     } else if (el.hasAttribute('mask-name')) {
                         var str = el.value.trim();
-                        var values = str.replace(/\s\s+/g, ' ').split(' ').filter(function(v){return v!==''});
+                        var values = str.replace(/\s\s+/g, ' ').split(' ').filter(function(v) {
+                            return v !== ''
+                        });
                         if (values.length < 2) {
                             addError(el, 'Insira o nome completo.');
                             return true;
                         }
-                        
+
                     } else if (el.hasAttribute('minlength')) {
                         const count = parseInt(el.getAttribute('minlength'));
-                        
+
                         if (el.value.trim().length < count) {
                             addError(el, 'Campo precisa de no mínimo ' + count + ' caracteres');
-                            
+
                         } else if (el.classList.contains('jsSameField')) {
                             checkForSameField(el);
                         }
-                        
+
                     } else if (el.classList.contains('jsSameField')) {
                         checkForSameField(el);
                     }
@@ -1862,14 +1864,14 @@
             function checkForSameField(el) {
                 const itens = StepController.stepContainer.querySelectorAll('.jsSameField');
                 const baseValue = itens[0].value;
-                
+
                 for (let i = 1; i < itens.length; i++) {
                     if (itens[i].value !== baseValue) {
 
                         if (itens[i].parentElement.querySelector('.gra-error-msg')) {
                             itens[i].parentElement.querySelector('.gra-error-msg').remove();
                         }
-                        
+
                         addError(itens[i], 'Confirme o valor do campo');
                     }
                 }
@@ -1929,14 +1931,14 @@
                 document.querySelector('.jsPopUpAlertTxt').textContent = '';
             }
         };
-    
+
         StepController.init();
     })();
- </script>
- <script src="https://cdn-public-library.clicksign.com/embedded/embedded.min-2.1.0.js" type="text/javascript"></script>
-    <!-- Google Tag Manager (noscript) -->
-    <noscript>
-        <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MNTX28WZ" height="0" width="0" style="display:none;visibility:hidden"></iframe>
-    </noscript>
-    <!-- End Google Tag Manager (noscript) -->
- </body>
+</script>
+<script src="https://cdn-public-library.clicksign.com/embedded/embedded.min-2.1.0.js" type="text/javascript"></script>
+<!-- Google Tag Manager (noscript) -->
+<noscript>
+    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MNTX28WZ" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+</noscript>
+<!-- End Google Tag Manager (noscript) -->
+</body>
