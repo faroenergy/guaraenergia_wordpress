@@ -7,7 +7,7 @@ on:
       - 'wordpress/wp-content/**'
 
 concurrency:
-  group: deploy-production
+  group: deploy-production-v2
   cancel-in-progress: false
 
 jobs:
