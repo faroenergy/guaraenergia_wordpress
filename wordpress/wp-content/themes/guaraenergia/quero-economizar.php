@@ -867,7 +867,27 @@ $validade = $passo_3['validade'];
 
                             async function validatePromoCode(code) {
                                 try {
-                                    const response = await fetch(`${self.baseUrl}/promo-code/validate/${code}`, {
+                                    // A elegibilidade por parceiro/distribuidora só é checada pela
+                                    // API quando esses dados são informados — sem eles, a validação
+                                    // segue sendo apenas "o código existe e está vigente?".
+                                    // `self.utility_id` é preenchido automaticamente a partir do CEP
+                                    // (fluxo comum); o <select class="jsFieldUtility"> só é preenchido
+                                    // no fallback manual (quando a resolução por CEP falha) — por isso
+                                    // ele é usado apenas como valor secundário aqui.
+                                    const utilityField = self.stepContainer.querySelector('.jsFieldUtility');
+                                    const utilityId = (utilityField && utilityField.value.trim() !== '')
+                                        ? utilityField.value.trim()
+                                        : (self.utility_id || null);
+
+                                    const partnerCodeField = self.stepContainer.querySelector('.jsFieldCodePartner');
+                                    const partnerCode = partnerCodeField ? partnerCodeField.value.trim() : '';
+
+                                    const params = new URLSearchParams();
+                                    if (utilityId) params.set('utility_id', utilityId);
+                                    if (partnerCode) params.set('partner_code', partnerCode);
+                                    const queryString = params.toString();
+
+                                    const response = await fetch(`${self.baseUrl}/promo-code/validate/${code}${queryString ? '?' + queryString : ''}`, {
                                         method: "GET",
                                         headers: {
                                             'Content-Type': 'application/json'
@@ -886,7 +906,17 @@ $validade = $passo_3['validade'];
                                         self.promoCodeValidated = false;
                                         promoCodeField.classList.add('gra-error');
 
-                                        addPromoCodeError('Cupom promocional inválido');
+                                        let message = 'Cupom promocional inválido';
+                                        try {
+                                            const errorData = await response.json();
+                                            if (errorData && errorData.detail) {
+                                                message = errorData.detail;
+                                            }
+                                        } catch (parseError) {
+                                            // mantém a mensagem genérica se a resposta de erro não vier em JSON
+                                        }
+
+                                        addPromoCodeError(message);
                                     }
                                 } catch (error) {
                                     console.log('Erro na validação do cupom promocional:', error);
@@ -896,6 +926,18 @@ $validade = $passo_3['validade'];
 
                                     addPromoCodeError('Erro ao validar cupom promocional');
                                 }
+                            }
+
+                            // Revalida o cupom já digitado quando a distribuidora muda — cobre o
+                            // caso de o usuário preencher o cupom antes de escolher a distribuidora.
+                            const utilityFieldForPromo = self.stepContainer.querySelector('.jsFieldUtility');
+                            if (utilityFieldForPromo) {
+                                utilityFieldForPromo.addEventListener('change', function() {
+                                    const code = promoCodeField.value.trim();
+                                    if (code !== '') {
+                                        validatePromoCode(code);
+                                    }
+                                });
                             }
 
                             function addPromoCodeError(message) {
