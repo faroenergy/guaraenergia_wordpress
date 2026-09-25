@@ -438,22 +438,38 @@ $validade = $passo_3['validade'];
                     if (response.ok) {
                         const {
                             client_provider_id,
-                            partner_code
+                            partner_code,
+                            promo_code
                         } = await response.json();
 
-                        self.clientProviderId = client_provider_id;
-                        self.stepStart = 2;
-                        self.stepType = 'cpf';
-                        self.stepAlert = null;
-                        self.codePartner = partner_code;
-                        self.partnerCodeValidated = true;
+                        // Código do Parceiro e Cupom Promocional são independentes do
+                        // client_provider_id (exclusivo do fluxo antigo da TIM, que
+                        // já identifica a pessoa e pula pro passo 2 assumindo CPF).
+                        // LPs de Colab, por exemplo, mandam promo_code (sempre) e
+                        // partner_code (pode vir vazio) sem client_provider_id.
+                        if (partner_code) {
+                            self.codePartner = partner_code;
+                            self.partnerCodeValidated = true;
+                        }
 
-                        document.querySelectorAll('.jsIsCpf').forEach(function(item) {
-                            item.style.display = '';
-                        });
-                        document.querySelectorAll('.jsIsCnpj').forEach(function(item) {
-                            item.style.display = 'none';
-                        });
+                        if (promo_code) {
+                            self.promoCode = promo_code;
+                            self.promoCodeValidated = true;
+                        }
+
+                        if (client_provider_id) {
+                            self.clientProviderId = client_provider_id;
+                            self.stepStart = 2;
+                            self.stepType = 'cpf';
+                            self.stepAlert = null;
+
+                            document.querySelectorAll('.jsIsCpf').forEach(function(item) {
+                                item.style.display = '';
+                            });
+                            document.querySelectorAll('.jsIsCnpj').forEach(function(item) {
+                                item.style.display = 'none';
+                            });
+                        }
                     }
                 }
 
@@ -840,6 +856,11 @@ $validade = $passo_3['validade'];
                         // Validação do Cupom Promocional
                         const promoCodeField = self.stepContainer.querySelector('.jsFieldPromoCode');
                         if (promoCodeField) {
+                            if (self.promoCode && self.promoCodeValidated) {
+                                promoCodeField.value = self.promoCode;
+                                promoCodeField.disabled = true;
+                            }
+
                             let promoValidationTimeout = null;
 
                             promoCodeField.addEventListener('input', function() {
