@@ -414,6 +414,8 @@ $validade = $passo_3['validade'];
             phone: null,
             codePartner: null,
             partnerCodeValidated: false,
+            acquisitionChannelId: null,
+            acquisitionSubchannelId: null,
             monthlyExpense: null,
             social_contract: null,
 
@@ -439,14 +441,17 @@ $validade = $passo_3['validade'];
                         const {
                             client_provider_id,
                             partner_code,
-                            promo_code
+                            promo_code,
+                            acquisition_channel_id,
+                            acquisition_subchannel_id
                         } = await response.json();
 
-                        // Código do Parceiro e Cupom Promocional são independentes do
-                        // client_provider_id (exclusivo do fluxo antigo da TIM, que
-                        // já identifica a pessoa e pula pro passo 2 assumindo CPF).
-                        // LPs de Colab, por exemplo, mandam promo_code (sempre) e
-                        // partner_code (pode vir vazio) sem client_provider_id.
+                        // Código do Parceiro, Cupom Promocional e Canal/Subcanal de
+                        // aquisição são independentes do client_provider_id (exclusivo
+                        // do fluxo antigo da TIM, que já identifica a pessoa e pula
+                        // pro passo 2 assumindo CPF). LPs de Colab, por exemplo, mandam
+                        // promo_code + canal/subcanal (sempre) e partner_code (pode vir
+                        // vazio) sem client_provider_id.
                         if (partner_code) {
                             self.codePartner = partner_code;
                             self.partnerCodeValidated = true;
@@ -455,6 +460,14 @@ $validade = $passo_3['validade'];
                         if (promo_code) {
                             self.promoCode = promo_code;
                             self.promoCodeValidated = true;
+                        }
+
+                        if (acquisition_channel_id) {
+                            self.acquisitionChannelId = acquisition_channel_id;
+                        }
+
+                        if (acquisition_subchannel_id) {
+                            self.acquisitionSubchannelId = acquisition_subchannel_id;
                         }
 
                         if (client_provider_id) {
@@ -1424,7 +1437,9 @@ $validade = $passo_3['validade'];
                                 installation_address_complement: self.installation_address_complement,
                                 installation_address_street: self.address,
                                 utility_id: self.utilityId,
-                                promo_code: self.promoCode
+                                promo_code: self.promoCode,
+                                acquisition_channel_id: self.acquisitionChannelId,
+                                acquisition_subchannel_id: self.acquisitionSubchannelId
                             };
 
                             if (self.stepType === "cpf") {
