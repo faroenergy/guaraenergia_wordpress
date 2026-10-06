@@ -57,6 +57,30 @@ $validade = $passo_3['validade'];
     .gra-codigo-parceiro-input.gra-error {
         border-color: #dc3545 !important;
     }
+
+    /* Logo da Colab ao lado do logo da Guará (header mobile + sidebar
+    desktop) — injetado via JS só quando o hash vem de uma LP de Colab. */
+    .gra-step-form__side-logo-wrap {
+        position: absolute;
+        top: 16px;
+        left: 120px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+    .gra-step-form__side-logo {
+        position: static;
+    }
+    .gra-colab-logo-sep {
+        width: 1px;
+        height: 24px;
+        background-color: rgba(255, 255, 255, 0.3);
+    }
+    .gra-colab-logo {
+        max-height: 40px;
+        width: auto;
+        object-fit: contain;
+    }
 </style>
 
 <section class="gra-step-form">
@@ -69,7 +93,9 @@ $validade = $passo_3['validade'];
     </header>
     <form class="gra-step-form__wrapper jsFormStep" onsubmit="event.preventDefault();" novalidate>
         <div class="gra-step-form__side jsStepSide">
-            <a href="/" class="gra-step-form__side-logo"><img src="<?php echo get_template_directory_uri(); ?>/assets/images/logo.svg" /></a>
+            <div class="gra-step-form__side-logo-wrap">
+                <a href="/" class="gra-step-form__side-logo"><img src="<?php echo get_template_directory_uri(); ?>/assets/images/logo.svg" /></a>
+            </div>
             <div step-side="1" style="display:none;background-image:url(<?php echo $passo_1['imagem'] ?>)"></div>
             <div step-side="2" step-side-inner style="display:none">
                 <p class="gra-step-item">
@@ -443,7 +469,9 @@ $validade = $passo_3['validade'];
                             partner_code,
                             promo_code,
                             acquisition_channel_id,
-                            acquisition_subchannel_id
+                            acquisition_subchannel_id,
+                            colab_slug,
+                            colab_logo_url
                         } = await response.json();
 
                         // Código do Parceiro, Cupom Promocional e Canal/Subcanal de
@@ -483,6 +511,13 @@ $validade = $passo_3['validade'];
                                 item.style.display = 'none';
                             });
                         }
+
+                        // colab_slug só existe quando o hash veio de uma LP
+                        // de Colab (único produtor desse campo) — presença
+                        // dele é o sinal de "este hash é de uma Colab".
+                        if (colab_slug) {
+                            self.applyColabBranding(colab_slug, colab_logo_url);
+                        }
                     }
                 }
 
@@ -490,6 +525,32 @@ $validade = $passo_3['validade'];
                 self.lastStep = self.stepStart;
                 const initialStep = self.showStep(self.stepStart);
                 self.startEvents();
+            },
+
+            applyColabBranding: function(colabSlug, colabLogoUrl) {
+                const backUrl = `https://portal.guaraenergia.com/${encodeURIComponent(colabSlug)}`;
+                const faqUrl = `${backUrl}#duvidas`;
+
+                document.querySelectorAll('.gra-header__logo, .gra-step-form__side-logo').forEach(function(logoLink) {
+                    logoLink.setAttribute('href', backUrl);
+
+                    if (colabLogoUrl) {
+                        const sep = document.createElement('span');
+                        sep.className = 'gra-colab-logo-sep';
+
+                        const img = document.createElement('img');
+                        img.className = 'gra-colab-logo';
+                        img.src = colabLogoUrl;
+                        img.alt = '';
+
+                        logoLink.insertAdjacentElement('afterend', img);
+                        logoLink.insertAdjacentElement('afterend', sep);
+                    }
+                });
+
+                document.querySelectorAll('a[href="/#faq"]').forEach(function(link) {
+                    link.setAttribute('href', faqUrl);
+                });
             },
 
             startEvents: function() {
