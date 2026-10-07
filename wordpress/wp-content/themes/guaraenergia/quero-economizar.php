@@ -68,6 +68,17 @@ $validade = $passo_3['validade'];
         align-items: center;
         gap: 12px;
     }
+    /* A versão compilada já esconde .gra-step-form__side-logo (o link) em
+    mobile, mas não o .gra-step-form__side-logo-wrap que o envolve. Como o JS
+    insere a logo da Colab como irmã do link (insertAdjacentElement/afterend),
+    ela fica dentro desse wrap e continua visível mesmo com o link escondido —
+    sobra flutuando em position:absolute por cima do header mobile, duplicando
+    visualmente a logo da Colab que já aparece no .gra-header__logo. */
+    @media (max-width: 1011px) {
+        .gra-step-form__side-logo-wrap {
+            display: none;
+        }
+    }
     .gra-step-form__side-logo {
         position: static;
     }
