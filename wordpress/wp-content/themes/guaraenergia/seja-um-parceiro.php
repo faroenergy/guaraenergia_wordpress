@@ -193,7 +193,72 @@
         </div>
         <div class="gra-separator"></div>
         <div>
-            <?php echo do_shortcode('[contact-form-7 id="96a75c3" title="Seja um parceiro"]') ?>
+            <!-- Grava em POST /lead-partners/ (guaraenergia_api); ver assets/js/seja-um-parceiro.js -->
+            <form id="partner-lead-form" class="gra-contact-form" novalidate>
+                <div class="gra-contact-form__field full">
+                    <label><span>Nome da empresa</span><input name="company_name" aria-describedby="erro-company_name" type="text" maxlength="255" autocomplete="organization" required></label>
+                    <div class="gra-contact-form__error" id="erro-company_name" data-error="company_name"></div>
+                </div>
+                <div class="gra-contact-form__field">
+                    <label><span>CNPJ</span><input name="cnpj" aria-describedby="erro-cnpj" type="text" inputmode="numeric" placeholder="00.000.000/0000-00" required></label>
+                    <div class="gra-contact-form__error" id="erro-cnpj" data-error="cnpj"></div>
+                </div>
+                <div class="gra-contact-form__field">
+                    <label><span>Nome do responsável</span><input name="responsible_name" aria-describedby="erro-responsible_name" type="text" maxlength="255" autocomplete="name" required></label>
+                    <div class="gra-contact-form__error" id="erro-responsible_name" data-error="responsible_name"></div>
+                </div>
+                <div class="gra-contact-form__field">
+                    <label><span>E-mail</span><input name="email" aria-describedby="erro-email" type="email" maxlength="255" autocomplete="email" required></label>
+                    <div class="gra-contact-form__error" id="erro-email" data-error="email"></div>
+                </div>
+                <div class="gra-contact-form__field">
+                    <label><span>Telefone / Whatsapp</span><input name="phone" aria-describedby="erro-phone" type="text" inputmode="tel" autocomplete="tel-national" placeholder="(11) 90000-0000" required></label>
+                    <div class="gra-contact-form__error" id="erro-phone" data-error="phone"></div>
+                </div>
+                <div class="gra-contact-form__field full">
+                    <label><span>Estado</span>
+                        <select name="state" aria-describedby="erro-state" required>
+                            <option value="">Selecione</option>
+                            <option value="AC">Acre</option>
+                            <option value="AL">Alagoas</option>
+                            <option value="AP">Amapá</option>
+                            <option value="AM">Amazonas</option>
+                            <option value="BA">Bahia</option>
+                            <option value="CE">Ceará</option>
+                            <option value="DF">Distrito Federal</option>
+                            <option value="ES">Espírito Santo</option>
+                            <option value="GO">Goiás</option>
+                            <option value="MA">Maranhão</option>
+                            <option value="MT">Mato Grosso</option>
+                            <option value="MS">Mato Grosso do Sul</option>
+                            <option value="MG">Minas Gerais</option>
+                            <option value="PA">Pará</option>
+                            <option value="PB">Paraíba</option>
+                            <option value="PR">Paraná</option>
+                            <option value="PE">Pernambuco</option>
+                            <option value="PI">Piauí</option>
+                            <option value="RJ">Rio de Janeiro</option>
+                            <option value="RN">Rio Grande do Norte</option>
+                            <option value="RS">Rio Grande do Sul</option>
+                            <option value="RO">Rondônia</option>
+                            <option value="RR">Roraima</option>
+                            <option value="SC">Santa Catarina</option>
+                            <option value="SP">São Paulo</option>
+                            <option value="SE">Sergipe</option>
+                            <option value="TO">Tocantins</option>
+                        </select>
+                    </label>
+                    <div class="gra-contact-form__error" id="erro-state" data-error="state"></div>
+                </div>
+                <div class="gra-contact-form__field full">
+                    <label><span>Mensagem (opcional)</span><textarea name="message" rows="10" maxlength="2000" aria-describedby="erro-message"></textarea></label>
+                    <div class="gra-contact-form__error" id="erro-message" data-error="message"></div>
+                </div>
+                <div class="gra-contact-form__field full">
+                    <input type="submit" value="Enviar">
+                </div>
+            </form>
+            <div id="partner-lead-status" class="gra-contact-form__status" role="status" aria-live="polite"></div>
         </div>
     </div>
 </section>
