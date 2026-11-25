@@ -121,6 +121,11 @@
                 return;
             }
 
+            if (response.status === 429) {
+                setStatus('Muitas tentativas. Tente novamente mais tarde.');
+                return;
+            }
+
             var body = response.status === 422 ? await response.json() : {};
             if (showApiErrors(body.detail)) {
                 setStatus('Confira os campos destacados.');
