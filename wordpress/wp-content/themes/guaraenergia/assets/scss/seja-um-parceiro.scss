@@ -446,6 +446,30 @@
     }
 }
 
+.gra-contact-form__error {
+    margin-top: 5px;
+    font-size: 14px;
+    color: #c00;
+}
+
+.gra-contact-form [aria-invalid="true"] {
+    border-color: #c00;
+}
+
+.gra-contact-form input[type="submit"]:disabled {
+    opacity: .6;
+    cursor: wait;
+}
+
+.gra-contact-form__status {
+    margin-top: 10px;
+    font-size: 18px;
+    color: #c00;
+    &.success {
+        color: $primary;
+    }
+}
+
 .screen-reader-response {
     display: none;
 }

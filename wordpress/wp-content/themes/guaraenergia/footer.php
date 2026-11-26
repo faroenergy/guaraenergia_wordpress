@@ -69,7 +69,11 @@
             }
         </script>
     <?php endif; ?>
-    <?php if ($args['name'] == 'seja-um-parceiro' or $args['name'] == 'guara-colab'): ?>
+    <?php if ($args['name'] == 'seja-um-parceiro'): ?>
+        <script src="<?php echo get_template_directory_uri(); ?>/assets/js/vanilla-masker.min.js"></script>
+        <script src="<?php echo get_template_directory_uri(); ?>/assets/js/seja-um-parceiro.js?v1"></script>
+    <?php endif; ?>
+    <?php if ($args['name'] == 'guara-colab'): ?>
         <script src="<?php echo get_template_directory_uri(); ?>/assets/js/vanilla-masker.min.js"></script>
         <script>
             function inputHandler(masks, max, event) {

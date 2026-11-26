@@ -39,7 +39,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.4/tiny-slider.css">
     <?php endif; ?>
     <link rel="icon" type="image/x-icon" href="<?php echo get_template_directory_uri(); ?>/assets/images/icons/favicon.svg">
-    <link href="<?php echo get_template_directory_uri(); ?>/assets/css/<?php echo $args['css']; ?>.css?v1" rel="stylesheet">
+    <link href="<?php echo get_template_directory_uri(); ?>/assets/css/<?php echo $args['css']; ?>.css?<?php echo $args['css'] == 'seja-um-parceiro' ? 'v2' : 'v1'; ?>" rel="stylesheet">
     <!-- Google Tag Manager -->
     <script>
         (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
