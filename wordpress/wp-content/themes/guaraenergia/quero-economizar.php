@@ -1554,8 +1554,8 @@ $validade = $passo_3['validade'];
                                     Container.classList.remove('gra-loading');
 
                                     // Validate monthly expense after successful registration
-                                    if (parseFloat(field_monthlyExpense) < 200) {
-                                        CustomAlert(true, 'A média do valor pago na fatura deve ser maior ou igual a R$ 200,00');
+                                    if (parseFloat(field_monthlyExpense) < 250) {
+                                        CustomAlert(true, 'A média do valor pago na fatura deve ser maior ou igual a R$ 250,00');
                                         return false;
                                     }
 
